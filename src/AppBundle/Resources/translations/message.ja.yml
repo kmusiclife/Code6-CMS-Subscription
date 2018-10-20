@@ -20,9 +20,18 @@ entity:
     user:
         username: "ユーザー名"
         email: "メールアドレス"
+        address: "住所"
+        zip: "郵便番号"
+        tel: "電話番号"
+        fname: "お名前(姓)"
+        lname: "お名前(名)"
+        plan: "プラン名"
         password: "パスワード"
         password_confirm: "パスワード(確認)"
-        current_password: "現在のパスワード"
+        plan: "プラン"
+        card: "カード番号"
+        facebook_url: "Facebookユーザー"
+
     image:
         title: "タイトル"
         body: "本文"

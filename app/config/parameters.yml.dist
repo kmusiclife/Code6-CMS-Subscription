@@ -27,3 +27,10 @@ parameters:
     project_dir: '%kernel.project_dir%'
     upload_path: '%kernel.project_dir%/web/uploads'
     upload_uri: /uploads
+
+    facebook_app_id: 00000000000000
+    stripe_application_fee: 10
+    stripe_connect_client_id: ca_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    stripe_secret_token: sk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    stripe_email: info@example.com
+    stripe_zip: 1230001

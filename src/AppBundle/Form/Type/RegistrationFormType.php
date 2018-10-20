@@ -3,10 +3,15 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -34,6 +39,35 @@ class RegistrationFormType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		
+		$this->serviceContainer->get('app.stripe_helper')->setApiKey();
+		
+	    $stripe_plans = \Stripe\Plan::all();
+		
+		$plans = array();
+		
+		foreach( $stripe_plans->data as $plan ){
+			
+			if($plan->currency == 'jpy') setlocale( LC_MONETARY, 'ja_JP.UTF-8' );
+			if($plan->currency == 'usd') setlocale( LC_MONETARY, 'en_US.UTF-8' );
+
+			$label = $plan->name . ' '. money_format('%.0n', $plan->amount) . ' / ' . $plan->interval;
+			$plans[$label] = $plan->id;
+			
+		}
+		$plan_id_choices = array(
+			'choices'  => $plans
+		);
+		
+	    $builder->add('fname');
+	    $builder->add('lname');
+	    $builder->add('zip');
+	    $builder->add('address');
+	    $builder->add('tel', TelType::class);
+	    $builder->add('facebook_url', HiddenType::class);
+	    $builder->add('stripe_plan_id', ChoiceType::class, $plan_id_choices);
+	    $builder->add('stripe_token_id', HiddenType::class, ['error_bubbling' => false]);
+
     }
     public function getName()
     {

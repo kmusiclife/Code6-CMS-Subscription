@@ -1,18 +1,23 @@
 {% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'config.title.new'|trans }}{% endblock title %}
+{% block body %}
+<p>サイトの初期設定を行います。管理者のユーザ名、パスワードなど必要項目を入力してください。</p>
 
 {{ 
 	form_start(
 		form, {
 			'method': 'post', 
-			'action': path('fos_user_registration_register'), 
+			'action': path('site_config'), 
 			'attr': {
-				'class': 'fos_user_registration_register row uniform', 
-				'id': 'payment-form',
+				'class': 'site_config row uniform', 
 				'novalidate': 'novalidate'
 		}
 	}) 
 }}
 {# 'attr': {'novalidate': 'novalidate'} #}
+
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.user.username'|trans() }}*</label>
@@ -76,52 +81,6 @@
 	{{ form_errors(form.tel) }}
 </div>
 
-{% if facebook_app_id %}
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.facebook_url'|trans() }}</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.facebook_url, {'attr': { 'placeholder':'' }}) }}
-	{{ form_errors(form.facebook_url) }}
-
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.1&appId=154618178520218&autoLogAppEvents=1';
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
-	
-	<div id="facebook_button" class="fb-login-button" 
-		data-max-rows="1" 
-		data-size="large" 
-		data-button-type="continue_with" 
-		data-show-faces="false" 
-		data-auto-logout-link="false" 
-		data-use-continue-as="true" 
-		onlogin="checkLoginState();" 
-		scope="user_link"
-	></div>
-	
-	<div id="facebook_info"></div>
-	<script>
-		function checkLoginState() {
-			FB.getLoginStatus(function(response) {
-				if (response && response.status == 'connected') {
-					FB.api('/me?fields=name,id,picture,link', function(response){
-						console.log(response);
-						$('#facebook_info').html(response.name);
-						$('#facebook_button').fadeOut();
-						$('#fos_user_registration_form_facebook_url').val(response.link);
-					});
-				}
-			});
-		}
-	</script>
-
-</div>
-{% endif %}
 
 
 <div class="3u 12u$(xsmall)">
@@ -144,28 +103,6 @@
 
 
 
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.plan'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.stripe_plan_id) }}
-	{{ form_errors(form.stripe_plan_id) }}
-</div>
-
-
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.card'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	<div id="card">
-		<div id="card-element"></div>
-		<div id="card-errors" role="alert"></div>
-	</div>
-	{{ form_widget(form.stripe_token_id) }}
-	{{ form_errors(form.stripe_token_id) }}
-</div>
-
-
 <div class="3u 12u$(xsmall)"></div>
 <div class="9u$ 12u$(xsmall)">
 	<input type="submit" class="special" value="{{ 'registration.button.submit'|trans }}" id="submit-button" />
@@ -176,3 +113,5 @@
 
 
 {{ form_end(form) }}
+
+{% endblock %}

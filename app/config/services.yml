@@ -16,6 +16,11 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    app.stripe_helper:
+        class: AppBundle\Helper\StripeHelper
+        arguments: ["@service_container", "@router"]
+        public: true
+
     app.app_helper:
         class: AppBundle\Helper\AppHelper
         arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
@@ -25,7 +30,7 @@ services:
         class: AppBundle\Helper\PagerHelper
         arguments: ["@request_stack", "@doctrine.orm.entity_manager"]
         public: true
-    
+
     app.registration_listener:
         class: AppBundle\EventListener\RegistrationListener
         arguments: ["@fos_user.mailer", "@fos_user.util.token_generator", "@service_container", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]

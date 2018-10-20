@@ -1,0 +1,21 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'stripe.title.registered'|trans }}{% endblock %}
+{% block body %}
+
+<p>
+<strong>Stripeの初期設定が完了しました。</strong>テストキーから本番キーへ切り替える際はSettingテーブルの<br />
+<strong>
+1: stripe_public_token, 2: stripe_secret_token, 3: stripe_access_token
+</strong>
+の３つのキーを削除して再度初期設定を行ってください。
+</p>
+<p>
+次は管理ユーザを作成してください。
+</p>
+<p>
+<a href="{{ path('site_config') }}" class="button special">CREATE ADMIN USER</a>
+</p>
+
+{% endblock %}

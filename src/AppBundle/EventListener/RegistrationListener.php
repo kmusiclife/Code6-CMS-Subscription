@@ -75,16 +75,80 @@ class RegistrationListener implements EventSubscriberInterface
 	{
 		//$user = $event->getUser();
 		//$request = $event->getRequest();
+		
+		if( !$this->serviceContainer->get('app.stripe_helper')->setApiKey() )
+		{
+			return $event->setResponse( new RedirectResponse( $this->router->generate('stripe_config') ) );
+		}
+		if( $this->serviceContainer->get('app.app_helper')->hasAdmin() == 0 )
+		{
+			return $event->setResponse( new RedirectResponse( $this->router->generate('site_config') ) );
+		}
 		if( $this->serviceContainer->getParameter('members_mode') == false )
 		{
-			$event->setResponse( new RedirectResponse('/') );
+			return $event->setResponse( new RedirectResponse( $this->router->generate('site_index') ) );
 		}
+		
+		$this->serviceContainer->get('twig')->addGlobal(
+			'stripe_public_token', 
+			$this->serviceContainer->get('app.stripe_helper')->getPublicKey() 
+		);
 
 	}
 	public function onRegistrationSuccess(FormEvent $event)
 	{
 		//$user = $event->getUser();
 		//$request = $event->getRequest();
+	
+		$this->form = $event->getForm();
+		$this->user = $this->form->getData();
+		
+		try{
+			
+			$this->serviceContainer->get('app.stripe_helper')->setApiKey();
+			
+			$customer = \Stripe\Customer::create(array(
+				"email" => $this->user->getEmail(),
+				"description" => "",
+				"source" => $this->user->getStripeTokenId(),
+			));
+			$this->user->setStripeCustomerId($customer->id);
+	
+			$subscription = \Stripe\Subscription::create(
+				array(
+					"customer" => $customer->id,
+					"items" => array(
+						array("plan" => $this->user->getStripePlanId()),
+					),
+					"application_fee_percent" => 10,
+				),
+				array(
+					"stripe_account" => $this->serviceContainer->get('app.app_helper')->getSetting('access_token')
+				)
+			);
+			$this->user->setStripeSubscriptionId($subscription->id);
+			
+			
+		} catch (\Stripe\Error\RateLimit $e) {
+			throw new Exception('クレジットカードの登録などの作業の間隔が速すぎのために処理できませんでした。時間を置いて登録してみてください。');
+		} catch (\Stripe\Error\InvalidRequest $e) {
+			throw new Exception('クレジットカード登録時にリクエストエラーが起こりました。何度も登録に失敗する場合は管理者にご連絡ください。');
+		} catch (\Stripe\Error\Authentication $e) {
+			throw new Exception('クレジットカード登録の接続に失敗しました。何度も登録に失敗する場合は管理者にご連絡ください。');
+		} catch (\Stripe\Error\ApiConnection $e) {
+			throw new Exception('クレジットカードAPIの接続に失敗しました。何度も登録に失敗する場合は管理者にご連絡ください。');
+		} catch (\Stripe\Error\Base $e) {
+			throw new Exception('クレジットカードの登録に失敗しました。有効期限などを確認してください。それでも解決しない場合はカード会社に確認してください。');
+		} catch (Exception $e) {
+			throw new Exception('クレジットカード登録時にシステムエラーが起こりました。何度も登録に失敗する場合は管理者にご連絡ください。');
+		}
+
+		if( false == $this->serviceContainer->getParameter('fos_user.registration.confirmation.enabled') )
+		{
+			$this->user->setConfirmationToken($this->tokenGenerator->generateToken());
+			$this->mailer->sendConfirmationEmailMessage($this->user);
+		}
+
 	}
 	public function onRegistrationComplete(FilterUserResponseEvent $event)
 	{

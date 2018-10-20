@@ -56,6 +56,17 @@ class AppHelper
 		return true;
 		
 	}
+	public function hasAdmin()
+	{
+	    $qb = $this->entityManager->createQueryBuilder();
+	    $qb->select('count(u)')
+	        ->from('AppBundle:User', 'u')
+	        ->where('u.roles LIKE :roles')
+	        ->setParameter('roles', '%ROLE_ADMIN%');
+	
+	    return $qb->getQuery()->getSingleScalarResult();
+	    
+	}
 	public function getImageIds()
 	{
 		$max =  (int)$this->serviceContainer->getParameter('image_count');

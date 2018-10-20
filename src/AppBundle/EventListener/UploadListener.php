@@ -33,7 +33,10 @@ class UploadListener
 		$this->tokenStorage = $tokenStorage;
 		$this->EntityManager = $entityManager;
 		
-		$this->user = $this->tokenStorage->getToken()->getUser();
+		if( is_object($this->tokenStorage->getToken()) )
+			$this->user = $this->tokenStorage->getToken()->getUser();
+		else $this->user = null;
+		
     }
     public function onUpload(PostPersistEvent $event)
     {

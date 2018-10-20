@@ -94,3 +94,8 @@ image:
 cms:
     title:
         policy: "プライバシーポリシー"
+
+stripe:
+    title:
+        config: "Stripe初期設定"
+        registered: "Stripe設定完了"
