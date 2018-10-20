@@ -117,9 +117,9 @@ class SiteController extends Controller
     public function afterLogin(AuthorizationCheckerInterface $authChecker)
     {
 	    if($authChecker->isGranted('ROLE_ADMIN'))
-	    	return new RedirectResponse($this->generateUrl('site_index'));
-	    else
 	    	return new RedirectResponse($this->generateUrl('admin_index'));
+	    else
+	    	return new RedirectResponse($this->generateUrl('site_index'));
     }
 
 }
