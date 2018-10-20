@@ -1,0 +1,30 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'setting.title.index'|trans }}{% endblock %}
+{% block body %}
+<div>
+<a href="{{ path('admin_setting_new') }}" class="button special small"><i class="fas fa-plus"></i> {{ 'page.button.new'|trans() }}</a>
+</div>
+<table>
+<thead>
+<tr>
+    <th>{{ 'entity.setting.slug'|trans }}</th>
+    <th>{{ 'entity.setting.value'|trans }}</th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+{% for setting in settings %}
+<tr>
+    <td>{{ setting.slug|trans() }}</td>
+    <td>{{ setting.value }}</td>
+    <td>
+        <a class="button special small" href="{{ path('admin_setting_edit', { 'id': setting.id }) }}">{{ 'setting.button.edit'|trans() }}</a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

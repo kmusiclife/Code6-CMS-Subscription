@@ -1,0 +1,39 @@
+{% trans_default_domain 'message' %}
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit row uniform', 'novalidate': 'novalidate' } }) }}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.username'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.username, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(form.username) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.email'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.email, {'attr': { 'placeholder':'例) info@example.com' }}) }}
+	{{ form_errors(form.email) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.password'|trans }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.plainPassword, {'attr': { 'placeholder':'例) info@example.com' }}) }}
+	{{ form_errors(form.plainPassword) }}
+</div>
+
+
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'profile.button.edit'|trans }}" id="submit-button" />
+</div>
+
+
+{{ form_end(form) }}

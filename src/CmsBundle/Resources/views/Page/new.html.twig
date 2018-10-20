@@ -1,0 +1,56 @@
+{% trans_default_domain 'message' %}
+{% extends "@AppBundle/Resources/views/Template/layout.html.twig" %}
+
+{% block title %}{{ 'page.title.new'|trans() }}{% endblock title %}
+
+{% block body %}
+{{ 
+	form_start(
+		form, {
+			'method': 'post', 
+			'attr': {
+				'class': 'page_add row uniform'
+		}
+	}) 
+}}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.title'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.title, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(form.title) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.slug'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.slug, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(form.slug) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.body'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.body, {'attr': { 'placeholder':'例) example', 'style': 'height: 300px;'}}) }}
+	{{ form_errors(form.body) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	&nbsp;
+</div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+</div>
+
+
+
+
+{{ form_end(form) }}
+
+{% endblock %}
+

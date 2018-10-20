@@ -1,0 +1,42 @@
+{% trans_default_domain 'message' %}
+{% use "form_div_layout.html.twig" %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{% block title %}Symfony CMS{% endblock %}</title>
+{% block stylesheets %}{% endblock stylesheets %}
+{% include 'header.html.twig' %}
+
+
+{% block banner %}{% endblock banner %}
+{% block header %}{% endblock %}
+
+{{ block('title') }}
+
+{% if app.request.hasPreviousSession %}
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        {{ message|trans() }}
+    {% endfor %}
+{% endfor %}
+{% endif %}
+
+
+{% if block('body') is defined %}
+	{{ block('body') }}
+{% endif %}
+{% if block('fos_user_content') is defined %}
+	{{ block('fos_user_content') }}
+{% endif %}
+
+
+{% include "footer.html.twig" %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!--[if lte IE 8]><script src="{{ asset('admin/js/ie/respond.min.js') }}"></script><![endif]-->
+
+{% block javascripts %}{% endblock javascripts %}
+{% block javascript %}{% endblock javascript %}
+
+</body>
+</html>

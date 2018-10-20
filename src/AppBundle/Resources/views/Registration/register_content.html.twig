@@ -1,0 +1,60 @@
+{% trans_default_domain 'message' %}
+
+{{ 
+	form_start(
+		form, {
+			'method': 'post', 
+			'action': path('fos_user_registration_register'), 
+			'attr': {
+				'class': 'fos_user_registration_register row uniform'
+		}
+	}) 
+}}
+{# 'attr': {'novalidate': 'novalidate'} #}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.username'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.username, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(form.username) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.email'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.email, {'attr': { 'placeholder':'例) info@example.com' }}) }}
+	{{ form_errors(form.email) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.password'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.plainPassword.first) }}
+	{{ form_errors(form.plainPassword.first) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.password_confirm'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.plainPassword.second) }}
+	{{ form_errors(form.plainPassword.second) }}
+</div>
+
+
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'registration.button.submit'|trans }}" id="submit-button" />
+</div>
+
+
+
+
+{{ form_end(form) }}

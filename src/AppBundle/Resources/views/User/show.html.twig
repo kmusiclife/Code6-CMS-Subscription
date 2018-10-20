@@ -1,0 +1,20 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'user.title.show'|trans }}{% endblock %}
+{% block body %}
+<table>
+    <tbody>
+        <tr>
+            <th width="32%">{{ 'entity.user.username'|trans() }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'entity.user.email'|trans() }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'setting.title.edit'|trans }}{% endblock %}
+{% block body %}
+
+{{ 
+	form_start(
+		edit_form, {
+			'attr': {
+				'class': 'setting_edit row uniform', 
+				'novalidate': 'novalidate',
+		}
+	}) 
+}}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.setting.slug'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.slug, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(edit_form.slug) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.setting.value'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.value, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(edit_form.value) }}
+</div>
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'setting.button.edit'|trans }}" id="submit-button" />
+</div>
+
+
+{{ form_end(edit_form) }}
+
+<hr />
+
+{{ form_start(delete_form, {'attr':{'class':'row uniform'}}) }}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.current_password'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(delete_form.password.current_password) }}
+	{{ form_errors(delete_form.password.current_password) }}
+</div>
+<div class="3u 12u$(xsmall)">
+	&nbsp;
+</div>
+<div class="9u$ 12u$(xsmall)">
+    <input type="submit" value="{{ 'page.button.delete'|trans() }}">
+</div>
+{{ form_end(delete_form) }}
+
+
+{% endblock %}

@@ -1,0 +1,136 @@
+entity:
+    page:
+        title: "タイトル"
+        slug: "ページスラッグ"
+        body: "ページ本文"
+    
+    news:
+        title: "ニュース名"
+        date: "ニュース開催日"
+        time: "ニュース開催時間"
+        body: "ニュース内容"
+        price: "ニュース参加費"
+        report: "ニュースのレポート"
+        files: "画像"
+        eyecatch: "メイン画像"
+        place: "開催場所"
+        is_published: "公開・非公開"
+        images: "アップロード画像"
+        
+    user:
+        username: "ユーザー名"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirm: "パスワード(確認)"
+        current_password: "現在のパスワード"
+    image:
+        title: "タイトル"
+        body: "本文"
+        image: "画像"
+    setting:
+        slug: "設定ID"
+        value: "設定内容"
+
+news:
+    title: 
+        index: "ニュース一覧"
+        show: "ニュース詳細"
+        edit: "ニュースを編集"
+        new: "ニュース新規作成"
+    button:
+        new: "ニュース追加"
+        show: "ニュース詳細"
+        edit: "ニュース編集"
+    message:
+        place: "開催場所はこちらより追加してください"
+        is_published: "公開する"
+        
+setting:
+    title:
+        index: "設定一覧"
+        edit: "設定変更"
+        new: "新しい設定"
+    button:
+        submit: "送信する"
+        edit:  "編集する"
+    
+exception:
+    title:
+        index: "Error"
+        
+admin:
+    title:
+        index: "管理者管理"
+
+resetting:
+    button:
+        submit: "送信する"
+        edit:  "編集する"
+        
+    title:
+        request: "パスワードリセット"
+
+registration:
+    title:
+        index: "新規登録"
+        confirmed: "登録完了しました"
+        
+    button:
+        submit: "新規登録"
+        
+security:
+    title:
+        index: "ログイン"
+
+profile:
+    title:
+        show: "プロフィール"
+        edit: "プロフィール編集"
+    
+    button:
+        edit: "編集する"
+        detail: "詳細"
+
+page:
+    title:
+        new: "ページ作成"
+        index: "ページ一覧"
+        edit: "ページを編集"
+        policy: "プライバシーポリシー"
+        about: "本サービスについて"
+        
+    button:
+        new: "追加する"
+        edit: "編集する"
+        show: "表示する"
+        delete: "削除する"
+        
+button:
+    subscription:
+        cancel: "プランを解約"
+        execute: "本当に解約しますか？"
+        card: "カードを登録する"
+    
+image:
+    title:
+        new: "画像追加"
+        index: "画像一覧"
+        edit: "画像編集"
+    button:
+        show: "表示する"
+        edit: "編集する"
+
+user:
+    title:
+        index: "ユーザ一覧"
+        show: "ユーザ詳細"
+        edit: "ユーザ変更"
+    button:
+        show: "詳細"
+        edit: "編集"
+        delete: "削除"
+
+message:
+    added: "データを追加しました"
+    edited: "編集を完了しました"
+    de;eted: "データを削除しました"

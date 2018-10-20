@@ -1,0 +1,10 @@
+{% trans_default_domain 'message' %}
+{% extends members_mode == true 
+    ? is_granted('ROLE_ADMIN') ? '@AppBundle/Resources/views/Template/layout.html.twig' : "layout.html.twig" 
+    : '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'profile.title.edit'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+{% include "@FOSUser/Profile/edit_content.html.twig" %}
+{% endblock fos_user_content %}

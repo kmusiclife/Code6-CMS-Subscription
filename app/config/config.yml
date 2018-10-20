@@ -1,0 +1,167 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@CmsBundle/Resources/config/services.yml" }
+    - { resource: "@SiteBundle/Resources/config/services.yml" }
+    
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: '%mailer_address%'
+        sender_name: '%mailer_name%'
+
+    registration:
+        confirmation:
+            enabled: false # change to true for required email confirmation
+        form:
+            type: AppBundle\Form\Type\RegistrationFormType
+
+    profile:
+        form:
+            type: AppBundle\Form\Type\ProfileFormType
+            
+parameters:
+    locale: ja
+
+framework:
+    
+    translator: ~
+    
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+    templating:
+        engines: ['twig']
+        
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        project_dir: '%project_dir%'
+        upload_uri: '%upload_uri%'
+        members_mode: '%members_mode%'
+        
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+sensio_framework_extra:
+   router:
+        annotations: false
+
+assetic:
+    debug: false
+    use_controller: false
+    filters:
+        cssrewrite: ~
+    assets:
+        jquery_js:
+            inputs:
+                - %kernel.root_dir%/../vendor/components/jquery/jquery.min.js
+            output: "admin/js/jquery.js"
+        dropzone_js:
+            inputs:
+                - %kernel.root_dir%/../vendor/enyo/dropzone/dist/dropzone.js
+            output: "admin/js/dropzone.js"
+        dropzone_css:
+            inputs:
+                - %kernel.root_dir%/../vendor/enyo/dropzone/dist/min/basic.min.css
+                - %kernel.root_dir%/../vendor/enyo/dropzone/dist/min/dropzone.min.css
+                
+            output: "admin/css/dropzone.css"
+
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: dropzone # or any uploader you use in the frontend
+            root_folder: true
+            storage:
+                directory: "%kernel.root_dir%/../web/uploads/"
+
+liip_imagine :
+    resolvers :
+        default :
+            web_path : ~
+
+    filter_sets :
+        cache : ~
+        image_small :
+            quality : 100
+            filters :
+                thumbnail  : { size : [100, 66], mode : outbound }
+
+        image_middle :
+            quality : 100
+            filters :
+                thumbnail  : { size : [500, 333], mode : outbound }
+                upscale: 
+                    min: [500, 333]
+                    max: [500, 333]
+
+        image_normal :
+            quality : 100
+            filters :
+                thumbnail  : { size : [1000, 666], mode : outbound }
+                upscale: 
+                    min: [1000, 666]
+                    max: [1000, 666]
+
+        square_small :
+            quality : 100
+            filters :
+                thumbnail  : { size : [100, 100], mode : outbound }
+
+        square_middle :
+            quality : 100
+            filters :
+                thumbnail  : { size : [250, 250], mode : outbound }
+                upscale: 
+                    min: [250, 250]
+                    max: [250, 250]
+
+        square_normal :
+            quality : 100
+            filters :
+                thumbnail  : { size : [500, 500], mode : outbound }
+                upscale: 
+                    min: [500, 500]
+                    max: [500, 500]

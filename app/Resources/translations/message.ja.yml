@@ -1,0 +1,96 @@
+entity:
+    page:
+        title: "タイトル"
+        slug: "ページスラッグ"
+        body: "ページ本文"
+    article:
+        title: "記事名"
+        date: "記事開催日"
+        time: "記事開催時間"
+        body: "記事内容"
+        price: "記事参加費"
+        report: "記事のレポート"
+        files: "画像"
+        eyecatch: "メイン画像"
+        place: "開催場所"
+        is_published: "公開・非公開"
+        images: "アップロード画像"
+        
+    user:
+        current_password: "現在のパスワード"
+    image:
+        title: "タイトル"
+        body: "本文"
+        image: "画像"
+        
+    place:
+        title: "場所の名前"
+        body: "場所の説明"
+        zip: "郵便番号"
+        address: "住所"
+        tel: "電話番号"
+        email: "メールアドレス"
+
+    setting:
+        slug: "設定ID"
+        value: "設定内容"
+
+setting:
+    title:
+        index: "設定一覧"
+        edit: "設定変更"
+        new: "新しい設定"
+        
+message:
+    added: "データを追加しました。"
+    edited: "編集を完了しました。"
+
+place:
+    button:
+        new: "新規追加"
+        show: "詳細"
+        edit: "編集"
+    title:
+        index: "場所一覧"
+        new: "場所追加"
+        edit: "場所編集"
+        
+article:
+    title: 
+        index: "記事一覧"
+        show: "記事詳細"
+        edit: "記事を編集"
+        new: "記事新規作成"
+    button:
+        new: "記事追加"
+        show: "記事詳細"
+        edit: "記事編集"
+    message:
+        place: "開催場所はこちらより追加してください"
+        is_published: "公開する"
+        
+page:
+    title:
+        new: "ページ作成"
+        index: "ページ一覧"
+        edit: "ページを編集"
+    button:
+        new: "追加する"
+        edit: "編集する"
+        show: "表示する"
+        delete: "削除する"
+index:
+    title: "トップページ"
+    
+image:
+    title:
+        new: "画像追加"
+        index: "画像一覧"
+        edit: "画像編集"
+    button:
+        show: "表示する"
+        edit: "編集する"
+        
+cms:
+    title:
+        policy: "プライバシーポリシー"

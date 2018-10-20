@@ -1,0 +1,11 @@
+services:
+
+    CmsBundle\:
+        resource: '%kernel.project_dir%/src/CmsBundle/*'
+        exclude: '%kernel.project_dir%/src/CmsBundle/{Entity,Repository,Tests,EventListener,Helper}'
+        
+    CmsBundle\Controller\:
+        resource: '%kernel.project_dir%/src/CmsBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+

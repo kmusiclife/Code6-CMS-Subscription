@@ -1,0 +1,77 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'article.title.new'|trans() }}{% endblock %}
+
+{% block body %}
+{{ form_start(form, {'attr':{'class':'row uniform'}}) }}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.title'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.title, {'attr': { 'placeholder':'例) Article Name' }}) }}
+	{{ form_errors(form.title) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.eyecatch'|trans() }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_errors(form.eyecatch.file) }}
+	{{ form_widget(form.eyecatch.file) }}
+</div>
+
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.body'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.body, {'attr': { 'placeholder':'例) example', 'style': 'height: 200px;' }}) }}
+	{{ form_errors(form.body) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.is_published'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(form.is_published) }}
+<label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
+</div>
+
+
+
+{% for image in form.images %}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.images'|trans() }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(image) }}
+	{{ form_errors(image) }}
+</div>
+{% endfor %}
+
+
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'page.button.new'|trans }}" id="submit-button" />
+</div>
+
+
+
+{{ form_end(form) }}
+
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

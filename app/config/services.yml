@@ -1,0 +1,59 @@
+parameters:
+    #parameter_name: value
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{Entity,Repository,Tests,EventListener,Helper}'
+
+    AppBundle\Controller\:
+        resource: '../../src/AppBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    app.app_helper:
+        class: AppBundle\Helper\AppHelper
+        arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        public: true
+
+    app.app_pager:
+        class: AppBundle\Helper\PagerHelper
+        arguments: ["@request_stack", "@doctrine.orm.entity_manager"]
+        public: true
+    
+    app.registration_listener:
+        class: AppBundle\EventListener\RegistrationListener
+        arguments: ["@fos_user.mailer", "@fos_user.util.token_generator", "@service_container", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app.profile_listener:
+        class: AppBundle\EventListener\ProfileListener
+        arguments: ["@service_container", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app.controller_listener:
+        class: AppBundle\EventListener\ControllerListener
+        arguments: ["@service_container"]
+        public: true,
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+            - { name: doctrine.event_listener, event: postRemove }
+            - { name: doctrine.event_listener, event: postLoad }
+
+    app.upload_listener:
+        class: AppBundle\EventListener\UploadListener
+        arguments: ["@service_container", "@security.token_storage", "@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist.gallery, method: onUpload }
+            

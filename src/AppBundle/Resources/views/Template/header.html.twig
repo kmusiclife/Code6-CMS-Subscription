@@ -1,0 +1,51 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--[if lte IE 8]><script src="{{ asset('admin/assets/js/ie/html5shiv.js') }}"></script><![endif]-->
+<link rel="stylesheet" href="{{ asset('admin/css/main.css') }}" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<!--[if lte IE 9]><link rel="stylesheet" href="{{ asset('admin/css/ie9.css') }}" /><![endif]-->
+<!--[if lte IE 8]><link rel="stylesheet" href="{{ asset('admin/css/ie8.css') }}" /><![endif]-->
+</head>
+<body>
+
+<header id="header">
+	<h1><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}">Symfony CMS</a></h1>
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	    <a href="{{ path('fos_user_profile_show') }}">
+	        {{ app.user.username }}
+	    </a>
+	{% else %}
+	    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+	{% endif %}
+	<a href="#menu">Menu</a>
+</header>
+<nav id="menu">
+	<ul class="links">
+		<li><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}"><i class="fas fa-home"></i> Home</a></li>
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			{% if is_granted('ROLE_ADMIN') %}
+				<li><a href="{{ path('article_index') }}"><i class="fas fa-images"></i> 記事作成</a></li>
+				<li><a href="{{ path('admin_contact_index') }}"><i class="fas fa-envelope"></i> 受信メール</a></li>
+				<li><a href="{{ path('page_index') }}"><i class="fas fa-file"></i> 固定ページ</a></li>
+				<li><a href="{{ path('image_index') }}"><i class="fas fa-images"></i> サイト内画像</a></li>
+				{% if members_mode == true %}
+				<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> ユーザ一覧</a></li>
+				{% endif %}
+			{% else %}
+				<li><a href="{{ path('fos_user_profile_show') }}">プロフィール</a></li>
+			{% endif %}
+		{% endif %}
+	</ul>
+	<ul class="actions vertical">
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		{% endif %}
+		
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			<li><a href="{{ path('fos_user_security_logout') }}" class="button fit">Log Out</a></li>
+		{% else %}
+			<li><a href="{{ path('fos_user_security_login') }}" class="button special fit">Log In</a></li>
+		{% endif %}
+		
+	</ul>
+</nav>
+

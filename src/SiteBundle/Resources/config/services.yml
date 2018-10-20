@@ -1,0 +1,11 @@
+services:
+
+    SiteBundle\:
+        resource: '%kernel.project_dir%/src/SiteBundle/*'
+        exclude: '%kernel.project_dir%/src/SiteBundle/{Entity,Repository,Tests,EventListener,Helper}'
+        
+    SiteBundle\Controller\:
+        resource: '%kernel.project_dir%/src/SiteBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+

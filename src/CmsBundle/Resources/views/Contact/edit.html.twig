@@ -1,0 +1,95 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ contact.title }}{% endblock %}
+
+{% block body %}
+{{ form_start(edit_form, {'attr':{'class':'row uniform'}}) }}
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.title'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.title }}
+	{{ form_widget(edit_form.title) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.name'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.name }}
+	{{ form_widget(edit_form.name) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.email'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.email }}
+	{{ form_widget(edit_form.email) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.zip'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.zip }}
+	{{ form_widget(edit_form.zip) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.address'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.address }}
+	{{ form_widget(edit_form.address) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.tel'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.tel }}
+	{{ form_widget(edit_form.tel) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.body'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.body }}
+	{{ form_widget(edit_form.body) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.contact.createdAt'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ contact.createdAt|date('Y-m-d H:i:s') }}
+</div>
+
+
+{{ form_end(edit_form) }}
+
+<hr />
+
+{{ form_start(delete_form, {'attr':{'class':'row uniform'}}) }}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.current_password'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(delete_form.password.current_password) }}
+	{{ form_errors(delete_form.password.current_password) }}
+</div>
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="button special" value="{{ 'page.button.delete'|trans }}" id="delete-button" />
+</div>
+{{ form_end(delete_form) }}
+
+{% endblock %}

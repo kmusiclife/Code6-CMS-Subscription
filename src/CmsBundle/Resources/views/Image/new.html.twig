@@ -1,0 +1,29 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'image.title.new'|trans() }}{% endblock title %}
+
+{% block body %}
+<form action="{{ oneup_uploader_endpoint('gallery') }}" class="dropzone" id="dropzone" style="border:2px dashed #ccc" ></form>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('admin/js/dropzone.js') }}"></script>
+<script>
+<!--
+
+	Dropzone.autoDiscover = false;
+	
+	$('#dropzone').dropzone({
+		maxFilesize: 3,
+		maxFiles: 3,
+		acceptedFiles: "image/*"
+	});
+	
+-->
+</script>
+{% endblock javascript %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('admin/css/dropzone.css') }}" />
+{% endblock stylesheets %}

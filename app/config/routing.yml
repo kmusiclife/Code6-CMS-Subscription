@@ -1,0 +1,23 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+cms:
+    resource: '@CmsBundle/Controller/'
+    type: annotation
+
+site:
+    resource: '@SiteBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+
+oneup_uploader:
+    resource: .
+    type: uploader
+    prefix: /admin
+    

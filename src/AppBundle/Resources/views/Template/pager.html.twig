@@ -1,0 +1,11 @@
+<p>
+{% if pager.vars.prev >= 0 %}
+<a href="{{ path(pager.vars.path, {'offset': pager.vars.prev}) }}" class="btn">前へ</a> 
+{% endif %}
+
+{{ pager.vars.current }}件 から {{ pager.vars.count }} 件を表示
+
+{% if (pager.vars.next >= 0 and pager.vars.is_next ) %}
+<a href="{{ path(pager.vars.path, {'offset': pager.vars.next}) }}" class="btn">次へ</a>
+{% endif %}
+</p>

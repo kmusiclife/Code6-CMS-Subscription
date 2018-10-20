@@ -1,0 +1,38 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'image.title.index'|trans() }}{% endblock %}
+
+{% block body %}
+
+<table class="table">
+    <thead>
+	    <tr>
+	    	<th>{{ 'entity.image.image'|trans() }}</th>
+	        <th>{{ 'entity.image.title'|trans() }}</th>
+	        <th>&nbsp;</th>
+	        <th>&nbsp;</th>
+	    </tr>
+	</thead>
+	<tbody>
+	{% for image in images %}
+    <tr>
+        <td><img src="{{ asset('/uploads/'~image.image)| imagine_filter('image_small') }}" alt="" /></td>
+        <td>{{ image.title|trans() }}</td>
+        <td>
+        	<a href="{{ path('image_show', {'id': image.id}) }}" class="button small" target="_blank">{{ 'image.button.show'|trans() }}</a>
+        </td>
+        <td>
+        	<a href="{{ path('image_edit', {'id': image.id}) }}" class="button small special">{{ 'image.button.edit'|trans() }}</a>
+        </td>
+
+    </tr>
+	{% endfor %}
+    </tbobdy>
+    
+</table>
+
+{% include '@AppBundle/Resources/views/Template/pager.html.twig' %}
+
+{% endblock body %}
+

@@ -1,0 +1,60 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'image.title.edit'|trans() }}{% endblock title %}
+{% block body %}
+
+
+{{ form_start(edit_form, { 'attr':{ 'class' : 'uniform row' } }) }}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.image.image'|trans() }}*</label>
+</div>
+<div class="9u 12u$(xsmall)">
+	<div class="image">
+		<img src="{{ asset('uploads/'~edit_form.image.vars.value) | imagine_filter('image_normal') }}" alt="" style="width: 100%;">
+	</div>
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.image.title'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.title, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(edit_form.title) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.image.body'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.body, {'attr': { 'placeholder':'例) ', 'style':'height: 300px;'}}) }}
+	{{ form_errors(edit_form.body) }}
+</div>
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+</div>
+{{ form_end(edit_form) }}
+
+{% if image.isLock == false %}
+<hr />
+{{ form_start(delete_form, {'attr':{'class':'row uniform'}}) }}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.current_password'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(delete_form.password.current_password) }}
+	{{ form_errors(delete_form.password.current_password) }}
+</div>
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="" value="{{ 'page.button.delete'|trans }}" id="delete-button" />
+</div>
+{{ form_end(delete_form) }}
+{% endif %}
+
+{% endblock %}

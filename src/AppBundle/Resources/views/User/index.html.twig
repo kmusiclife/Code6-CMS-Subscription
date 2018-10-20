@@ -1,0 +1,29 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'user.title.index'|trans }}{% endblock %}
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{ 'entity.user.username'|trans() }}</th>
+            <th>{{ 'entity.user.email'|trans() }}</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <a href="{{ path('user_edit', { 'id': user.id }) }}" class="button small special">{{ 'user.button.show'|trans() }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% include '@AppBundle/Resources/views/Template/pager.html.twig' %}
+
+{% endblock %}

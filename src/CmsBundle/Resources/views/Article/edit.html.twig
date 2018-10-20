@@ -1,0 +1,107 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'article.title.edit' }}{% endblock %}
+
+{% block body %}
+{{ form_start(edit_form, {'attr':{'class':'row uniform'}}) }}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.title'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.title, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(edit_form.title) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.eyecatch'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.eyecatch) }}
+	{{ form_errors(edit_form.eyecatch) }}
+	{% if article.eyecatch.image is defined %}
+	<div class="image">
+		<img src="{{ upload_uri }}/{{ article.eyecatch.image }}" width="100%" />
+	</div>
+	{% endif %}
+	
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.body'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.body, {'attr': { 'placeholder':'例) ', 'style':'height: 300px;'}}) }}
+	{{ form_errors(edit_form.body) }}
+</div>
+
+
+
+
+{% for image in edit_form.images %}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.images'|trans() }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(image) }}
+	{{ form_errors(image) }}
+	{% if image.vars.value.image is not null %}
+	<div class="image">
+		<img src="{{ upload_uri }}/{{ image.vars.value.image }}" width="100%" />
+	</div>
+	{% endif %}
+</div>
+{% endfor %}
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.is_published'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(edit_form.is_published) }}
+<label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
+</div>
+
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="special" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+</div>
+
+
+
+{{ form_end(edit_form) }}
+
+<hr />
+
+{{ form_start(delete_form, {'attr':{'class':'row uniform'}}) }}
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.current_password'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(delete_form.password.current_password) }}
+	{{ form_errors(delete_form.password.current_password) }}
+</div>
+
+<div class="3u 12u$(xsmall)"></div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="" value="{{ 'page.button.delete'|trans }}" id="delete-button" />
+</div>
+{{ form_end(delete_form) }}
+
+{% endblock %}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+

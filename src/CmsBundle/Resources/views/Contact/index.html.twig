@@ -1,0 +1,29 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'contact.title.index'|trans }}{% endblock %}
+{% block body %}
+<table>
+    <thead>
+        <tr>
+            <th>{{ 'entity.contact.title'|trans }}</th>
+            <th>{{ 'entity.contact.email'|trans }}</th>
+            <th>{{ 'entity.contact.name'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.title }}</td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.name }}</td>
+            <td>
+                <a class="button small special" href="{{ path('admin_contact_edit', { 'id': contact.id }) }}">{{ 'contact.button.edit'|trans }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

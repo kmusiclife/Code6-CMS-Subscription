@@ -1,0 +1,20 @@
+{% extends "index.html.twig" %}
+
+{% block banner %}
+<section id="banner">
+	<div class="inner">
+		<h2 class="major special">{{ your_service_name }}</h2>
+		<p>{{ your_service_description_simple }}</p>
+		<ul class="actions vertical">
+			<li><a href="{{ path('fos_user_registration_register') }}" class="button special big">Sign up</a></li>
+			<li><a href="{{ path('fos_user_security_login') }}" class="button big scrolly">Sign in</a></li>
+		</ul>
+	</div>
+</section>
+{% endblock %}
+
+{% block title %}{{ page.title }}{% endblock title %}
+{% block body %}
+{{ page.body|raw }}
+{% endblock body %}
+
