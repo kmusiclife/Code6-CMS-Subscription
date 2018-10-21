@@ -84,10 +84,6 @@ class RegistrationListener implements EventSubscriberInterface
 		{
 			return $event->setResponse( new RedirectResponse( $this->router->generate('site_config') ) );
 		}
-		if( $this->serviceContainer->getParameter('members_mode') == false )
-		{
-			return $event->setResponse( new RedirectResponse( $this->router->generate('site_index') ) );
-		}
 		
 		$this->serviceContainer->get('twig')->addGlobal(
 			'stripe_public_token', 
