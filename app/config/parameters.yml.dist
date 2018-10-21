@@ -18,7 +18,6 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
-    members_mode: false
     image_count: 4
     
     mailer_address: info@example.com

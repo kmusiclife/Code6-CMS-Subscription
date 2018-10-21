@@ -28,9 +28,7 @@
 				<li><a href="{{ path('admin_contact_index') }}"><i class="fas fa-envelope"></i> 受信メール</a></li>
 				<li><a href="{{ path('page_index') }}"><i class="fas fa-file"></i> 固定ページ</a></li>
 				<li><a href="{{ path('image_index') }}"><i class="fas fa-images"></i> サイト内画像</a></li>
-				{% if members_mode == true %}
 				<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> ユーザ一覧</a></li>
-				{% endif %}
 			{% else %}
 				<li><a href="{{ path('fos_user_profile_show') }}">プロフィール</a></li>
 			{% endif %}

@@ -59,7 +59,6 @@ twig:
     globals:
         project_dir: '%project_dir%'
         upload_uri: '%upload_uri%'
-        members_mode: '%members_mode%'
         facebook_app_id: '%facebook_app_id%'
         
 doctrine:
