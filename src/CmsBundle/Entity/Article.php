@@ -40,6 +40,13 @@ class Article
     private $body;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="body_extra", type="text", nullable=true)
+     */
+    private $body_extra;
+
+    /**
     * @ORM\ManyToOne(targetEntity="CmsBundle\Entity\Image", cascade={"persist"})
     */
     private $eyecatch;
@@ -159,6 +166,30 @@ class Article
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set bodyExtra.
+     *
+     * @param string|null $bodyExtra
+     *
+     * @return Article
+     */
+    public function setBodyExtra($bodyExtra = null)
+    {
+        $this->body_extra = $bodyExtra;
+
+        return $this;
+    }
+
+    /**
+     * Get bodyExtra.
+     *
+     * @return string|null
+     */
+    public function getBodyExtra()
+    {
+        return $this->body_extra;
     }
 
     /**

@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use AppBundle\Entity\Setting;
 use CmsBundle\Entity\Image;
+use CmsBundle\Entity\Article;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
