@@ -26,12 +26,12 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="お名前(姓)を入力してください。", groups={"Registration", "Profile"})
+     * @Assert\NotBlank(message="お名前(姓)を入力してください", groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min=1,
      *     max=255,
-     *     minMessage="一文字以上は必ず入力してください。",
-     *     maxMessage="これ以上入力することは出来ません。",
+     *     minMessage="一文字以上は必ず入力してください",
+     *     maxMessage="これ以上入力することは出来ません",
      *     groups={"Registration", "Profile"}
      * )
      */
@@ -40,12 +40,12 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="お名前(名)を入力してください。", groups={"Registration", "Profile"})
+     * @Assert\NotBlank(message="お名前(名)を入力してください", groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min=1,
      *     max=255,
-     *     minMessage="一文字以上は必ず入力してください。",
-     *     maxMessage="これ以上入力することは出来ません。",
+     *     minMessage="一文字以上は必ず入力してください",
+     *     maxMessage="これ以上入力することは出来ません",
      *     groups={"Registration", "Profile"}
      * )
      */
@@ -55,12 +55,12 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\NotBlank(message="郵便番号を入力してください", groups={"Registration", "Profile"})
-     * @Assert\Regex(pattern="/^\d{3}-\d{4}$|^\d{7}$/", message="郵便番号のフォーマットが間違っています。") 
+     * @Assert\Regex(pattern="/^\d{3}-\d{4}$|^\d{7}$/", message="郵便番号のフォーマットが間違っています") 
      * @Assert\Length(
      *     min=1,
      *     max=12,
-     *     minMessage="7文字以上は必ず入力してください。",
-     *     maxMessage="これ以上入力することは出来ません。",
+     *     minMessage="7文字以上は必ず入力してください",
+     *     maxMessage="これ以上入力することは出来ません",
      *     groups={"Registration", "Profile"}
      * )
      */
@@ -73,8 +73,8 @@ class User extends BaseUser
      * @Assert\Length(
      *     min=5,
      *     max=255,
-     *     minMessage="5文字以上は必ず入力してください。",
-     *     maxMessage="これ以上入力することは出来ません。",
+     *     minMessage="5文字以上は必ず入力してください",
+     *     maxMessage="これ以上入力することは出来ません",
      *     groups={"Registration", "Profile"}
      * )
      */
@@ -82,9 +82,9 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min=7, max=20, minMessage = "電話番号の桁数が足りません。", maxMessage = "電話番号の桁数が多すぎます。")
-     * @Assert\Regex(pattern="/^\d{10}$|^\d{11}$|^\d{3,}-\d{3,}-\d{3,}$/", message="電話番号のフォーマットが間違っています。") 
-     * @Assert\NotBlank(message="電話番号を入力してください。", groups={"Registration", "Profile"})
+     * @Assert\Length(min=7, max=20, minMessage = "電話番号の桁数が足りません", maxMessage = "電話番号の桁数が多すぎます")
+     * @Assert\Regex(pattern="/^\d{10}$|^\d{11}$|^\d{3,}-\d{3,}-\d{3,}$/", message="電話番号のフォーマットが間違っています") 
+     * @Assert\NotBlank(message="電話番号を入力してください", groups={"Registration", "Profile"})
      */
     protected $tel;
 
@@ -94,14 +94,14 @@ class User extends BaseUser
     protected $facebook_url;
 
     /**
-     * @Assert\NotBlank(message="クレジットカード番号を登録してください。", groups={"Registration"})
+     * @Assert\NotBlank(message="クレジットカード番号を登録してください", groups={"Registration"})
      */
     protected $stripe_token_id;
     public function getStripeTokenId(){ return $this->stripe_token_id; }
     public function setStripeTokenId($stripe_token_id){ $this->stripe_token_id = $stripe_token_id; }
     
     /**
-     * @Assert\NotBlank(message="プランは必ず選択してください。", groups={"Registration"})
+     * @Assert\NotBlank(message="プランは必ず選択してください", groups={"Registration"})
      */
     protected $stripe_plan_id;
     public function getStripePlanId(){ return $this->stripe_plan_id; }
