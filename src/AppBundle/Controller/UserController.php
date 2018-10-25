@@ -36,13 +36,38 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="user_show")
+     * @Route("/{id}/show", name="user_show")
      * @Method("GET")
      */
     public function showAction(User $user)
     {
+
+		try{
+			
+			$this->get('app.stripe_helper')->setApiKey();
+			
+			if( $user->getStripeSubscriptionId() ){
+				$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
+			} else {
+				$subscription = null;
+			}
+			
+			if( $user->getStripeCustomerId() ){
+				$invoices = \Stripe\Invoice::all(array(
+					"customer" => $user->getStripeCustomerId(),
+				) );
+			} else {
+				$invoices = null;
+			}
+			
+		} catch (Exception $e) {
+			throw new Exception('Stripe Plan::retrieve Error');
+		}
+		
         return $this->render('@AppBundle/Resources/views/User/show.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'subscription' => isset($subscription) ? $subscription : null,
+            'invoices' => isset($invoices) ? $invoices : null,
         ));
     }
     /**

@@ -12,7 +12,6 @@
 	    <tr>
 	        <th>{{ 'entity.article.title'|trans() }}</th>
 	        <th>{{ 'entity.article.date'|trans() }}</th>
-	        <th>&nbsp;</th>
 	    </tr>
 	</thead>
     <tbobdy>
@@ -20,11 +19,11 @@
     <tr>
         <td><img src="{{ asset('/uploads/'~article.eyecatch.image)| imagine_filter('image_small') }}" alt="" /></td>
         <td>
-			{{ article.title|trans() }}
-		</td>
-        <td>
-        	<a href="{{ path('article_show', {'id': article.id}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a><br />
-        	<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
+			<div style="padding: 10px 0;">{{ article.title|trans() }}</div>
+	        <div>
+	        <a href="{{ path('article_show', {'id': article.id}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
+	        	<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
+			</div>
         </td>
     </tr>
 {% endfor %}

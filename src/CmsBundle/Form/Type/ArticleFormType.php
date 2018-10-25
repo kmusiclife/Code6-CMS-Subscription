@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -36,7 +37,10 @@ class ArticleFormType extends AbstractType
             'entry_type' => ImageSimpleFormType::class,
             'entry_options' => array('required' => false),
         ));
-
+        $builder->add('publishedat', DateTimeType::class, array(
+        	'widget' => 'single_text',
+        	'html5' => false,
+        ));
         $builder->add('eyecatch', ImageSimpleRequireFormType::class, array());
     }
     public function configureOptions(OptionsResolver $resolver)

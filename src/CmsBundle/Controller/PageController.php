@@ -14,8 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 /**
- * Page controller.
- *
  * @Route("/admin")
  */
 class PageController extends Controller
@@ -106,9 +104,6 @@ class PageController extends Controller
 
         return $this->redirectToRoute('page_index');
     }
-    /**
-     * @return \Symfony\Component\Form\Form The form
-     */
     private function createDeleteForm(Page $page)
     {
         return $this->createFormBuilder()

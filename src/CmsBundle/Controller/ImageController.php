@@ -11,15 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\PasswordFormType;
 
 /**
- * Image controller.
- *
  * @Route("admin/image")
  */
 class ImageController extends Controller
 {
     /**
-     * Lists all image entities.
-     *
      * @Route("/", name="image_index")
      * @Method("GET")
      */
@@ -40,8 +36,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Creates a new image entity.
-     *
      * @Route("/new", name="image_new")
      * @Method({"GET", "POST"})
      */
@@ -52,8 +46,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing image entity.
-     *
      * @Route("/{id}/edit", name="image_edit")
      * @Method({"GET", "POST"})
      */
@@ -77,8 +69,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Deletes a image entity.
-     *
      * @Route("/{id}", name="image_delete")
      * @Method("DELETE")
      */
@@ -99,13 +89,6 @@ class ImageController extends Controller
         return $this->redirectToRoute('image_index');
     }
 
-    /**
-     * Creates a form to delete a image entity.
-     *
-     * @param Image $image The image entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
     private function createDeleteForm(Image $image)
     {
         return $this->createFormBuilder()

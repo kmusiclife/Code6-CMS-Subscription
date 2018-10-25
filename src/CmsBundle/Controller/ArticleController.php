@@ -214,9 +214,6 @@ class ArticleController extends Controller
         return $this->redirectToRoute('article_index');
     }
 
-    /**
-     * @return \Symfony\Component\Form\Form The form
-     */
     private function createDeleteForm(Article $article)
     {
         return $this->createFormBuilder()

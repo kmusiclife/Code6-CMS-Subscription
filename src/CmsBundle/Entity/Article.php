@@ -86,6 +86,12 @@ class Article
      */
     private $is_member = false;
 
+
+    /**
+	 * @Assert\DateTime()
+     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
+     */
+    private $publishedAt;
     
     /**
 	 * @Assert\DateTime()
@@ -262,6 +268,30 @@ class Article
     public function getIsMember()
     {
         return $this->is_member;
+    }
+
+    /**
+     * Set publishedAt.
+     *
+     * @param \DateTime $publishedAt
+     *
+     * @return Article
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get publishedAt.
+     *
+     * @return \DateTime
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
     }
 
     /**

@@ -4,19 +4,6 @@ entity:
         slug: "ページスラッグ"
         body: "ページ本文"
     
-    news:
-        title: "ニュース名"
-        date: "ニュース開催日"
-        time: "ニュース開催時間"
-        body: "ニュース内容"
-        price: "ニュース参加費"
-        report: "ニュースのレポート"
-        files: "画像"
-        eyecatch: "メイン画像"
-        place: "開催場所"
-        is_published: "公開・非公開"
-        images: "アップロード画像"
-        
     user:
         username: "ユーザー名"
         email: "メールアドレス"
@@ -138,6 +125,32 @@ user:
         show: "詳細"
         edit: "編集"
         delete: "削除"
+
+subscription:
+    title:
+        index: "契約プラン詳細"
+        invoice: "お支払い履歴"
+        cancel: 
+            index: "解約の確認"
+            completed: "解約完了"
+        card: 
+            index: "カード番号登録"
+            completed: "カード番号更新完了"
+    
+    plan:
+        amount: "料金"
+        interval: "課金の間隔"
+    
+    current_period_start: "現在のプランの開始"
+    current_period_end: "次回の課金のタイミング"
+
+    invoice:
+        date: "請求日"
+        paid: "支払い済み"
+        total: "合計金額"
+        number: "請求番号"
+        hosted_invoice_url: "請求詳細"
+        invoice_pdf: "請求書PDF"
 
 message:
     added: "データを追加しました"

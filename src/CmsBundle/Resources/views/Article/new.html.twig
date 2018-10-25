@@ -34,16 +34,6 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.article.is_published'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-{{ form_widget(form.is_published) }}
-<label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
-</div>
-
-
-
 {% for image in form.images %}
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.article.images'|trans() }}</label>
@@ -54,6 +44,21 @@
 </div>
 {% endfor %}
 
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.published_at'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.publishedat, {'attr': { 'class' : 'js-datepicker-datetime', 'placeholder':'例) 2018' }}) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.is_published'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(form.is_published) }}
+<label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
+</div>
 
 
 <div class="3u 12u$(xsmall)"></div>
@@ -68,10 +73,45 @@
 {% endblock %}
 
 {% block stylesheets %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 {% endblock %}
 
 {% block javascripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 {% endblock %}
 
 {% block javascript %}
+{# http://eonasdan.github.io/bootstrap-datetimepicker/ #}
+<script>
+$(document).ready(function() {
+	
+	var defaultDate = new Date('{{ 'now'|date('Y/m/d 10:00') }}');
+
+	$('.js-datepicker-datetime').datetimepicker({
+		format: 'YYYY-MM-DD HH:ss',
+		locale: '{{ app.request.locale }}',
+		inline: false,
+		defaultDate: defaultDate
+	});
+	$('.js-datepicker-date').datetimepicker({
+		format: 'YYYY-MM-DD',
+		locale: '{{ app.request.locale }}',
+		inline: false,
+		defaultDate: defaultDate
+	});
+	$('.js-datepicker-time').datetimepicker({
+		format: 'HH:ss',
+		locale: '{{ app.request.locale }}',
+		inline: false,
+		defaultDate: defaultDate
+	});
+
+});
+</script>
 {% endblock %}
