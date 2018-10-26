@@ -153,18 +153,6 @@ class RegistrationListener implements EventSubscriberInterface
 			$this->mailer->sendConfirmationEmailMessage($this->user);
 		}
 		*/
-		$message = \Swift_Message::newInstance()
-		    ->setSubject( $this->serviceContainer->get('app.app_helper')->getConvertSetting(
-		    	'register_email_subject_join', array('user'=>$this->user)) 
-		    )
-		    ->setFrom( $this->serviceContainer->getParameter('mailer_address') )
-		    ->setBcc( $this->serviceContainer->getParameter('mailer_address') )
-		    ->setTo( $this->user->getEmail() )
-		    ->setBody( $this->serviceContainer->get('app.app_helper')->getConvertSetting(
-		    	'register_email_subject_join', array('user'=>$this->user)) 
-		    )
-		;
-		$this->get('mailer')->send($message);
 		
 	}
 	public function onRegistrationComplete(FilterUserResponseEvent $event)

@@ -86,6 +86,19 @@ class AppHelper
 		return $setting->getValue();
 		
 	}
+	public function getConvertedSetting($slug, $params=array())
+	{
+		$setting = $this->getSetting($slug);
+		if(!$setting) return null;
+		
+		if($params){
+			foreach($params as $key=>$value){
+				$setting = preg_replace('/%'.$key.'%/', $value, $setting);
+			}
+		}
+		return $setting;
+		
+	}
 	public function setSetting($slug, $value=null)
 	{
 		
