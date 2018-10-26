@@ -185,24 +185,41 @@ class AppHelper
 		return true;
 	
 	}
-	
-	public function sendEmail($params)
+	public function renderSetting($setting_slug, $params = array())
 	{
-
-		$templating = $this->serviceContainer->get('templating');
-
+		$source = $this->getSetting($setting_slug);
+		if(!$source) return null;
+		$env = new \Twig_Environment(new \Twig_Loader_Array());
+		$template = $env->createTemplate($source);
+		return $template->render($params);		
+	}
+	public function sendEmailBySetting($to, $subject_slug, $body_slug, $params=array(), $bcc=false)
+	{
+		$subject = $this->renderSetting($subject_slug, $params);
+		$body = $this->renderSetting($body_slug, $params);
+		return $this->sendEmail($to, $subject, $body, $params, $bcc);
+	}
+	public function sendEmail($to, $subject, $body, $params=array(), $bcc=false)
+	{
 		$message = \Swift_Message::newInstance()
-		    ->setSubject( $params['subject'] )
-		    ->setFrom( $params['from'] )
-		    ->setTo( $params['to'] )
-		    ->setBody(
-		        $templating->render(
-		            $params['template'],
-		            $params['params']
-		        )
-		    )
+		    ->setSubject( $subject )
+		    ->setTo( $to )
+		    ->setBody( $body )
 		;
-		$this->serviceContainer->get('mailer')->send($message);
+		if( isset($param['from']) ){
+			$message->setFrom($param['from']);
+		} else {
+			$message->setFrom( $this->serviceContainer->getParameter('mailer_address') );
+		}
+		if($bcc){
+			$message->setBcc( $this->serviceContainer->getParameter('mailer_address') );
+		} else {
+			if( isset($param['bcc']) ) $message->setBcc($param['bcc']);
+		}
+		if( isset($param['cc']) ){
+			$message->setCc($param['cc']);
+		}
+		return $this->serviceContainer->get('mailer')->send($message);
 		
 	}
 	
