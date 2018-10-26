@@ -26,6 +26,8 @@ entity:
     setting:
         slug: "設定ID"
         value: "設定内容"
+        slug_config: "初期設定ID"
+        value_config: "初期設定内容"
 
 news:
     title: 
@@ -46,6 +48,7 @@ setting:
         index: "設定一覧"
         edit: "設定変更"
         new: "新しい設定"
+        config: "初期設定"
     button:
         submit: "送信する"
         edit:  "編集する"

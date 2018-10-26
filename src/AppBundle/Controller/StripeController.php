@@ -16,6 +16,22 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class StripeController extends Controller
 {
     /**
+     * @Route("/config", name="stripe_config")
+     * @Method("GET")
+     */
+    public function configAction()
+    {
+		if( $this->get('app.stripe_helper')->setApiKey() )
+		{
+			return new RedirectResponse($this->generateUrl('site_index'));
+		}
+        return $this->render('@AppBundle/Resources/views/Stripe/config.html.twig', array(
+	        'stripe_secret_token' => substr($this->getParameter('stripe_secret_token'), 0, 15).'****************',
+	        'stripe_connect_client_id' => substr($this->getParameter('stripe_connect_client_id'), 0, 15).'****************',
+	        'stripe_application_fee' => $this->getParameter('stripe_application_fee')
+        ));
+	}
+    /**
      * @Route("/oauth/redirect", name="stripe_oauth")
      * @Method("GET")
      */
@@ -71,22 +87,6 @@ class StripeController extends Controller
     public function startAction()
     {
 	    return $this->redirect( $this->get('app.stripe_helper')->oauthGenerateUrl() );
-	}
-    /**
-     * @Route("/config", name="stripe_config")
-     * @Method("GET")
-     */
-    public function configAction()
-    {
-		if( $this->get('app.stripe_helper')->setApiKey() )
-		{
-			return new RedirectResponse($this->generateUrl('site_index'));
-		}
-        return $this->render('@AppBundle/Resources/views/Stripe/config.html.twig', array(
-	        'stripe_secret_token' => substr($this->getParameter('stripe_secret_token'), 0, 15).'****************',
-	        'stripe_connect_client_id' => substr($this->getParameter('stripe_connect_client_id'), 0, 15).'****************',
-	        'stripe_application_fee' => $this->getParameter('stripe_application_fee')
-        ));
 	}
     
 }

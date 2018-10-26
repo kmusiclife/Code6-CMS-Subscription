@@ -86,7 +86,6 @@ class Article
      */
     private $is_member = false;
 
-
     /**
 	 * @Assert\DateTime()
      * @ORM\Column(name="publishedAt", type="datetime", nullable=true)

@@ -5,39 +5,44 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Setting;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Form\Type\PasswordFormType;
 
 /**
- * Setting controller.
- *
- * @Route("admin/setting")
+ * @Route("/")
  */
 class SettingController extends Controller
 {
+
     /**
-     * Lists all setting entities.
-     *
-     * @Route("/", name="admin_setting_index")
-     * @Method("GET")
+     * @Route("setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_join|register_email_leave|register_email_subject_join|register_email_subject_leave"})
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function configAction(Request $request)
     {
-	    
-        $em = $this->getDoctrine()->getManager();
-        $settings = $em->getRepository('AppBundle:Setting')->findAll();
-
-        return $this->render('@AppBundle/Resources/views/Setting/index.html.twig', array(
-            'settings' => $settings,
-        ));
+        $setting = new Setting();
+        $setting->setSlug( $request->get('slug') );
         
+        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($setting);
+            $em->flush();
+            return $this->redirectToRoute('fos_user_registration_register');
+        }
+		
+        return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(
+            'setting' => $setting,
+            'form' => $form->createView(),
+        ));
     }
-
+	
     /**
-     * Creates a new setting entity.
-     *
-     * @Route("/new", name="admin_setting_new")
+     * @Route("admin/setting/new", name="admin_setting_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -61,9 +66,7 @@ class SettingController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing setting entity.
-     *
-     * @Route("/{id}/edit", name="admin_setting_edit")
+     * @Route("admin/setting/{id}/edit", name="admin_setting_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Setting $setting)
@@ -87,9 +90,7 @@ class SettingController extends Controller
     }
 
     /**
-     * Deletes a setting entity.
-     *
-     * @Route("/{id}", name="admin_setting_delete")
+     * @Route("admin/setting/{id}", name="admin_setting_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Setting $setting)
@@ -106,13 +107,6 @@ class SettingController extends Controller
         return $this->redirectToRoute('admin_setting_index');
     }
 
-    /**
-     * Creates a form to delete a setting entity.
-     *
-     * @param Setting $setting The setting entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
     private function createDeleteForm(Setting $setting)
     {
         return $this->createFormBuilder()

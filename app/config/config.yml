@@ -15,7 +15,7 @@ fos_user:
 
     registration:
         confirmation:
-            enabled: false # change to true for required email confirmation
+            enabled: false # Symfony-CMS-Stripe does not use FOSUserBundle email confirmation. Always "false".
         form:
             type: AppBundle\Form\Type\RegistrationFormType
 

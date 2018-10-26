@@ -84,7 +84,14 @@ class RegistrationListener implements EventSubscriberInterface
 		{
 			return $event->setResponse( new RedirectResponse( $this->router->generate('site_config') ) );
 		}
-		
+		foreach(array('register_email_subject_join', 'register_email_join', 'register_email_subject_leave', 'register_email_leave') as $slug){
+			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) )
+			{
+				return $event->setResponse( new RedirectResponse( 
+					$this->router->generate('setting_config', array('slug' => $slug)) ) 
+				);
+			}
+		}
 		$this->serviceContainer->get('twig')->addGlobal(
 			'stripe_public_token', 
 			$this->serviceContainer->get('app.stripe_helper')->getPublicKey() 
@@ -138,13 +145,27 @@ class RegistrationListener implements EventSubscriberInterface
 		} catch (Exception $e) {
 			throw new Exception('クレジットカード登録時にシステムエラーが起こりました。何度も登録に失敗する場合は管理者にご連絡ください。');
 		}
-
+		
+		/*
 		if( false == $this->serviceContainer->getParameter('fos_user.registration.confirmation.enabled') )
 		{
 			$this->user->setConfirmationToken($this->tokenGenerator->generateToken());
 			$this->mailer->sendConfirmationEmailMessage($this->user);
 		}
-
+		*/
+		$message = \Swift_Message::newInstance()
+		    ->setSubject( $this->serviceContainer->get('app.app_helper')->getConvertSetting(
+		    	'register_email_subject_join', array('user'=>$this->user)) 
+		    )
+		    ->setFrom( $this->serviceContainer->getParameter('mailer_address') )
+		    ->setBcc( $this->serviceContainer->getParameter('mailer_address') )
+		    ->setTo( $this->user->getEmail() )
+		    ->setBody( $this->serviceContainer->get('app.app_helper')->getConvertSetting(
+		    	'register_email_subject_join', array('user'=>$this->user)) 
+		    )
+		;
+		$this->get('mailer')->send($message);
+		
 	}
 	public function onRegistrationComplete(FilterUserResponseEvent $event)
 	{
