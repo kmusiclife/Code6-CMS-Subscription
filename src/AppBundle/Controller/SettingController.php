@@ -17,7 +17,7 @@ class SettingController extends Controller
 {
 
     /**
-     * @Route("setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_join|register_email_leave|register_email_subject_join|register_email_subject_leave"})
+     * @Route("setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_subject|register_email|cancel_email_subject|cancel_email"})
      * @Method({"GET", "POST"})
      */
     public function configAction(Request $request)

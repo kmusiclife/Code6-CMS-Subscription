@@ -84,7 +84,7 @@ class RegistrationListener implements EventSubscriberInterface
 		{
 			return $event->setResponse( new RedirectResponse( $this->router->generate('site_config') ) );
 		}
-		foreach(array('register_email_subject_join', 'register_email_join', 'register_email_subject_leave', 'register_email_leave') as $slug){
+		foreach(array('register_email_subject', 'register_email', 'cancel_email_subject', 'cancel_email') as $slug){
 			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) )
 			{
 				return $event->setResponse( new RedirectResponse( 
@@ -163,8 +163,8 @@ class RegistrationListener implements EventSubscriberInterface
 
         $this->serviceContainer->get('app.app_helper')->sendEmailBySetting(
         	$user->getEmail(), 
-        	'register_email_subject_join', 
-        	'register_email_join', 
+        	'register_email_subject', 
+        	'register_email', 
         	array('user' => $user, 'subscription' => $subscription),
         	true
         );
