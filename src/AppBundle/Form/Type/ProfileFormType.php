@@ -53,6 +53,9 @@ class ProfileFormType extends AbstractType
 	    // $this->serviceContainer->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
 	    $builder->add('username');
 	    $builder->add('email');
+	    $builder->add('zip');
+	    $builder->add('address');
+	    $builder->add('tel');
 	    $builder->remove('current_password');
         $builder->add('plainPassword', RepeatedType::class, array(
             'type' => PasswordType::class,

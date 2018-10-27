@@ -158,11 +158,14 @@ class RegistrationListener implements EventSubscriberInterface
 	public function onRegistrationComplete(FilterUserResponseEvent $event)
 	{
 		$user = $event->getUser();
+		$this->serviceContainer->get('app.stripe_helper')->setApiKey();
+		$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
+
         $this->serviceContainer->get('app.app_helper')->sendEmailBySetting(
         	$user->getEmail(), 
         	'register_email_subject_join', 
         	'register_email_join', 
-        	array('user' => $user),
+        	array('user' => $user, 'subscription' => $subscription),
         	true
         );
 	}

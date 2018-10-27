@@ -21,9 +21,8 @@ class StripeController extends Controller
      */
     public function configAction()
     {
-		if( $this->get('app.stripe_helper')->setApiKey() )
-		{
-			return new RedirectResponse($this->generateUrl('site_index'));
+		if( $this->get('app.stripe_helper')->setApiKey() ){
+			return $this->redirectToRoute('site_index');
 		}
         return $this->render('@AppBundle/Resources/views/Stripe/config.html.twig', array(
 	        'stripe_secret_token' => substr($this->getParameter('stripe_secret_token'), 0, 15).'****************',
@@ -38,9 +37,8 @@ class StripeController extends Controller
     public function redirectAction(Request $request)
     {
 	    
-		if( $this->get('app.stripe_helper')->setApiKey() )
-		{
-			return new RedirectResponse($this->generateUrl('site_index'));
+		if( $this->get('app.stripe_helper')->setApiKey() ){
+			return $this->redirectToRoute('site_index');
 		}
 
 	    $url = 'https://connect.stripe.com/oauth/token';
@@ -86,6 +84,9 @@ class StripeController extends Controller
      */
     public function startAction()
     {
+		if( $this->get('app.stripe_helper')->setApiKey() ){
+			return $this->redirectToRoute('site_index');
+		}
 	    return $this->redirect( $this->get('app.stripe_helper')->oauthGenerateUrl() );
 	}
     

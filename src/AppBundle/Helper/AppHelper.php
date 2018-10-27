@@ -46,17 +46,6 @@ class AppHelper
 		
 		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
-	public function configuration()
-	{
-		
-		$error = 0;
-		$params = array();
-		foreach($params as $param){
-			if(!$param) return false;
-		}
-		return true;
-		
-	}
 	public function hasAdmin()
 	{
 	    $qb = $this->entityManager->createQueryBuilder();

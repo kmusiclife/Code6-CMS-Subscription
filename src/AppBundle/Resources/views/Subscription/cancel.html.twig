@@ -1,0 +1,39 @@
+{% trans_default_domain 'message' %}
+
+{% extends "layout.html.twig" %}
+{% block title %}{{ 'subscription.title.cancel.index'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+
+{{ 
+	form_start(
+		form, {
+			'method': 'post', 
+			'action': path('subscription_cancel'), 
+			'attr': {
+				'class': 'subscription_cancel row uniform', 
+				'novalidate': 'novalidate'
+		}
+	}) 
+}}
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.password'|trans }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.current_password) }}
+	{{ form_errors(form.current_password) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	&nbsp;
+</div>
+<div class="9u$ 12u$(xsmall)">
+	<input type="submit" class="button special" value="{{ 'button.subscription.execute'|trans }}" id="submit-button" />
+</div>
+
+
+{{ form_end(form) }}
+
+{% endblock %}

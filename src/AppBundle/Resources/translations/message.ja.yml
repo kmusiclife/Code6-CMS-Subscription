@@ -143,6 +143,7 @@ subscription:
     plan:
         amount: "料金"
         interval: "課金の間隔"
+        name: "プラン名"
     
     current_period_start: "現在のプランの開始"
     current_period_end: "次回の課金のタイミング"
