@@ -4,21 +4,6 @@
 {% block title %}{{ 'setting.title.config'|trans }}{% endblock %}
 
 {% block body %}
-<div class="box">
-<p>初期設定を行います。サイト運営に必要になる設定は下記のとおりです。設定されていない場合は設定をしない限り会員登録ができません。</p>
-<p>
-<strong>「register_email_subject」</strong> 会員登録が完了した際に会員へ送信されるメールのタイトルです。会員サービスでは必ず設定が必要です。
-</p>
-<p>
-<strong>「register_email」</strong> 会員登録が完了した際に会員へ送信されるメールです。会員サービスでは必ず設定が必要です。
-</p>
-<p>
-<strong>「cancel_email_subject」</strong> 会員登録が脱会した際に会員へ送信されるメールのタイトルです。会員サービスでは必ず設定が必要です。
-</p>
-<p>
-<strong>「cancel_email」</strong> 会員登録が脱会した際に会員へ送信されるメールです。会員サービスでは必ず設定が必要です。
-</p>
-</div>
 {{ 
 	form_start(
 		form, {
@@ -48,7 +33,29 @@
 <div class="9u$ 12u$(xsmall)">
 	<input type="submit" class="special" value="{{ 'setting.button.edit'|trans }}" id="submit-button" />
 </div>
-
 {{ form_end(form) }}
+
+<hr />
+
+<h3>初期設定設定例</h3>
+<div class="box">
+<p>初期設定を行います。サイト運営に必要になる設定は下記のとおりです。設定されていない場合は設定をしない限り会員登録ができません。</p>
+
+<p>
+<h4>register_email_subject</h4>
+<p>会員登録が完了した際に会員へ送信されるメールのタイトルです。</p>
+<p>
+<h4>register_email</h4>
+<p>会員登録が完了した際に会員へ送信されるメールの本文です。</p>
+<p>
+<h4>cancel_email_subject</h4>
+<p>会員登録を解除した際に会員へ送信されるメールのタイトルです。</p>
+<p>
+<h4>cancel_email</h4>
+<p>会員登録を解除した際に会員へ送信されるメールの本文です。</p>
+
+
+</div>
+
 
 {% endblock %}

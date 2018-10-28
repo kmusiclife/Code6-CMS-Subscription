@@ -24,6 +24,8 @@ class SettingController extends Controller
     {
         $setting = new Setting();
         $setting->setSlug( $request->get('slug') );
+        $default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'message');
+        $setting->setValue($default_value);
         
         $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);
         $form->handleRequest($request);
