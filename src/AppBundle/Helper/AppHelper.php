@@ -75,19 +75,6 @@ class AppHelper
 		return $setting->getValue();
 		
 	}
-	public function getConvertedSetting($slug, $params=array())
-	{
-		$setting = $this->getSetting($slug);
-		if(!$setting) return null;
-		
-		if($params){
-			foreach($params as $key=>$value){
-				$setting = preg_replace('/%'.$key.'%/', $value, $setting);
-			}
-		}
-		return $setting;
-		
-	}
 	public function setSetting($slug, $value=null)
 	{
 		
@@ -178,6 +165,12 @@ class AppHelper
 	{
 		$source = $this->getSetting($setting_slug);
 		if(!$source) return null;
+		
+		$params['login'] = $this->router->generate('fos_user_security_login', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+		$params['resetting'] = $this->router->generate('fos_user_resetting_request', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+		$params['profile'] = $this->router->generate('fos_user_profile_show', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+		$params['homepage'] = $this->router->generate('site_index', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+		
 		$env = new \Twig_Environment(new \Twig_Loader_Array());
 		$template = $env->createTemplate($source);
 		return $template->render($params);		
