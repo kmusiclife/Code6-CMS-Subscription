@@ -11,40 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\PasswordFormType;
 
 /**
- * @Route("/")
+ * Setting Controller
+ * 
+ * @Route("/admin")
  */
 class SettingController extends Controller
 {
-
-    /**
-     * @Route("setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_subject|register_email|cancel_email_subject|cancel_email"})
-     * @Method({"GET", "POST"})
-     */
-    public function configAction(Request $request)
-    {
-        $setting = new Setting();
-        $setting->setSlug( $request->get('slug') );
-        $default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'message');
-        $setting->setValue($default_value);
-        
-        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($setting);
-            $em->flush();
-            return $this->redirectToRoute('fos_user_registration_register');
-        }
-		
-        return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(
-            'setting' => $setting,
-            'form' => $form->createView(),
-        ));
-    }
 	
     /**
-     * @Route("admin/setting/new", name="admin_setting_new")
+     * @Route("/setting/new", name="admin_setting_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -68,7 +43,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("admin/setting/{id}/edit", name="admin_setting_edit")
+     * @Route("/setting/{id}/edit", name="admin_setting_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Setting $setting)
@@ -80,7 +55,6 @@ class SettingController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('admin_setting_edit', array('id' => $setting->getId()));
         }
 
@@ -92,7 +66,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("admin/setting/{id}", name="admin_setting_delete")
+     * @Route("setting/{id}", name="admin_setting_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Setting $setting)

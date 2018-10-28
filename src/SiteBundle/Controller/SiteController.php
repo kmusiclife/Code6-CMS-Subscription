@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Article controller.
+ * Site controller.
  *
  * @Route("/")
  */
@@ -31,11 +31,10 @@ class SiteController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        
-        return $this->render('index.html.twig', array(
-        ));
-        
+	    $response = $this->get('app.init_helper')->initSite();
+	    if(null != $response) return $response;
+
+        return $this->render('index.html.twig', array());
     }
     /**
      * @Route("/page/{slug}", name="page_show")
@@ -72,41 +71,6 @@ class SiteController extends Controller
     {
         return $this->render('image.html.twig', array(
             'image' => $image
-        ));
-        
-    }
-    /**
-     * @Route("/site/config", name="site_config")
-     * @Method("GET,POST")
-     */
-    public function configAction(Request $request)
-    {
-		if( $this->get('app.app_helper')->hasAdmin() > 0 ){
-			return new RedirectResponse($this->generateUrl('site_index'));
-		}
-
-        $em = $this->getDoctrine()->getManager();
-
-        $user = new User();
-        $form = $this->createForm('SiteBundle\Form\Type\ConfigFormType', $user, array(
-	        'validation_groups' => array('Profile')
-        ));
-        $form->handleRequest($request);
-		
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();
-            $user->setEnabled(true);
-            $user->addRole('ROLE_ADMIN');
-            $em->persist($user);
-            $em->flush();
-            
-			return $this->render('@SiteBundle/Resources/views/Config/registered.html.twig', array());
-			
-        }
-        return $this->render('@SiteBundle/Resources/views/Config/new.html.twig', array(
-            'user' => $user,
-            'form' => $form->createView(),
         ));
         
     }

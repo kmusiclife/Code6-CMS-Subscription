@@ -39,7 +39,7 @@ class StripeHelper
 		/* https://stripe.com/docs/connect/oauth-reference */
 
 		$oauth_url = 'https://connect.stripe.com/oauth/authorize';
-		$redirect_uri = $this->router->generate('stripe_oauth', [], UrlGeneratorInterface::ABSOLUTE_URL);
+		$redirect_uri = $this->router->generate('stripe_redirect', [], UrlGeneratorInterface::ABSOLUTE_URL);
 		
 		$queries = array(
 			'response_type' => 'code',

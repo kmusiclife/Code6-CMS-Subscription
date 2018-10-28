@@ -63,6 +63,11 @@ class Page
      */
     private $updatedAt;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+    */
+    protected $createdUser;
+
 
 
     /**
@@ -217,5 +222,29 @@ class Page
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set createdUser.
+     *
+     * @param \AppBundle\Entity\User|null $createdUser
+     *
+     * @return Page
+     */
+    public function setCreatedUser(\AppBundle\Entity\User $createdUser = null)
+    {
+        $this->createdUser = $createdUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createdUser.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getCreatedUser()
+    {
+        return $this->createdUser;
     }
 }

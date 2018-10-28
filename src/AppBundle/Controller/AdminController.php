@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Public controller.
+ * Admin controller.
  *
  * @Route("/admin")
  */
@@ -26,8 +26,9 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-	    
-        $em = $this->getDoctrine()->getManager();
+	    $response = $this->get('app.init_helper')->initSite();
+	    if(null != $response) return $response;
+
         return $this->render('@AppBundle/Resources/views/Admin/index.html.twig', array(
 	        'body' => ''
         ));

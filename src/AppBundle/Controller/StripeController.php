@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  *
- * @Route("stripe")
+ * @Route("/admin/")
  */
 class StripeController extends Controller
 {
     /**
-     * @Route("/config", name="stripe_config")
+     * @Route("stripe/config", name="stripe_config")
      * @Method("GET")
      */
     public function configAction()
@@ -24,14 +24,14 @@ class StripeController extends Controller
 		if( $this->get('app.stripe_helper')->setApiKey() ){
 			return $this->redirectToRoute('site_index');
 		}
-        return $this->render('@AppBundle/Resources/views/Stripe/config.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/Config/stripe.html.twig', array(
 	        'stripe_secret_token' => substr($this->getParameter('stripe_secret_token'), 0, 15).'****************',
 	        'stripe_connect_client_id' => substr($this->getParameter('stripe_connect_client_id'), 0, 15).'****************',
 	        'stripe_application_fee' => $this->getParameter('stripe_application_fee')
         ));
 	}
     /**
-     * @Route("/oauth/redirect", name="stripe_oauth")
+     * @Route("stripe/redirect", name="stripe_redirect")
      * @Method("GET")
      */
     public function redirectAction(Request $request)
@@ -73,13 +73,11 @@ class StripeController extends Controller
 		$this->get('app.app_helper')->setSetting('stripe_secret_token', $stripe_secret_token);
 		$this->get('app.app_helper')->setSetting('stripe_access_token', $stripe_access_token);
 		
-	    $this->addFlash('notice', 'Stripe Connect Code Registered.');
-        
-        return $this->render('@AppBundle/Resources/views/Stripe/registered.html.twig', array());
+        return $this->redirectToRoute('site_index');
 	    
     }
     /**
-     * @Route("/oauth/start", name="stripe_start")
+     * @Route("stripe/start", name="stripe_start")
      * @Method("GET")
      */
     public function startAction()
