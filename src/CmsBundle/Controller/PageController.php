@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 /**
+ * Page Controller
+ *
  * @Route("/admin")
  */
 class PageController extends Controller
