@@ -59,7 +59,7 @@ class ConfigController extends Controller
     }
     
     /**
-     * @Route("admin/setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_subject|register_email|cancel_email_subject|cancel_email"})
+     * @Route("admin/setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_subject|register_email|cancel_email_subject|cancel_email|cancel_description"})
      * @Method({"GET", "POST"})
      */
     public function configSettingAction(Request $request)

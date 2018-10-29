@@ -55,21 +55,29 @@ class InitHelper
 		}
 		return null;
 	}
+	// Do not forget change CmpBundle:ConfigController also
+	static function getPageSlugs(){
+		return array('privacy', 'term');
+	}
 	public function initPage()
 	{
-		foreach(array('privacy', 'term') as $page_slug)
-		{
+		$page_slugs = $this->getPageSlugs();
+		foreach($page_slugs as $page_slug){
 			$page = $this->entityManager->getRepository('CmsBundle:Page')->findOneBySlug($page_slug);
 			if( !$page ) return new RedirectResponse( $this->router->generate('site_config_page', array('slug' => $page_slug)));
 		}
 		return null;
 		
 	}
+	// Do not forget change AppBundle:ConfigController also
+	static function getSettingSlugs(){
+		return array('register_email_subject', 'register_email', 'cancel_email_subject', 'cancel_email', 'cancel_description');
+	}
 	public function hasSettings()
 	{
-		foreach(array('register_email_subject', 'register_email', 'cancel_email_subject', 'cancel_email') as $slug){
-			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) )
-			{
+		$slugs = $this->getSettingSlugs();
+		foreach($slugs as $slug){
+			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) ){
 				return false;
 			}
 		}
@@ -77,23 +85,10 @@ class InitHelper
 	}
 	public function initSettings()
 	{
-		foreach(array('register_email_subject', 'register_email', 'cancel_email_subject', 'cancel_email') as $slug){
-			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) )
-			{
+		$slugs = $this->getSettingSlugs();
+		foreach($slugs as $slug){
+			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) ){
 				return new RedirectResponse( $this->router->generate('setting_config', array('slug' => $slug)) );
-			}
-		}
-		
-		return null;
-		
-	}
-	public function initStripe()
-	{
-
-		foreach(array('stripe_public_token', 'stripe_secret_token', 'stripe_access_token') as $slug){
-			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) )
-			{
-				return new RedirectResponse( $this->router->generate('stripe_config') );
 			}
 		}
 		
@@ -103,7 +98,6 @@ class InitHelper
 	public function initSite()
 	{
 		if($this->initAdmin()) return $this->initAdmin();
-		if($this->initStripe()) return $this->initStripe();
 		if($this->initSettings()) return $this->initSettings();
 		if($this->initPage()) return $this->initPage();
 	}
