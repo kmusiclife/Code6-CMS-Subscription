@@ -1,9 +1,6 @@
 {% trans_default_domain 'message' %}
-
-{% extends "layout.html.twig" %}
-
-{% block title %}{{ 'security.title.index'|trans() }}{% endblock %}
-{% block fos_user_content %}
-    {{ include('@FOSUser/Security/login_content.html.twig') }}
-{% endblock fos_user_content %}
-
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/login.html.twig" : 
+		"login.html.twig" 
+%}

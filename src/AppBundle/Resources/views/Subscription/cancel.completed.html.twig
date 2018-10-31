@@ -1,8 +1,6 @@
 {% trans_default_domain 'message' %}
-
-{% extends "layout.html.twig" %}
-{% block title %}{{ 'subscription.title.cancel.completed'|trans() }}{% endblock %}
-
-{% block fos_user_content %}
-{% endblock  fos_user_content %}
-
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/subscription.cancel.completed.html.twig" : 
+		"subscription.cancel.completed.html.twig" 
+%}

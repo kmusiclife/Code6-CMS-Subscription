@@ -1,0 +1,10 @@
+{% trans_default_domain 'message' %}
+{% extends "layout.html.twig" %}
+{% block title %}{{ 'subscription.title.cancel.completed'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+<div>
+<p>{{ getSetting('canceled_description') }}</p>
+</div>
+{% endblock  fos_user_content %}
+

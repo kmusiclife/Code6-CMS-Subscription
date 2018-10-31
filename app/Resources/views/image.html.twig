@@ -1,5 +1,9 @@
 {% trans_default_domain 'message' %}
-{% extends "layout.html.twig" %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/layout.html.twig" : 
+		"layout.html.twig" 
+%}
 
 {% block title %}{{ image.title }}{% endblock title %}
 

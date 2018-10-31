@@ -1,8 +1,6 @@
 {% trans_default_domain 'message' %}
-{% extends is_granted('ROLE_ADMIN') ? '@AppBundle/Resources/views/Template/layout.html.twig' : "layout.html.twig" %}
-
-{% block title %}{{ 'profile.title.show'|trans }}{% endblock %}
-
-{% block fos_user_content %}
-{% include "@FOSUser/Profile/show_content.html.twig" %}
-{% endblock fos_user_content %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/profile.show.html.twig" : 
+		"profile.show.html.twig" 
+%}

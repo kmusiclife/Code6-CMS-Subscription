@@ -1,0 +1,9 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~theme_name~"/layout.html.twig" %}
+
+{% block title %}{{ page.title }}{% endblock title %}
+
+{% block body %}
+{{ page.body|raw }}
+{% endblock %}
+

@@ -12,7 +12,7 @@
 </div>
 <div class="9u 12u$(xsmall)">
 	<div class="image">
-		<img src="{{ asset('uploads/'~edit_form.image.vars.value) | imagine_filter('image_normal') }}" alt="" style="width: 100%;">
+		<img src="{{ asset(upload_uri~'/'~edit_form.image.vars.value) | imagine_filter('image_normal') }}" alt="" style="width: 100%;">
 	</div>
 </div>
 

@@ -116,7 +116,7 @@ class RegistrationListener implements EventSubscriberInterface
 				"source" => $this->user->getStripeTokenId(),
 			));
 			$this->user->setStripeCustomerId($customer->id);
-	
+			
 			$subscription = \Stripe\Subscription::create(
 				array(
 					"customer" => $customer->id,

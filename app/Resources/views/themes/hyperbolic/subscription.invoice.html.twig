@@ -1,0 +1,47 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~theme_name~"/layout.html.twig" %}
+{% block title %}{{ 'subscription.title.invoice'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+<div class="uniform">
+    
+    <table class="table">
+	<tr>
+		<th>
+			{{ 'subscription.invoice.date'|trans }} 
+		</th>
+		<th>
+			{{ 'subscription.invoice.number'|trans }}
+		</th>
+		<th>
+			{{ 'subscription.invoice.total'|trans }}
+		</th>
+		<th>
+			{{ 'subscription.invoice.hosted_invoice_url'|trans }}
+		</th>
+	</tr>
+
+	{% for invoice in invoices.data %}
+		
+		<tr>
+			<td>
+				{{ invoice.date|date('Y-m-d') }} 
+			</td>
+			<td>
+				{{ invoice.number }}
+			</td>
+			<td>
+				{{ invoice.total }}
+			</td>
+			<td>
+				<a href="{{ invoice.hosted_invoice_url }}" target="_blank" class="button small special">{{ 'subscription.invoice.hosted_invoice_url'|trans }}</a>
+			</td>
+		</tr>
+		
+	{% endfor %}
+	</table>
+    
+</div>
+
+{% endblock  fos_user_content %}
+

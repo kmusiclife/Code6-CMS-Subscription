@@ -1,0 +1,46 @@
+{% trans_default_domain 'message' %}
+
+{% extends "themes/"~theme_name~"/layout.html.twig" %}
+{% block title %}{{ 'security.title.index'|trans() }}{% endblock %}
+
+{% block body %}
+
+{% if error %}
+    <div class="box">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post" class="gtr-uniform row uniform">
+
+    {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    {% endif %}
+	
+	<div class="col-3 col-12-small">
+		{{ 'entity.user.username'|trans }}
+	</div>
+	<div class="col-9 col-12-small">
+		<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+	</div>
+
+	<div class="col-3 col-12-small">
+		{{ 'entity.user.password'|trans }}
+	</div>
+	<div class="col-9 col-12-small">
+	    <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+	</div>
+
+	<div class="col-3 col-12-small"></div>
+	<div class="col-9 col-12-small">
+	    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+	    <label for="remember_me">{{ 'message.remember_me'|trans }}</label>
+	</div>
+
+	<div class="col-3 col-12-small"></div>
+	<div class="col-9 col-12-small">
+	    <input type="submit" id="_submit" name="_submit" class="special" value="{{ 'form.button.login'|trans }}" />
+	</div>
+	
+</form>
+
+{% endblock %}
+

@@ -1,0 +1,102 @@
+{% trans_default_domain 'message' %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{% block title %}Theme CMS{% endblock %}</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+{% block stylesheets %}{% endblock stylesheets %}
+{% include 'themes/hyperbolic/header.html.twig' %}
+
+</head>
+<body class="is-preload">
+
+<div id="wrapper">
+
+	<section id="header">
+		<a href="index.html" class="logo"><strong>Hyperbolic</strong> by Pixelarity</a>
+		<nav id="nav">
+			<ul>
+				<li class="current"><a href="index.html">Home</a></li>
+				<li>
+					<a href="#" class="icon fa-angle-down">Dropdown</a>
+					<ul>
+						<li><a href="#">Option One</a></li>
+						<li><a href="#">Option Two</a></li>
+						<li><a href="#">Option Three</a></li>
+						<li>
+							<a href="#">Submenu</a>
+							<ul>
+								<li><a href="#">Option One</a></li>
+								<li><a href="#">Option Two</a></li>
+								<li><a href="#">Option Three</a></li>
+								<li><a href="#">Option Four</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><a href="generic.html">Generic</a></li>
+				<li><a href="elements.html">Elements</a></li>
+			</ul>
+		</nav>
+	</section>
+	
+	{% block banner %}{% endblock banner %}
+	
+	<section class="wrapper style1" id="first">
+		<div class="inner">
+		
+			{% block header %}{% endblock %}
+			
+			<h3>{{ block('title') }}</h3>
+			
+			{% if app.request.hasPreviousSession %}
+			{% for type, messages in app.session.flashbag.all() %}
+			    {% for message in messages %}
+			        {{ message|trans() }}
+			    {% endfor %}
+			{% endfor %}
+			{% endif %}
+			
+			
+			{% if block('body') is defined %}
+				{{ block('body') }}
+			{% endif %}
+			{% if block('fos_user_content') is defined %}
+				{{ block('fos_user_content') }}
+			{% endif %}
+
+		</div>
+	</section>
+	
+	
+	<section id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+			<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+			<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+			<li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
+			<li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
+		</ul>
+		<p class="copyright">
+			&copy; Untitled. All rights reserved.
+		</p>
+	</section>
+
+
+</div>
+
+{% include "themes/hyperbolic/footer.html.twig" %}
+{% block javascripts %}{% endblock javascripts %}
+<script src="{{ asset('themes/hyperbolic/js/jquery.min.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/jquery.dropotron.min.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/jquery.scrollex.min.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/jquery.scrolly.min.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/browser.min.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/breakpoints.min.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/util.js') }}"></script>
+<script src="{{ asset('themes/hyperbolic/js/main.js') }}"></script>
+{% block javascript %}{% endblock javascript %}
+
+</body>
+</html>

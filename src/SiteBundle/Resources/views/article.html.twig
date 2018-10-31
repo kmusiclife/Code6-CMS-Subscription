@@ -1,0 +1,6 @@
+{% trans_default_domain 'message' %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/article.html.twig" : 
+		"article.html.twig" 
+%}

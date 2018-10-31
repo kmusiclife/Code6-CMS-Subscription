@@ -1,0 +1,85 @@
+{% trans_default_domain 'message' %}
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ 'contact.title.new'|trans }}{% endblock title %}
+
+{% block body %}
+{{ form_start(form, { 'attr':{ 'class': 'row gtr-uniform' } }) }}
+
+<div>
+	<label>{{ 'entity.contact.title'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.title, {'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.title) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.contact.name'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.name, {'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.name) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.contact.email'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.email, {'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.email) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.contact.tel'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.tel, {'required':false, 'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.tel) }}
+</div>
+
+
+
+<div>
+	<label>{{ 'entity.contact.zip'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.zip, {'required':false, 'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.zip) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.contact.address'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.address, {'required':false, 'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.address) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.contact.body'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.body, {'attr': { 'placeholder':'例)' }}) }}
+	{{ form_errors(form.body) }}
+</div>
+
+
+
+<div>
+	&nbsp;
+</div>
+<div>
+	<input type="submit" class="special" value="{{ 'contact.button.new'|trans }}" id="submit-button" />
+</div>
+
+
+
+
+{{ form_end(form) }}
+{% endblock %}

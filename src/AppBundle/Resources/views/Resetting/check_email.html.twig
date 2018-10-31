@@ -1,9 +1,6 @@
-{% extends "layout.html.twig" %}
-
-{% trans_default_domain 'FOSUserBundle' %}
-
-{% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
-</p>
-{% endblock %}
+{% trans_default_domain 'message' %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/request.confirm.html.twig" : 
+		"request.confirm.html.twig" 
+%}

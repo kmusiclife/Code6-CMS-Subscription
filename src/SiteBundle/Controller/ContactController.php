@@ -14,12 +14,12 @@ class ContactController extends Controller
 {
 
     /**
-     * @Route("/thankyou", name="contact_thankyou")
+     * @Route("/completed", name="contact_completed")
      * @Method({"GET"})
      */
-    public function thankyouAction()
+    public function completedAction()
     {
-        return $this->render('@SiteBundle/Resources/views/Contact/thankyou.html.twig', array(
+        return $this->render('@SiteBundle/Resources/views/contact.completed.html.twig', array(
         ));
     }
 
@@ -38,10 +38,10 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
-            return $this->redirectToRoute('contact_thnakyou');
+            return $this->redirectToRoute('contact_completed');
         }
 
-        return $this->render('@SiteBundle/Resources/views/Contact/index.html.twig', array(
+        return $this->render('@SiteBundle/Resources/views/contact.html.twig', array(
             'contact' => $contact,
             'form' => $form->createView(),
         ));

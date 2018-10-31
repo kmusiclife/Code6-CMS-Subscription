@@ -1,0 +1,5 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~theme_name~"/layout.html.twig" %}
+
+{% block title %}{{ 'contact.title.completed'|trans }}{% endblock title %}
+{% block body %}{{ 'message.contact_sent'|trans }}{% endblock %}

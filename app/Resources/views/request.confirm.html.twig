@@ -1,0 +1,7 @@
+{% trans_default_domain 'message' %}
+{% extends "layout.html.twig" %}
+{% block title %}{{ 'resetting.title.request'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+{{ 'message.resetting.request.confirm'|trans }}
+{% endblock fos_user_content %}

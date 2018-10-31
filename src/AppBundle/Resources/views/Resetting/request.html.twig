@@ -1,8 +1,6 @@
 {% trans_default_domain 'message' %}
-{% extends "layout.html.twig" %}
-
-{% block title %}{{ 'resetting.title.request'|trans() }}{% endblock %}
-
-{% block fos_user_content %}
-{% include "@FOSUser/Resetting/request_content.html.twig" %}
-{% endblock fos_user_content %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/request.html.twig" : 
+		"request.html.twig" 
+%}

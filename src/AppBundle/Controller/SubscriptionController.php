@@ -71,7 +71,8 @@ class SubscriptionController extends Controller
 					throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
 				}
 				
-				return new RedirectResponse($this->generateUrl('subscription_card_completed'));
+				$this->addFlash('notice', 'message.subscription.card.update');
+				return new RedirectResponse($this->generateUrl('subscription_card'));
 				
             }
         }

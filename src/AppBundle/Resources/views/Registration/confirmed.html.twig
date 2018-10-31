@@ -1,10 +1,6 @@
 {% trans_default_domain 'message' %}
-{% extends "layout.html.twig" %}
-
-{% block title %}{{ 'registration.title.confirmed'|trans() }}{% endblock %}
-	{% block fos_user_content %}
-		<p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
-	{% if targetUrl %}
-		<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-	{% endif %}
-{% endblock fos_user_content %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/register.completed.html.twig" : 
+		"register.completed.html.twig" 
+%}

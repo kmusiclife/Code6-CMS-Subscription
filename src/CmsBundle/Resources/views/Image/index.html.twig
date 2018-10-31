@@ -17,7 +17,7 @@
 	<tbody>
 	{% for image in images %}
     <tr>
-        <td><img src="{{ asset('/uploads/'~image.image)| imagine_filter('image_small') }}" alt="" /></td>
+        <td><img src="{{ asset(upload_uri~'/'~image.image)| imagine_filter('image_small') }}" alt="" /></td>
         <td>{{ image.title|trans() }}</td>
         <td>
         	<a href="{{ path('image_show', {'id': image.id}) }}" class="button small" target="_blank">{{ 'image.button.show'|trans() }}</a>

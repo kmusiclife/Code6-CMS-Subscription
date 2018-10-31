@@ -71,7 +71,7 @@ class InitHelper
 	}
 	// Do not forget change AppBundle:ConfigController also
 	static function getSettingSlugs(){
-		return array('register_email_subject', 'register_email', 'cancel_email_subject', 'cancel_email', 'cancel_description');
+		return array('register_email_subject', 'register_email', 'registered_description', 'cancel_email_subject', 'cancel_email', 'cancel_description', 'canceled_description');
 	}
 	public function hasSettings()
 	{

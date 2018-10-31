@@ -1,28 +1,8 @@
 {% trans_default_domain 'message' %}
-{% extends 'layout.html.twig' %}
+{% extends "layout.html.twig" %}
 
-{% block title %}{{ article.title|trans() }}{% endblock %}
+{% block title %}{{ article.title }}{% endblock title %}
+
 {% block body %}
-
-<div class="uniform row">
-	
-	<div class="12u$ 12u$(xsmall)">
-		<div class="image">
-		<img src="{{ asset('/uploads/'~article.eyecatch.image)| imagine_filter('image_normal') }}" alt="" style="width: 100%;" />
-		</div>
-	</div>
-
-	<div class="3u 12u$(xsmall)">
-		<label>{{ 'entity.article.body'|trans() }}</label>
-	</div>
-	<div class="9u$ 12u$(xsmall)">
-		{{ article.body }}
-	</div>
-	
-	{{ dump( article.images ) }}
-	
-</div>
-
-
+{{ article.body }}
 {% endblock %}
-

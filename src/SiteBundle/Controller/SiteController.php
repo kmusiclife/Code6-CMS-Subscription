@@ -33,49 +33,47 @@ class SiteController extends Controller
     {
 	    $response = $this->get('app.init_helper')->initSite();
 	    if(null != $response) return $response;
-
-        return $this->render('index.html.twig', array());
+	    
+        return $this->render('@SiteBundle/Resources/views/index.html.twig', array());
     }
     /**
-     * @Route("/page/{slug}", name="page_show")
+     * @Route("page/{slug}", name="page_show")
      * @ParamConverter("Page", class="CmsBundle:Page", options={"mapping":{"slug"="slug"}})
      * @Method("GET")
      */
     public function pageShowAction(Page $page)
     {
-        return $this->render('page.html.twig', array(
+	    
+        return $this->render('@SiteBundle/Resources/views/page.html.twig', array(
             'page' => $page,
         ));
     }
 	
     /**
-     * @Route("/article/{id}", name="article_show")
+     * @Route("article/{id}", name="article_show")
      * @Method("GET")
      */
     public function articleShowAction(Article $article, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-		$user = $this->getUser();
-
-        return $this->render('article.html.twig', array(
+	    
+        return $this->render('@SiteBundle/Resources/views/article.html.twig', array(
             'article' => $article,
-            'user' => $user,
         ));
     }
 	
     /**
-     * @Route("/upload/image/{id}", name="image_show")
+     * @Route("upload/image/{id}", name="image_show")
      * @Method("GET")
      */
     public function imageShowAction(Image $image)
     {
-        return $this->render('image.html.twig', array(
-            'image' => $image
+        return $this->render('@SiteBundle/Resources/views/image.html.twig', array(
+            'image' => $image,
         ));
         
     }
     /**
-     * @Route("/_login", name="site_login")
+     * @Route("_login", name="site_login")
      * @Method("GET")
      */
     public function afterLogin(AuthorizationCheckerInterface $authChecker)

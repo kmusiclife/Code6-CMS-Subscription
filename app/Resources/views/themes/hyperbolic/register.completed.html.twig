@@ -1,0 +1,8 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~theme_name~"/layout.html.twig" %}
+
+{% block title %}{{ 'registration.title.confirmed'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+{{ getSetting('registered_description') }}
+{% endblock fos_user_content %}
