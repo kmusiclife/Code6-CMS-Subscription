@@ -3,11 +3,14 @@
 *.php~
 /.gitignore
 /.web-server-pid
+/web/themes/*
 /web/config.rb
 /web/assets
 /web/bundles/
 /web/media
 /web/uploads/*
+/web/admin/assets
+/app/Resources/views/themes
 /app/config/parameters.yml
 /app/config/parameters.custom.yml
 /build/
