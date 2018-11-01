@@ -2,4 +2,6 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}{{ 'contact.title.completed'|trans }}{% endblock title %}
-{% block body %}{{ 'message.contact_sent'|trans }}{% endblock %}
+{% block body %}
+<p>{{ getSetting('contacted_description') }}</p>
+{% endblock %}
