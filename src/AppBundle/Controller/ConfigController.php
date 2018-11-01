@@ -22,6 +22,38 @@ use AppBundle\Entity\Setting;
  */
 class ConfigController extends Controller
 {
+    /**
+     * @Route("admin/config/setting/{slug}", name="setting_config", requirements={"slug"="register_email_subject|register_email|registered_description|cancel_email_subject|cancel_email|cancel_description|contact_email_subject|contact_email|canceled_description|contacted_description"})
+     * @Method({"GET", "POST"})
+     */
+    public function configSettingAction(Request $request)
+    {
+	    $em = $this->getDoctrine()->getManager();
+	    $slug = $request->get('slug');
+	    
+	    $setting = $em->getRepository('AppBundle:Setting')->findOneBySlug($slug);
+	    if($setting) return $this->redirectToRoute('site_index');
+	    
+	    $setting = new Setting();
+		$setting->setSlug( $request->get('slug') );
+		$default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'message');
+		$setting->setValue($default_value);
+        
+        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($setting);
+            $em->flush();
+            return $this->redirectToRoute('site_index');
+        }
+		
+        return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(
+            'setting' => $setting,
+            'form' => $form->createView(),
+        ));
+    }
 
     /**
      * @Route("config/user", name="config_user")
@@ -57,40 +89,6 @@ class ConfigController extends Controller
         ));
         
     }
-    
-    /**
-     * @Route("admin/setting/{slug}/config", name="setting_config", requirements={"slug"="register_email_subject|register_email|registered_description|cancel_email_subject|cancel_email|cancel_description|canceled_description|contacted_description"})
-     * @Method({"GET", "POST"})
-     */
-    public function configSettingAction(Request $request)
-    {
-	    $em = $this->getDoctrine()->getManager();
-	    $slug = $request->get('slug');
-	    
-	    $setting = $em->getRepository('AppBundle:Setting')->findOneBySlug($slug);
-	    if($setting) return $this->redirectToRoute('site_index');
-	    
-	    $setting = new Setting();
-		$setting->setSlug( $request->get('slug') );
-		$default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'message');
-		$setting->setValue($default_value);
-        
-        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($setting);
-            $em->flush();
-            return $this->redirectToRoute('site_index');
-        }
-		
-        return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(
-            'setting' => $setting,
-            'form' => $form->createView(),
-        ));
-    }
-
 
     /**
      * @Route("/admin/stripe/config", name="stripe_config")
