@@ -17,7 +17,19 @@ use AppBundle\Form\Type\PasswordFormType;
  */
 class SettingController extends Controller
 {
-	
+    /**
+     * @Route("/setting/", name="admin_setting_index")
+     * @Method({"GET"})
+     */
+    public function indexAction(Request $request)
+    {
+	    $em = $this->getDoctrine()->getManager();
+	    $settings = $em->getRepository('AppBundle:Setting')->findAll();
+	    
+        return $this->render('@AppBundle/Resources/views/Setting/index.html.twig', array(
+            'settings' => $settings,
+        ));
+    }	
     /**
      * @Route("/setting/new", name="admin_setting_new")
      * @Method({"GET", "POST"})
