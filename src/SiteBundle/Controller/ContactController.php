@@ -19,7 +19,7 @@ class ContactController extends Controller
      */
     public function completedAction()
     {
-        return $this->render('@SiteBundle/Resources/views/contact.completed.html.twig', array(
+        return $this->render('@SiteBundle/Resources/views/Contact/completed.html.twig', array(
         ));
     }
 
@@ -38,10 +38,18 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
+	        $this->get('app.app_helper')->sendEmailBySetting(
+	        	$this->getParameter('mailer_address'), 
+	        	'contact_email_subject', 
+	        	'contact_email', 
+	        	array('contact' => $contact),
+	        	false
+	        );
+
             return $this->redirectToRoute('contact_completed');
         }
 
-        return $this->render('@SiteBundle/Resources/views/contact.html.twig', array(
+        return $this->render('@SiteBundle/Resources/views/Contact/index.html.twig', array(
             'contact' => $contact,
             'form' => $form->createView(),
         ));
