@@ -10,7 +10,6 @@
 /web/media
 /web/uploads/*
 /web/admin/assets
-/web/admin/themes
 /app/Resources/views/themes
 /app/config/parameters.yml
 /app/config/parameters.custom.yml
