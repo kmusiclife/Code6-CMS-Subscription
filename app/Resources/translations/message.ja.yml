@@ -440,6 +440,7 @@ subscription:
             completed: "解約完了"
         card: 
             index: "カード番号登録"
+            edit: "カード番号更新"
             completed: "カード番号更新完了"
     
     plan:
