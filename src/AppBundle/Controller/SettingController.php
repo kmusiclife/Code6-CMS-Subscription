@@ -18,7 +18,7 @@ use AppBundle\Form\Type\PasswordFormType;
 class SettingController extends Controller
 {
     /**
-     * @Route("/setting/", name="admin_setting_index")
+     * @Route("/setting/index", name="admin_setting_index")
      * @Method({"GET"})
      */
     public function indexAction(Request $request)
