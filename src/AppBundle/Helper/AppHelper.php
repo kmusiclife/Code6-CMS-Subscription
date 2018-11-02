@@ -68,6 +68,10 @@ class AppHelper
 		return $images;
 		
 	}
+	public function getParameter($name)
+	{
+		return $this->serviceContainer->getParameter($name);
+	}
 	public function getSetting($slug)
 	{
 		$setting = $this->entityManager->getRepository('AppBundle:Setting')->findOneBySlug($slug);

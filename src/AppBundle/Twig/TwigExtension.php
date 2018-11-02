@@ -34,6 +34,7 @@ class TwigExtension extends AbstractExtension
 	    return array(
 	        new \Twig_SimpleFunction('is_home', array($this, 'is_home')),
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
+	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
 	    );
 	}
 	public function is_home($app)
@@ -43,6 +44,10 @@ class TwigExtension extends AbstractExtension
 	public function getSetting($slug)
 	{
 		return $this->serviceContainer->get('app.app_helper')->getSetting($slug);
+	}
+	public function getParameter($name)
+	{
+		return $this->serviceContainer->get('app.app_helper')->getParameter($name);
 	}
 
 }
