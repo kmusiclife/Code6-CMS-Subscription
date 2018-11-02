@@ -55,7 +55,11 @@ news:
     message:
         place: "開催場所はこちらより追加してください"
         is_published: "公開する"
-        
+
+stripe:
+    title:
+        config: "Stripe 初期設定"
+
 setting:
     title:
         index: "設定一覧"
