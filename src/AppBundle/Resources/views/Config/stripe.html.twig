@@ -3,8 +3,17 @@
 
 {% block title %}{{ 'stripe.title.config'|trans }}{% endblock %}
 {% block body %}
-
-<p>あなたのStripeアカウントとサービスを連携します。下記のボタンを押して認証してください。インストール時に登録した application stripe account IDは下記のとおりです。テストキーから本番キーへの変更の際はSettingのStripe tokenを削除してください。</p>
+<p>
+STEP1. マスターのStripeのConnectリダイレクト URISに下記URIを登録してください。
+</p>
+<p>
+<table>
+	<tr>
+		<td>リダイレクトURI</td><td><strong>{{ app.request.scheme ~ '://' ~ app.request.host }}{{ path('stripe_redirect') }}</strong></td>
+	</tr>
+</table>
+</p>
+<p>STEP2. あなたのStripeアカウントとサービスを連携します。下記のボタンを押してあなたのStripeアカウントを認証してください。マスターStripeのapplication stripe account IDは下記のとおりです。テストキーから本番キーへの変更の際はSettingのStripe tokenを削除してください。</p>
 <p>
 <table>
 	<tr>
