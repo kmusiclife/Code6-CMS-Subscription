@@ -40,6 +40,7 @@ class StripeHelper
 
 		$oauth_url = 'https://connect.stripe.com/oauth/authorize';
 		$redirect_uri = $this->router->generate('stripe_redirect', [], UrlGeneratorInterface::ABSOLUTE_URL);
+		$user = $this->getUser();
 		
 		$queries = array(
 			'response_type' => 'code',
@@ -48,8 +49,10 @@ class StripeHelper
 			'stripe_user[url]' => $redirect_uri,
 			'stripe_user[email]' => $this->serviceContainer->getParameter('stripe_email'),
 			'stripe_user[zip]' => $this->serviceContainer->getParameter('stripe_zip'),
+			'stripe_user[phone_number]' => $user->getTel(),
+			'stripe_user[first_name]' => $user->getFname(),
+			'stripe_user[last_name]' => $user->getLname(),
 			'redirect_uri' => $redirect_uri,
-//			'stripe_user' => $this->serviceContainer->getParameter('your_email'),
 		);
 		return $oauth_url.'?'.http_build_query( $queries );
 		
