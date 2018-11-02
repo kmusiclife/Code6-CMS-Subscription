@@ -2,22 +2,28 @@
 
 namespace AppBundle\Helper;
 
-use FOS\UserBundle\Model\UserManagerInterface;
+// Injection Classes
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StripeHelper 
 {
 	
 	protected $serviceContainer;
+	protected $tokenStorage;
+	protected $router;
 	
 	public function __construct(
 		ContainerInterface $serviceContainer,
+		TokenStorageInterface $tokenStorage,
 		UrlGeneratorInterface $router
 	){
 		$this->serviceContainer = $serviceContainer;
+		$this->tokenStorage = $tokenStorage;
 		$this->router = $router;
+		
+		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
 	public function setApiKey()
 	{
@@ -40,7 +46,6 @@ class StripeHelper
 
 		$oauth_url = 'https://connect.stripe.com/oauth/authorize';
 		$redirect_uri = $this->router->generate('stripe_redirect', [], UrlGeneratorInterface::ABSOLUTE_URL);
-		$user = $this->getUser();
 		
 		$queries = array(
 			'response_type' => 'code',
@@ -49,9 +54,9 @@ class StripeHelper
 			'stripe_user[url]' => $redirect_uri,
 			'stripe_user[email]' => $this->serviceContainer->getParameter('stripe_email'),
 			'stripe_user[zip]' => $this->serviceContainer->getParameter('stripe_zip'),
-			'stripe_user[phone_number]' => $user->getTel(),
-			'stripe_user[first_name]' => $user->getFname(),
-			'stripe_user[last_name]' => $user->getLname(),
+			'stripe_user[phone_number]' => $this->user->getTel(),
+			'stripe_user[first_name]' => $this->user->getFname(),
+			'stripe_user[last_name]' => $this->user->getLname(),
 			'redirect_uri' => $redirect_uri,
 		);
 		return $oauth_url.'?'.http_build_query( $queries );

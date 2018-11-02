@@ -18,7 +18,7 @@ services:
 
     app.stripe_helper:
         class: AppBundle\Helper\StripeHelper
-        arguments: ["@service_container", "@router"]
+        arguments: ["@service_container", "@security.token_storage", "@router"]
         public: true
 
     app.init_helper:

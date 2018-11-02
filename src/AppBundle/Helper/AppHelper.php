@@ -25,10 +25,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 class AppHelper 
 {
 	
-	protected $userManager;
 	protected $serviceContainer;
+	protected $tokenStorage;
+	protected $userManager;
 	protected $entityManager;
 	protected $router;
+	
+	protected $user;
 	
 	public function __construct(
 		ContainerInterface $serviceContainer, 
