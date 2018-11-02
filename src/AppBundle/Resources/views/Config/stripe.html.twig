@@ -3,9 +3,9 @@
 
 {% block title %}{{ 'stripe.title.config'|trans }}{% endblock %}
 {% block body %}
-<p>
+<h3>
 STEP1. マスターのStripeのConnectリダイレクト URISに下記URIを登録してください。
-</p>
+</h3>
 <p>
 <table>
 	<tr>
@@ -13,7 +13,13 @@ STEP1. マスターのStripeのConnectリダイレクト URISに下記URIを登�
 	</tr>
 </table>
 </p>
-<p>STEP2. あなたのStripeアカウントとサービスを連携します。下記のボタンを押してあなたのStripeアカウントを認証してください。マスターStripeのapplication stripe account IDは下記のとおりです。テストキーから本番キーへの変更の際はSettingのStripe tokenを削除してください。</p>
+<h3>STEP.2 あなたのStripeのメールアドレスの確認</h3>
+<p>
+あなたのStripeのアカウントのメールアドレスは{{ getParameter('stripe_email') }}です。左記と異なったメールアドレスのアカウントで登録する場合はシステム管理者に連絡しparameters.ymlの設定を変更してください。メールアドレスが異なっていると認証ができません。
+</p>
+
+<h3>STEP3. あなたのStripeアカウントとサービスを登録</h3>
+<p>下記のボタンを押してあなたのStripeアカウントを認証してください。マスターStripeのapplication stripe account IDは下記のとおりです。テストキーから本番キーへの変更の際はSettingのStripe tokenを削除してください。</p>
 <p>
 <table>
 	<tr>
