@@ -112,7 +112,7 @@
 				if (response && response.status == 'connected') {
 					FB.api('/me?fields=name,id,picture,link', function(response){
 						$('#facebook_info').html(response.name);
-						$('#facebook_button').fadeOut("slow");
+						$('#facebook_button').hide();
 						$('#fos_user_registration_form_facebook_url').val(response.link);
 					});
 				}
