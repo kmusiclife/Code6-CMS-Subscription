@@ -4,13 +4,15 @@
 /.gitignore
 /.web-server-pid
 /web/themes/*
+!/web/themes/default
 /web/config.rb
 /web/assets
 /web/bundles/
 /web/media
 /web/uploads/*
 /web/admin/assets
-/app/Resources/views/themes
+/app/Resources/views/themes/*
+!/app/Resources/views/themes/default
 /app/config/parameters.yml
 /app/config/parameters.custom.yml
 /build/
