@@ -78,7 +78,6 @@ class SubscriptionController extends Controller
         }
 
         return $this->render('@AppBundle/Resources/views/Subscription/card.html.twig', array(
-			'stripe_public_token' => $this->get('app.stripe_helper')->getPublicKey(),
             'user' => $user,
             'form' => $form->createView(),
         ));

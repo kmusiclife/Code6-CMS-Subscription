@@ -92,10 +92,6 @@ class RegistrationListener implements EventSubscriberInterface
 				);
 			}
 		}
-		$this->serviceContainer->get('twig')->addGlobal(
-			'stripe_public_token', 
-			$this->serviceContainer->get('app.stripe_helper')->getPublicKey() 
-		);
 
 	}
 	public function onRegistrationSuccess(FormEvent $event)

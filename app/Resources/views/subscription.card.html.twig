@@ -61,7 +61,7 @@ var style = {
 
 $(function(){
 	
-	var stripe = Stripe('{{ stripe_public_token }}');
+	var stripe = Stripe('{{ getSetting('stripe_public_token') }}');
 	var elements = stripe.elements();
 	var token = $('#card_form_stripe_token_id').val();
 	
