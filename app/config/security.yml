@@ -26,6 +26,8 @@ security:
                 domain: ~
                 path: /
                 secret: %secret%
+            
+            access_denied_handler: AppBundle\Security\AccessDeniedHandler
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
