@@ -80,6 +80,7 @@ class ArticleController extends Controller
 	    }
 		
 		if( $article->getEyecatch() ){
+			
 	        $this->get('app.app_helper')->validationImage('eyecatch', $form, $article->getEyecatch());
 		}
 		
@@ -89,16 +90,18 @@ class ArticleController extends Controller
 	        $this->get('app.app_helper')->uploadImage($article->getEyecatch());
 	        $article->getEyecatch()
 	        	->setIsLock(true)
-	        	->setTitle($article->getTitle())
-	        	->setBody($article->getBody())
-	        	->setCreatedUser($this->getUser());
-			
+			    ->setTitle($article->getTitle())
+			    ->setBody($article->getBody())
+		        ->setCreatedUser($this->getUser());
+				
 	        $this->get('app.app_helper')->uploadImages($article->getImages());
 	        foreach($article->getImages() as $image)
 	        {
-		        $image->setTitle($article->getTitle());
-		        $image->setBody($article->getBody());
-		        $image->setIsLock(true);
+		        $image
+		        	->setTitle($article->getTitle())
+		        	->setBody($article->getBody())
+		        	->setCreatedUser($user)
+		        	->setIsLock(true);
 	        }
 	        
             $em->persist($article);
@@ -162,20 +165,22 @@ class ArticleController extends Controller
 			        $this->get('app.app_helper')->uploadImage($article->getEyecatch());
 			        $article->getEyecatch()
 			        	->setIsLock(true)
-			        	->setTitle($article->getTitle())
-			        	->setBody($article->getBody())
-			        	->setCreatedUser($this->getUser());
+						->setTitle($article->getTitle())
+						->setBody($article->getBody())
+						->setCreatedUser($this->getUser());
 				}
 				
 		        $this->get('app.app_helper')->uploadImages($article->getImages());
 		        foreach($article->getImages() as $image)
 		        {
-			        $image->setTitle($article->getTitle())
+			        $image
+			        	->setTitle($article->getTitle())
 			        	->setBody($article->getBody())
-			        	->setIsLock(true)
-			        	->setCreatedUser($this->getUser());
+						->setIsLock(true)
+				        ->setCreatedUser($this->getUser());
 		        }
 
+	            
 	            $em = $this->getDoctrine()->getManager();
 	            $em->persist($article);
 	            $em->flush();
@@ -205,10 +210,23 @@ class ArticleController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $eyecatch = $article->getEyecatch();
+            $images = $article->getImages();
+            
             $em->remove($article);
+            
+            $eyecatch = $this->get('app.app_helper')->deleteImage( $eyecatch );
+            $em->remove($eyecatch);
+            
+            $images = $this->get('app.app_helper')->deleteImages( $images );            
+            foreach($images as $image)
+            {
+	            $em->remove($image);
+            }
+            
             $em->flush();
-            $this->get('app.app_helper')->deleteImage( $eyecatch );
+            
         }
 		
         return $this->redirectToRoute('article_index');

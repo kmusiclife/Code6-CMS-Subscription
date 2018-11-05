@@ -6,9 +6,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 // Injection Classes
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -16,11 +13,18 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+// Entities
 use AppBundle\Entity\Setting;
 use CmsBundle\Entity\Image;
 use CmsBundle\Entity\Article;
 
+// on Source
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class AppHelper 
 {
@@ -49,17 +53,7 @@ class AppHelper
 		
 		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
-	public function hasAdmin()
-	{
-	    $qb = $this->entityManager->createQueryBuilder();
-	    $qb->select('count(u)')
-	        ->from('AppBundle:User', 'u')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%ROLE_ADMIN%');
-	
-	    return $qb->getQuery()->getSingleScalarResult();
-	    
-	}
+
 	public function getImageIds()
 	{
 		$max =  (int)$this->serviceContainer->getParameter('image_count');
@@ -159,14 +153,20 @@ class AppHelper
 		
 		try {
 			$file_system->remove($this->serviceContainer->getParameter('upload_path').'/'.$filename);
-            $this->entityManager->remove($image);
-            $this->entityManager->flush();
             
 		} catch (IOExceptionInterface $exception) {
 			return false;
 		}
-		return true;
+		return $image;
 	
+	}
+	public function deleteImages($images)
+	{
+		$image_results = array();
+		foreach($images as $image){
+			array_push($image_results, $this->deleteImage($image));
+		}
+		return $image_results;
 	}
 	public function renderSetting($setting_slug, $params = array())
 	{
