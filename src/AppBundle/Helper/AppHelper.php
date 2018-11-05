@@ -211,5 +211,11 @@ class AppHelper
 		return $this->serviceContainer->get('mailer')->send($message);
 		
 	}
-	
+	public function hasAdmin()
+	{
+	    $qb = $this->entityManager->createQueryBuilder();
+	    $qb->select('count(u)')
+	    return (int)$qb->getQuery()->getSingleScalarResult();
+	    
+	}
 }
