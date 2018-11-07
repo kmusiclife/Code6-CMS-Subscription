@@ -37,7 +37,7 @@ article:
     title:
         index: "記事一覧"
         edit: "記事編集"
-        add: "記事新規作成"
+        new: "記事新規作成"
     button:
         new: "追加する"
         edit: "編集する"
