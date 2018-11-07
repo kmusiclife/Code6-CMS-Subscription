@@ -36,7 +36,7 @@ class ConfigController extends Controller
 	    
 	    $setting = new Setting();
 		$setting->setSlug( $request->get('slug') );
-		$default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'message');
+		$default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'default');
 		$setting->setValue($default_value);
         
         $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);

@@ -15,6 +15,8 @@ message:
     contact_sent: "お問い合わせありがとうございます。お問い合わせを送信いたしました。"
     
 contact:
+    title:
+        index: "受信メール一覧"
     button:
         new: "メールを送信する"
         

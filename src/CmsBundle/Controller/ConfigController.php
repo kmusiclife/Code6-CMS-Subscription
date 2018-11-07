@@ -31,8 +31,8 @@ class ConfigController extends Controller
         $page->setSlug( $request->get('slug') );
         $page->setCreatedUser($user);
         
-        $default_page_title = $this->get('translator')->trans('page.default.'.$request->get('slug').'_title', [], 'message');
-        $default_page_body = $this->get('translator')->trans('page.default.'.$request->get('slug').'_body', [], 'message');
+        $default_page_title = $this->get('translator')->trans('page.default.'.$request->get('slug').'_title', [], 'default');
+        $default_page_body = $this->get('translator')->trans('page.default.'.$request->get('slug').'_body', [], 'default');
         
         $page->setTitle($default_page_title);
         $page->setBody($default_page_body);

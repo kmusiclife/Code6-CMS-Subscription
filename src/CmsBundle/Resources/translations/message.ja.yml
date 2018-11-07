@@ -3,6 +3,12 @@ entity:
         title: "タイトル"
         slug: "ページスラッグ"
         body: "ページ本文"
+    
+    image:
+        title: "タイトル"
+        body: "本文"
+        image: "画像"
+
     article:
         title: "記事名"
         date: "記事開催日"
@@ -15,84 +21,45 @@ entity:
         place: "開催場所"
         is_published: "公開・非公開"
         images: "アップロード画像"
-        published_at: "公開日時"
+        published_at: "公開時間"
         
-    user:
-        current_password: "現在のパスワード"
-    image:
-        title: "タイトル"
-        body: "本文"
-        image: "画像"
-        
-    place:
-        title: "場所の名前"
-        body: "場所の説明"
-        zip: "郵便番号"
-        address: "住所"
-        tel: "電話番号"
-        email: "メールアドレス"
+    seo:
+        image: "メインイメージ"
+        description: "説明文"
+        keywords: "キーワード"
 
-    setting:
-        slug: "設定ID"
-        value: "設定内容"
-        
-    contact:
-        title: "メールタイトル"
-        name: "お名前"
-        email: "メールアドレス"
-        zip: "郵便番号"
-        address: "住所"
-        tel: "電話番号"
-        body: "本文"
-        createdAt: "送信日時"
-        
-setting:
+seo:
     title:
-        index: "設定一覧"
-        edit: "設定変更"
-        new: "新しい設定"
-        
-message:
-    added: "データを追加しました"
-    edited: "編集を完了しました"
-    contact_deleted: "メールを削除しました"
+        form_title: "SEO設定"
+        form_description: "サイトを検索に確実にヒットさせる際には下記を設定してください。サイトの説明には200文字程度の説明文を入力してください。Google検索や各種SNSで表示されます。サイトのキーワードは必須ではありません。"
 
-place:
-    button:
-        new: "新規追加"
-        show: "詳細"
-        edit: "編集"
-    title:
-        index: "場所一覧"
-        new: "場所追加"
-        edit: "場所編集"
-        
 article:
-    title: 
+    title:
         index: "記事一覧"
-        show: "記事詳細"
-        edit: "記事を編集"
-        new: "記事新規作成"
-    button:
-        new: "記事追加"
-        show: "記事詳細"
         edit: "記事編集"
+        add: "記事新規作成"
+    button:
+        new: "追加する"
+        edit: "編集する"
+        show: "表示する"
+        delete: "削除する"
     message:
-        place: "開催場所はこちらより追加してください"
-        is_published: "公開する"
+        is_published: "公開する場合はチェックを入れてください"
         
 page:
     title:
         new: "ページ作成"
         index: "ページ一覧"
         edit: "ページを編集"
+        policy: "プライバシーポリシー"
+        about: "本サービスについて"
+        config: "ページ初期設定"
+        
     button:
         new: "追加する"
         edit: "編集する"
         show: "表示する"
         delete: "削除する"
-index:
-    title: "トップページ"
     
 image:
     title:
@@ -102,13 +69,9 @@ image:
     button:
         show: "表示する"
         edit: "編集する"
-        
-cms:
-    title:
-        policy: "プライバシーポリシー"
 
 contact:
     title:
-        index: "受信メール一覧"
-    button:
-        edit: "詳細を見る"
+        new: "お問い合わせ"
+        completed: "お問い合わせありがとうございます"
+
