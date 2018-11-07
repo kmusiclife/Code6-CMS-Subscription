@@ -219,5 +219,15 @@ class AppHelper
 		return $this->serviceContainer->get('mailer')->send($message);
 		
 	}
+	public function hasAdmin()
+	{
+	    $qb = $this->entityManager->createQueryBuilder();
+	    $qb->select('count(u)')
+	        ->from('AppBundle:User', 'u')
+	        ->where('u.roles LIKE :roles')
+	        ->setParameter('roles', '%ROLE_ADMIN%');
 	
+	    return (int)$qb->getQuery()->getSingleScalarResult();
+	    
+	}
 }
