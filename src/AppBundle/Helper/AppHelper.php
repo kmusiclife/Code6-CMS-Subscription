@@ -99,57 +99,65 @@ class AppHelper
 		}
 		
 	}
-	public function validationImages($form_id, Form &$form, $images){
+	public function validImage(Image $image, &$form_obj)
+	{
+		if( $image->getFile() ){
+	        $this->validationImage($form_obj, $image);
+		}
+	}
+	public function validationImages(&$form_obj, $images){
 		
 	    foreach( $images as $i => $image )
         {
 	        
 	        if(!$image->getFile()) continue;
-	        
 			$errors = $this->serviceContainer->get('validator')->validate($image);
 	        
 	        if( count($errors) > 0 ){
 		        foreach($errors as $error){
-			        $form[$form_id][$i]['file']->addError( new FormError($error->getMessage()) );
+			        $form_obj[$i]['file']->addError( new FormError($error->getMessage()) );
 		        }
 	        } else {
 			    $image_name = uniqid().'.'.$image->getFile()->guessExtension();
-		        $image->setImage($image_name);
+		        $image->setSrc($image_name);
 	        }
         }
 
 	}
-	public function validationImage($form_id, Form &$form, Image $image)
+	public function validationImage(&$form_obj, Image $image)
 	{
 		
+		if(null == $image->getFile()) return;
         $errors = $this->serviceContainer->get('validator')->validate($image);
         
         if( count($errors) > 0 ){
 	        foreach($errors as $error){
-		        $form[$form_id]['file']->addError( new FormError($error->getMessage()) );
+		        $form_obj['file']->addError( new FormError($error->getMessage()) );
 	        }
         } else {
 			$image_name = uniqid().'.'.$image->getFile()->guessExtension();
-			$image->setImage($image_name);
+			$image->setSrc($image_name);
         }
-		
+        
 	}
 	public function uploadImage(Image $image)
 	{
 		if(!$image->getFile()) return;
-	    return $image->getFile()->move($this->serviceContainer->getParameter('upload_path'), $image->getImage());
+	    return $image->getFile()->move($this->serviceContainer->getParameter('upload_path'), $image->getSrc());
 	}
 	public function uploadImages($images) 
 	{
+		$result_images = array();
 	    foreach( $images as $image ){
-			$this->uploadImage($image);
+			array_push($result_images, $this->uploadImage($image));
         }
+        return $result_images;
 	}
 	public function deleteImage(Image $image)
 	{
 		
 		$file_system = new Filesystem();
-		$filename = $image->getImage();
+		$filename = $image->getSrc();
 		
 		try {
 			$file_system->remove($this->serviceContainer->getParameter('upload_path').'/'.$filename);
@@ -211,15 +219,5 @@ class AppHelper
 		return $this->serviceContainer->get('mailer')->send($message);
 		
 	}
-	public function hasAdmin()
-	{
-	    $qb = $this->entityManager->createQueryBuilder();
-	    $qb->select('count(u)')
-	        ->from('AppBundle:User', 'u')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%ROLE_ADMIN%');
 	
-	    return (int)$qb->getQuery()->getSingleScalarResult();
-	    
-	}
 }
