@@ -29,7 +29,7 @@ class ContactFormType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'sitebundle_config';
+        return 'sitebundle_contact';
     }
 
 

@@ -1,0 +1,13 @@
+{% trans_default_domain 'message' %}
+{% extends 
+	theme_name ? 
+		"themes/"~theme_name~"/layout.html.twig" : 
+		"themes/default/layout.html.twig"
+%}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Create" />
+{{ form_end(form) }}
+{% endblock %}

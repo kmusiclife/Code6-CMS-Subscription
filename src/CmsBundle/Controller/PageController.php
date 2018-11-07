@@ -14,15 +14,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 /**
- * Page Controller
+ * Page controller.
  *
- * @Route("/admin")
+ * @Route("/")
  */
 class PageController extends Controller
 {
-
+	
     /**
-     * @Route("/page", name="page_index")
+     * @Route("admin/page", name="page_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -42,12 +42,15 @@ class PageController extends Controller
 
     }
     /**
-     * @Route("/page/new", name="page_new")
+     * @Route("admin/page/new", name="page_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
+	    $user = $this->getUser();
         $page = new Page();
+        $page->setCreatedUser($user);
+        
         $form = $this->createForm('CmsBundle\Form\Type\PageFormType', $page);
         $form->handleRequest($request);
 
@@ -65,7 +68,7 @@ class PageController extends Controller
 
     }
     /**
-     * @Route("/page/edit/{slug}", name="page_edit")
+     * @Route("admin/page/edit/{slug}", name="page_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Page $page)
@@ -90,7 +93,7 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/page/delete/{id}", name="page_delete")
+     * @Route("admin/page/delete/{id}", name="page_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Page $page)

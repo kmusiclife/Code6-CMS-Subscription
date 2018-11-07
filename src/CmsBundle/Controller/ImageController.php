@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\PasswordFormType;
 
 /**
+ * Image controller.
+ *
  * @Route("admin/image")
  */
 class ImageController extends Controller
@@ -74,6 +76,7 @@ class ImageController extends Controller
      */
     public function deleteAction(Request $request, Image $image)
     {
+	    $em = $this->getDoctrine()->getManager();
 	    
 	    if($image->getIsLock()){
 		    return $this->redirectToRoute('image_index');
@@ -84,6 +87,8 @@ class ImageController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('cms.cms_helper')->deleteImage( $image );
+            $em->remove($image);
+            $em->flush();
         }
 
         return $this->redirectToRoute('image_index');

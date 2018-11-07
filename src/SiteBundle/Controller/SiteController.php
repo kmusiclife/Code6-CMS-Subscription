@@ -18,6 +18,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 /**
  * Site controller.
  *
@@ -83,5 +87,5 @@ class SiteController extends Controller
 	    else
 	    	return new RedirectResponse($this->generateUrl('site_index'));
     }
-
+    	
 }
