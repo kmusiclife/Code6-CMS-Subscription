@@ -42,7 +42,7 @@ class UploadListener
     {
 
         $image = new Image();
-        $image->setImage( $event->getFile()->getFilename() );
+        $image->setSrc( $event->getFile()->getFilename() );
         $image->setCreatedUser( $this->user );
         $this->EntityManager->persist($image);
         $this->EntityManager->flush();

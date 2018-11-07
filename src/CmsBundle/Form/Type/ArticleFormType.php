@@ -41,7 +41,8 @@ class ArticleFormType extends AbstractType
         	'widget' => 'single_text',
         	'html5' => false,
         ));
-        $builder->add('eyecatch', ImageSimpleRequireFormType::class, array());
+        $builder->add('seo', SeoRequireFormType::class, array());
+
     }
     public function configureOptions(OptionsResolver $resolver)
     {

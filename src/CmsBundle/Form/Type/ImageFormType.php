@@ -19,7 +19,7 @@ class ImageFormType extends AbstractType
     {
         $builder->add('title');
         $builder->add('body');
-        $builder->add('image', HiddenType::class);
+        $builder->add('src', HiddenType::class);
     }
     /**
      * {@inheritdoc}

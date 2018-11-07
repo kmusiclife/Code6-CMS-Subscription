@@ -17,8 +17,6 @@ class Article
 {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -26,31 +24,20 @@ class Article
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="body", type="text")
      */
     private $body;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="body_extra", type="text", nullable=true)
      */
     private $body_extra;
 
-    /**
-    * @ORM\ManyToOne(targetEntity="CmsBundle\Entity\Image", cascade={"persist"})
-    */
-    private $eyecatch;
-    
     /**
      * @ORM\ManyToMany(targetEntity="Image", cascade={"persist"})
      * @ORM\JoinTable(name="article_images",
@@ -60,17 +47,6 @@ class Article
      */
 	private $images;
 	
-	/*
-	 * File Upload Interface
-	*/
-	private $file;
-	public function getFile(){
-		return $this->file;
-	}
-	public function setFile($file){
-		$this->file = $file;
-	}
-    
     /**
      * @ORM\Column(name="is_published", type="boolean")
      */
@@ -103,6 +79,11 @@ class Article
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="CmsBundle\Entity\Seo")
+    */
+    protected $seo;
 
 
 
@@ -272,11 +253,11 @@ class Article
     /**
      * Set publishedAt.
      *
-     * @param \DateTime $publishedAt
+     * @param \DateTime|null $publishedAt
      *
      * @return Article
      */
-    public function setPublishedAt($publishedAt)
+    public function setPublishedAt($publishedAt = null)
     {
         $this->publishedAt = $publishedAt;
 
@@ -286,7 +267,7 @@ class Article
     /**
      * Get publishedAt.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getPublishedAt()
     {
@@ -342,30 +323,6 @@ class Article
     }
 
     /**
-     * Set eyecatch.
-     *
-     * @param \CmsBundle\Entity\Image|null $eyecatch
-     *
-     * @return Article
-     */
-    public function setEyecatch(\CmsBundle\Entity\Image $eyecatch = null)
-    {
-        $this->eyecatch = $eyecatch;
-
-        return $this;
-    }
-
-    /**
-     * Get eyecatch.
-     *
-     * @return \CmsBundle\Entity\Image|null
-     */
-    public function getEyecatch()
-    {
-        return $this->eyecatch;
-    }
-
-    /**
      * Add image.
      *
      * @param \CmsBundle\Entity\Image $image
@@ -399,5 +356,29 @@ class Article
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set seo.
+     *
+     * @param \CmsBundle\Entity\Seo|null $seo
+     *
+     * @return Article
+     */
+    public function setSeo(\CmsBundle\Entity\Seo $seo = null)
+    {
+        $this->seo = $seo;
+
+        return $this;
+    }
+
+    /**
+     * Get seo.
+     *
+     * @return \CmsBundle\Entity\Seo|null
+     */
+    public function getSeo()
+    {
+        return $this->seo;
     }
 }

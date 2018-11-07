@@ -15,8 +15,6 @@ use AppBundle\Entity\User;
 class Image
 {
     /**
-     * @var integer $id
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -29,23 +27,19 @@ class Image
     protected $createdUser;
     
     /**
-     * @var string $title
-     *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
     
     /**
-     * @var string $body
-     *
      * @ORM\Column(name="body", type="text", nullable=true)
      */
     private $body;
 
     /**
-     * @ORM\Column(name="image", type="string", nullable=true)
+     * @ORM\Column(name="src", type="string", nullable=true)
      */
-    private $image;
+    private $src;
     
     /**
      * @ORM\Column(name="is_lock", type="boolean")
@@ -88,6 +82,9 @@ class Image
      */
     private $updatedAt;
     
+
+
+
 
 
     /**
@@ -149,27 +146,27 @@ class Image
     }
 
     /**
-     * Set image.
+     * Set src.
      *
-     * @param string|null $image
+     * @param string|null $src
      *
      * @return Image
      */
-    public function setImage($image = null)
+    public function setSrc($src = null)
     {
-        $this->image = $image;
+        $this->src = $src;
 
         return $this;
     }
 
     /**
-     * Get image.
+     * Get src.
      *
      * @return string|null
      */
-    public function getImage()
+    public function getSrc()
     {
-        return $this->image;
+        return $this->src;
     }
 
     /**

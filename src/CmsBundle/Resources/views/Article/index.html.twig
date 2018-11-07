@@ -17,7 +17,7 @@
     <tbobdy>
 {% for article in articles %}
     <tr>
-        <td><img src="{{ asset('/uploads/'~article.eyecatch.image)| imagine_filter('image_small') }}" alt="" /></td>
+        <td><img src="{{ asset('/uploads/'~article.seo.image.src)| imagine_filter('image_small') }}" alt="" /></td>
         <td>
 			<div style="padding: 10px 0;">{{ article.title|trans() }}</div>
 	        <div>

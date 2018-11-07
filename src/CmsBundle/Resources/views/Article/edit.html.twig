@@ -16,14 +16,14 @@
 
 
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.article.eyecatch'|trans() }}*</label>
+	<label>{{ 'entity.seo.image'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ form_widget(edit_form.eyecatch) }}
-	{{ form_errors(edit_form.eyecatch) }}
-	{% if article.eyecatch.image is defined %}
+	{{ form_widget(edit_form.seo.image) }}
+	{{ form_errors(edit_form.seo.image) }}
+	{% if article.seo.image.src is defined %}
 	<div class="image">
-		<img src="{{ upload_uri }}/{{ article.eyecatch.image }}" width="100%" />
+		<img src="{{ upload_uri }}/{{ article.seo.image.src }}" width="100%" />
 	</div>
 	{% endif %}
 	
@@ -48,14 +48,13 @@
 <div class="9u$ 12u$(xsmall)">
 	{{ form_widget(image) }}
 	{{ form_errors(image) }}
-	{% if image.vars.value.image is not null %}
+	{% if image.vars.value.src is not null %}
 	<div class="image">
-		<img src="{{ upload_uri }}/{{ image.vars.value.image }}" width="100%" />
+		<img src="{{ upload_uri }}/{{ image.vars.value.src }}" width="100%" />
 	</div>
 	{% endif %}
 </div>
 {% endfor %}
-
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.article.published_at'|trans() }}*</label>
@@ -65,6 +64,30 @@
 </div>
 
 
+<div class="12u$ 12u$(xsmall)">
+	<div class="box">
+		<div>
+		<h3>{{ 'seo.title.form_title'|trans }}</h3>
+		<p>{{ 'seo.title.form_description'|trans }}</p>
+		</div>
+		
+		<h4>{{ 'entity.seo.description'|trans }}</h4>
+		<div class="12u$ 12u$(xsmall)">
+			<p>
+			{{ form_widget(edit_form.seo.description) }}
+			{{ form_errors(edit_form.seo.description) }}
+			</p>
+		</div>
+		<h4>{{ 'entity.seo.keywords'|trans }}</h4>
+		<div class="12u$ 12u$(xsmall)">
+			<p>
+			{{ form_widget(edit_form.seo.keywords) }}
+			{{ form_errors(edit_form.seo.keywords) }}
+			</p>
+		</div>
+	</div>
+</div>
+
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.article.is_published'|trans() }}*</label>
 </div>
@@ -73,10 +96,8 @@
 <label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
 </div>
 
-
-<div class="3u 12u$(xsmall)"></div>
-<div class="9u$ 12u$(xsmall)">
-	<input type="submit" class="special" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+<div class="12u$ 12u$(xsmall)">
+	<input type="submit" class="special fit" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
 </div>
 
 
@@ -103,7 +124,6 @@
 
 {% endblock %}
 
-
 {% block stylesheets %}
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
@@ -111,11 +131,13 @@
 {% endblock %}
 
 {% block javascripts %}
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 {% endblock %}
 
 {% block javascript %}

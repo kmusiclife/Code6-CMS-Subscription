@@ -6,6 +6,7 @@ use CmsBundle\Entity\Article;
 use CmsBundle\Form\Type\ArticleFormType;
 
 use CmsBundle\Entity\Image;
+use CmsBundle\Entity\Seo;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -55,10 +56,13 @@ class ArticleController extends Controller
      */
     public function newAction(Request $request)
     {
-	    
 	    $em = $this->getDoctrine()->getManager();
 	    $user = $this->getUser();
         $article = new Article();
+        $seo = new Seo();
+        
+        $seo->setImage( new Image() );
+        $article->setSeo( $seo );
         
         $image_ids = $this->getImageIds();
         
@@ -72,28 +76,25 @@ class ArticleController extends Controller
         $form = $this->createForm(ArticleFormType::class, $article);
         $form->handleRequest($request);
         
+		$this->get('app.app_helper')->validImage($article->getSeo()->getImage(), $form['seo']['image']);
+		
 		if($article->getImages()){
 	        foreach( $article->getImages() as $image ){
 		        if(!$image->getFile()) $article->removeImage($image);
 	        }
-			$this->get('app.app_helper')->validationImages('images', $form, $article->getImages());
+			$this->get('app.app_helper')->validationImages($form['images'], $article->getImages());
 	    }
-		
-		if( $article->getEyecatch() ){
-			
-	        $this->get('app.app_helper')->validationImage('eyecatch', $form, $article->getEyecatch());
-		}
 		
         if( $form->isSubmitted() && $form->isValid() )
         {
 	        
-	        $this->get('app.app_helper')->uploadImage($article->getEyecatch());
-	        $article->getEyecatch()
+	        $this->get('app.app_helper')->uploadImage($article->getSeo()->getImage());
+	        $article->getSeo()->getimage()
 	        	->setIsLock(true)
 			    ->setTitle($article->getTitle())
 			    ->setBody($article->getBody())
 		        ->setCreatedUser($this->getUser());
-				
+	        
 	        $this->get('app.app_helper')->uploadImages($article->getImages());
 	        foreach($article->getImages() as $image)
 	        {
@@ -103,9 +104,11 @@ class ArticleController extends Controller
 		        	->setCreatedUser($user)
 		        	->setIsLock(true);
 	        }
-	        
+
+	        $em->persist($article->getSeo());
             $em->persist($article);
             $em->flush();
+            
             $this->addFlash('notice', 'message.added');
             return $this->redirectToRoute('article_edit', array('id' => $article->getId()));
 			
@@ -116,7 +119,7 @@ class ArticleController extends Controller
             'form' => $form->createView(),
         ));
     }
-
+	
     /**
      * @Route("/{id}/edit", name="article_edit")
      * @Method({"GET", "POST"})
@@ -143,33 +146,31 @@ class ArticleController extends Controller
 		
 		if($editForm->isSubmitted()){
 			
-			if( $article->getEyecatch()->getFile() ){
-		        $this->get('app.app_helper')->validationImage('eyecatch', $editForm, $article->getEyecatch());
-			}
+			$this->get('app.app_helper')->validImage($article->getSeo()->getImage(), $editForm['seo']['image']);
 			
 			if($article->getImages()){
 		       
 		        foreach( $article->getImages() as $image ){
 			        
-			        if(!$image->getFile() and !$image->getImage()) {
+			        if(!$image->getFile() and !$image->getSrc()) {
 				        $article->removeImage($image);
 				    }
 		        }
-				$this->get('app.app_helper')->validationImages('images', $editForm, $article->getImages());
+				$this->get('app.app_helper')->validationImages($editForm['images'], $article->getImages());
 				
 		    }
 		    
 	        if ($editForm->isValid()) {
 				
-				if($article->getEyecatch()->getFile()){
-			        $this->get('app.app_helper')->uploadImage($article->getEyecatch());
-			        $article->getEyecatch()
+				if($article->getSeo()->getImage()->getFile()){
+			        $this->get('app.app_helper')->uploadImage($article->getSeo()->getImage());
+			        $article->getSeo()->getImage()
 			        	->setIsLock(true)
-						->setTitle($article->getTitle())
-						->setBody($article->getBody())
-						->setCreatedUser($this->getUser());
-				}
-				
+					    ->setTitle($article->getTitle())
+					    ->setBody($article->getBody())
+				        ->setCreatedUser($this->getUser());
+			    }
+
 		        $this->get('app.app_helper')->uploadImages($article->getImages());
 		        foreach($article->getImages() as $image)
 		        {
@@ -179,7 +180,6 @@ class ArticleController extends Controller
 						->setIsLock(true)
 				        ->setCreatedUser($this->getUser());
 		        }
-
 	            
 	            $em = $this->getDoctrine()->getManager();
 	            $em->persist($article);
@@ -211,13 +211,14 @@ class ArticleController extends Controller
 		
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $eyecatch = $article->getEyecatch();
             $images = $article->getImages();
             
             $em->remove($article);
             
-            $eyecatch = $this->get('app.app_helper')->deleteImage( $eyecatch );
-            $em->remove($eyecatch);
+			$seo = $article->getSeo();
+            $seo_image = $this->get('app.app_helper')->deleteImage( $seo->getImage() );
+			$em->remove($seo_image);
+            $em->remove($seo);
             
             $images = $this->get('app.app_helper')->deleteImages( $images );            
             foreach($images as $image)

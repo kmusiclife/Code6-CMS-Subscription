@@ -41,20 +41,15 @@ entity:
         place: "開催場所"
         is_published: "公開・非公開"
         images: "アップロード画像"
+    seo:
+        image: "メインイメージ"
+        description: "説明文"
+        keywords: "キーワード"
 
-news:
-    title: 
-        index: "ニュース一覧"
-        show: "ニュース詳細"
-        edit: "ニュースを編集"
-        new: "ニュース新規作成"
-    button:
-        new: "ニュース追加"
-        show: "ニュース詳細"
-        edit: "ニュース編集"
-    message:
-        place: "開催場所はこちらより追加してください"
-        is_published: "公開する"
+seo:
+    title:
+        form_title: "SEO設定"
+        form_description: "サイトを検索に確実にヒットさせる際には下記を設定してください。サイトの説明には200文字程度の説明文を入力してください。Google検索や各種SNSで表示されます。サイトのキーワードは必須ではありません。"
 
 stripe:
     title:
@@ -493,3 +488,4 @@ form:
         delete: "削除する"
         cancel: "解約する"
         login: "ログイン"
+        create: "新規作成する"

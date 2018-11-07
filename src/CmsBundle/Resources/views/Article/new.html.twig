@@ -16,11 +16,11 @@
 
 
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.article.eyecatch'|trans() }}</label>
+	<label>{{ 'entity.seo.image'|trans() }}</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ form_errors(form.eyecatch.file) }}
-	{{ form_widget(form.eyecatch.file) }}
+	{{ form_errors(form.seo.image.file) }}
+	{{ form_widget(form.seo.image.file) }}
 </div>
 
 
@@ -31,6 +31,14 @@
 <div class="9u$ 12u$(xsmall)">
 	{{ form_widget(form.body, {'attr': { 'placeholder':'例) example', 'style': 'height: 200px;' }}) }}
 	{{ form_errors(form.body) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.published_at'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.publishedat, {'attr': { 'class' : 'js-datepicker-datetime', 'placeholder':'例) 2018' }}) }}
 </div>
 
 
@@ -45,12 +53,31 @@
 {% endfor %}
 
 
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.article.published_at'|trans() }}*</label>
+
+<div class="12u$ 12u$(xsmall)">
+	<div class="box">
+		<div>
+		<h3>{{ 'seo.title.form_title'|trans }}</h3>
+		<p>{{ 'seo.title.form_description'|trans }}</p>
+		</div>
+		
+		<h4>{{ 'entity.seo.description'|trans }}</h4>
+		<div class="12u$ 12u$(xsmall)">
+			<p>
+			{{ form_widget(form.seo.description) }}
+			{{ form_errors(form.seo.description) }}
+			</p>
+		</div>
+		<h4>{{ 'entity.seo.keywords'|trans }}</h4>
+		<div class="12u$ 12u$(xsmall)">
+			<p>
+			{{ form_widget(form.seo.keywords) }}
+			{{ form_errors(form.seo.keywords) }}
+			</p>
+		</div>
+	</div>
 </div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.publishedat, {'attr': { 'class' : 'js-datepicker-datetime', 'placeholder':'例) 2018' }}) }}
-</div>
+
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.article.is_published'|trans() }}*</label>
@@ -60,11 +87,10 @@
 <label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
 </div>
 
-
-<div class="3u 12u$(xsmall)"></div>
-<div class="9u$ 12u$(xsmall)">
-	<input type="submit" class="special" value="{{ 'page.button.new'|trans }}" id="submit-button" />
+<div class="12u$ 12u$(xsmall)">
+	<input type="submit" class="special fit" value="{{ 'form.button.create'|trans }}" id="submit-button" />
 </div>
+
 
 
 
@@ -79,11 +105,13 @@
 {% endblock %}
 
 {% block javascripts %}
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 {% endblock %}
 
 {% block javascript %}
@@ -91,7 +119,7 @@
 <script>
 $(document).ready(function() {
 	
-	var defaultDate = new Date('{{ 'now'|date('Y/m/d 10:00') }}');
+	var defaultDate = new Date('{{ 'now'|date('Y/m/d H:i') }}');
 
 	$('.js-datepicker-datetime').datetimepicker({
 		format: 'YYYY-MM-DD HH:ss',
