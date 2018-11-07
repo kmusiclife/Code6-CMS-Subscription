@@ -83,7 +83,7 @@ class ImageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('app.app_helper')->deleteImage( $image );
+            $this->get('cms.cms_helper')->deleteImage( $image );
         }
 
         return $this->redirectToRoute('image_index');

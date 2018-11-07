@@ -9,3 +9,7 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    cms.cms_helper:
+        class: CmsBundle\Helper\CmsHelper
+        arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        public: true

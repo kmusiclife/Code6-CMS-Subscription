@@ -53,18 +53,6 @@ class AppHelper
 		
 		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
-
-	public function getImageIds()
-	{
-		$max =  (int)$this->serviceContainer->getParameter('image_count');
-		$images = array();
-		
-		for($i=0; $i<$max; $i++){
-			array_push($images, 'image'.($i+1));
-		}
-		return $images;
-		
-	}
 	public function getParameter($name)
 	{
 		return $this->serviceContainer->getParameter($name);
@@ -98,83 +86,6 @@ class AppHelper
 			$this->setSetting($setting_slug, $value);
 		}
 		
-	}
-	public function validImage(Image $image, &$form_obj)
-	{
-		if( $image->getFile() ){
-	        $this->validationImage($form_obj, $image);
-		}
-	}
-	public function validationImages(&$form_obj, $images){
-		
-	    foreach( $images as $i => $image )
-        {
-	        
-	        if(!$image->getFile()) continue;
-			$errors = $this->serviceContainer->get('validator')->validate($image);
-	        
-	        if( count($errors) > 0 ){
-		        foreach($errors as $error){
-			        $form_obj[$i]['file']->addError( new FormError($error->getMessage()) );
-		        }
-	        } else {
-			    $image_name = uniqid().'.'.$image->getFile()->guessExtension();
-		        $image->setSrc($image_name);
-	        }
-        }
-
-	}
-	public function validationImage(&$form_obj, Image $image)
-	{
-		
-		if(null == $image->getFile()) return;
-        $errors = $this->serviceContainer->get('validator')->validate($image);
-        
-        if( count($errors) > 0 ){
-	        foreach($errors as $error){
-		        $form_obj['file']->addError( new FormError($error->getMessage()) );
-	        }
-        } else {
-			$image_name = uniqid().'.'.$image->getFile()->guessExtension();
-			$image->setSrc($image_name);
-        }
-        
-	}
-	public function uploadImage(Image $image)
-	{
-		if(!$image->getFile()) return;
-	    return $image->getFile()->move($this->serviceContainer->getParameter('upload_path'), $image->getSrc());
-	}
-	public function uploadImages($images) 
-	{
-		$result_images = array();
-	    foreach( $images as $image ){
-			array_push($result_images, $this->uploadImage($image));
-        }
-        return $result_images;
-	}
-	public function deleteImage(Image $image)
-	{
-		
-		$file_system = new Filesystem();
-		$filename = $image->getSrc();
-		
-		try {
-			$file_system->remove($this->serviceContainer->getParameter('upload_path').'/'.$filename);
-            
-		} catch (IOExceptionInterface $exception) {
-			return false;
-		}
-		return $image;
-	
-	}
-	public function deleteImages($images)
-	{
-		$image_results = array();
-		foreach($images as $image){
-			array_push($image_results, $this->deleteImage($image));
-		}
-		return $image_results;
 	}
 	public function renderSetting($setting_slug, $params = array())
 	{
