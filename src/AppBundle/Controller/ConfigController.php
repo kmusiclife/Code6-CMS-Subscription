@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -39,14 +41,18 @@ class ConfigController extends Controller
 		$default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'default');
 		$setting->setValue($default_value);
         
-        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting);
+        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting)->remove('slug')->add('slug', HiddenType::class);
+        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($setting);
             $em->flush();
-            return $this->redirectToRoute('site_index');
+            
+            return $this->redirectToRoute('admin_index');
+            
         }
 		
         return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(

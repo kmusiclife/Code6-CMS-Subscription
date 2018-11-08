@@ -34,6 +34,8 @@ setting:
     button:
         submit: "送信する"
         edit:  "編集する"
+        new: "登録する"
+        
 exception:
     title:
         index: "Error"

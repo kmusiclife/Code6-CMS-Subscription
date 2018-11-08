@@ -51,10 +51,13 @@ class ConfigController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($page);
             $em->flush();
-            return $this->redirectToRoute('site_index');
+            
+            return $this->redirectToRoute('admin_index');
+            
         }
         
         return $this->render('@CmsBundle/Resources/views/Config/new.html.twig', array(

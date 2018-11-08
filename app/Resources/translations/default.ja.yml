@@ -1,6 +1,9 @@
 setting:
     default:
+        register_email_subject_label: "メールタイトル：会員登録完了時"
         register_email_subject: "【重要】登録完了のお知らせ"
+        
+        register_email_label: "メール本文：会員登録完了時"
         register_email: |
             
             本メールはサービス登録時にお送りしています。
@@ -30,6 +33,8 @@ setting:
             
             本サービスをご利用いただき誠にありがとうございます。
             今後ともどうぞよろしくお願いいたします。
+        
+        registered_description_label: "ページ表示：会員登録時"
         registered_description: |
             
             登録誠にありがとうございます。
@@ -41,7 +46,10 @@ setting:
             よりよいコミュニティづくりを行っていきます。
             今後ともどうぞよろしくお願いいたします。
             
+        cancel_email_subject_label:  "メールタイトル：退会完了時"
         cancel_email_subject:  "【重要】登録解除のお知らせ"
+        
+        cancel_email_label: "メール本文：退会完了時"
         cancel_email: |
             
             本メールはサービス登録解除時にお送りしています。
@@ -57,6 +65,7 @@ setting:
             上記内容でサービスの解除を行いました。
             本サービスをご利用いただきありがとうございました。
 
+        cancel_description_label: "ページ表示：退会「前」"
         cancel_description: |
             
             本サービスの登録解除を行うと本サービスの利用ができなくなります。
@@ -64,14 +73,18 @@ setting:
             また、メールアドレスなどの個人情報をはじめ、サービス利用時のデータのすべてを
             登録解除とともに完全に削除いたします。復旧することはできませんのであらかじめご了承ください。
  
+        canceled_description_label: "ページ表示：退会「完了」"
         canceled_description: |
             
             本サービスのキャンセル処理が完了いたしました。
             サービスのご利用ありがとうございました。
             また何かの機会がありましたらサービスをご利用いただけると幸いです。
             今後ともどうぞよろしくお願いいたします。
-
+        
+        contact_email_subject_label: "メールタイトル：サイトからのお問い合わせ(管理者へのメール)"
         contact_email_subject: "【お問い合わせ】サイトからのお問い合わせ"
+        
+        contact_email_label: "メール本文：サイトからのお問い合わせ(管理者へのメール)"
         contact_email: |
             
             サイトからのお問い合わせです。
@@ -84,7 +97,8 @@ setting:
             住所： {{ contact.zip }} {{ contact.address }}
             本文：
             {{ contact.body }}
-            
+        
+        contacted_description_label: "ページ表示：サイトからのお問い合わせ完了時"
         contacted_description: |
             お問い合わせありがとうございます。
             お返事までに数日お時間いただくことがありますがご了承頂ますようお願いいたします。
