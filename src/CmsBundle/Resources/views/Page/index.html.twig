@@ -4,39 +4,34 @@
 {% block title %}{{ 'page.title.index'|trans() }}{% endblock title %}
 {% block body %}
 <div>
-<a href="{{ path('page_new') }}" class="button special small"><i class="fas fa-plus"></i> {{ 'page.button.new'|trans() }}</a>
+<a href="{{ path('page_new') }}" class="button special small fit"><i class="fas fa-plus"></i> {{ 'page.button.new'|trans() }}</a>
 </div>
 <div class="table-wrapper">
 <table class="table">
     <thead>
 	    <tr>
+	        <th>{{ 'entity.page.eyecatch'|trans() }}</th>
 	        <th>{{ 'entity.page.title'|trans() }}</th>
-	        <th>{{ 'entity.page.slug'|trans() }}</th>
-	        <th>&nbsp;</th>
-	        <th>&nbsp;</th>
 	    </tr>
 	</thead>
-
     <tbobdy>
 {% for page in pages %}
     <tr>
-        <td>{{ page.title|trans() }}</td>
-        <td>{{ page.slug }}</td>
         <td>
-        	{% if page.slug == 'index' %}
-        	<a href="{{ path('homepage') }}" class="button small" target="_blank">{{ 'page.button.show'|trans() }}</a>
-        	{% else %}
-        	<a href="{{ path('page_show', {'slug': page.slug}) }}" class="button small" target="_blank">{{ 'page.button.show'|trans() }}</a>
-        	{% endif %}
+        	{% if page.seo.image %}
+        	<img src="{{ asset('/uploads/'~page.seo.image.src)| imagine_filter('image_small') }}" alt="" />
+			{% endif %}
         </td>
         <td>
-        	<a href="{{ path('page_edit', {'slug': page.slug}) }}" class="button small special">{{ 'page.button.edit'|trans() }}</a>
+			<div style="padding: 10px 0;">{{ page.title|trans() }}</div>
+	        <div>
+	        <a href="{{ path('page_show', {'slug': page.slug}) }}" class="button small" target="_blank">{{ 'page.button.show'|trans() }}</a>
+	        	<a href="{{ path('page_edit', {'id': page.id}) }}" class="button small special">{{ 'page.button.edit'|trans() }}</a>
+			</div>
         </td>
-
     </tr>
 {% endfor %}
     </tbobdy>
-    
 </table>
 </div>
 

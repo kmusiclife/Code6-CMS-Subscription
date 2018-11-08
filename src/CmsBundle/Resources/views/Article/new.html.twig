@@ -16,7 +16,16 @@
 
 
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.seo.image'|trans() }}</label>
+	<label>{{ 'entity.article.slug'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.slug, {'attr': {'placeholder':'例) article01'}}) }}
+	{{ form_errors(form.slug) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.seo.image'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
 	{{ form_errors(form.seo.image.file) }}
@@ -78,7 +87,6 @@
 	</div>
 </div>
 
-
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.article.is_published'|trans() }}*</label>
 </div>
@@ -86,6 +94,16 @@
 {{ form_widget(form.is_published) }}
 <label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
 </div>
+
+{% if members_mode == true %}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.is_member'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(form.is_member) }}
+<label for="cmsbundle_article_is_member">{{ 'article.message.is_member'|trans() }}</label>
+</div>
+{% endif %}
 
 <div class="12u$ 12u$(xsmall)">
 	<input type="submit" class="special fit" value="{{ 'form.button.create'|trans }}" id="submit-button" />

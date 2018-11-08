@@ -76,6 +76,11 @@ class RegistrationListener implements EventSubscriberInterface
 		//$user = $event->getUser();
 		//$request = $event->getRequest();
 		
+		if( $this->serviceContainer->getParameter('members_mode') == false ){
+			return $event->setResponse(
+				new RedirectResponse( $this->router->generate('site_index'))
+			);
+		}
 		if( !$this->serviceContainer->get('app.stripe_helper')->setApiKey() )
 		{
 			return $event->setResponse( new RedirectResponse( $this->router->generate('stripe_config') ) );

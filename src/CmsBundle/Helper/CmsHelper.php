@@ -151,5 +151,16 @@ class CmsHelper
 		}
 		return $image_results;
 	}
+	public function createImage(Image $image, $title, $body)
+	{
+        $image
+        	->setTitle($title)
+        	->setBody($body)
+        	->setCreatedUser($this->user)
+        	->setIsLock(true);
+        
+        return $image;
+
+	}
 	
 }

@@ -7,8 +7,8 @@
 
 <div class="box">
 <p>ページの初期設定を行います。作成するページは下記のとおりです。
-<strong>{{ 'page.default.privacy.title'|trans }}</strong>
-<strong>{{ 'page.default.term.title'|trans }}</strong>
+<strong>{{ 'page.default.privacy_title'|trans({}, 'default') }}</strong>
+<strong>{{ 'page.default.term_title'|trans({}, 'default') }}</strong>
 内容を入力してください。
 </p>
 
@@ -54,7 +54,7 @@
 	&nbsp;
 </div>
 <div class="9u$ 12u$(xsmall)">
-	<input type="submit" class="special" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+	<input type="submit" class="special" value="{{ 'page.button.new'|trans }}" id="submit-button" />
 </div>
 
 

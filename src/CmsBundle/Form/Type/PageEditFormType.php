@@ -7,9 +7,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ArticleEditFormType extends ArticleFormType
+class PageEditFormType extends PageFormType
 {
-    
+	
     protected $serviceContainer;
 
     public function __construct(

@@ -27,17 +27,20 @@ class ConfigController extends Controller
     public function configPageAction(Request $request)
     {
 
+        $default_page_title = 
+        	$this->get('translator')->trans('page.default.'.$request->get('slug').'_title', [], 'default');
+        $default_page_body = 
+        	$this->get('translator')->trans('page.default.'.$request->get('slug').'_body', [], 'default');
+
 	    $user = $this->getUser();
 	    
         $page = new Page();
         $page->setSlug( $request->get('slug') );
-        $page->setCreatedUser($user);
-        
-        $default_page_title = $this->get('translator')->trans('page.default.'.$request->get('slug').'_title', [], 'default');
-        $default_page_body = $this->get('translator')->trans('page.default.'.$request->get('slug').'_body', [], 'default');
-        
         $page->setTitle($default_page_title);
         $page->setBody($default_page_body);
+        $page->setCreatedUser($user);
+        $page->setIsPublished(true);
+        $page->setPublishedAt(new \DateTime());
         
         $seo = new Seo();
         $seo->setDescription(strip_tags($default_page_body));

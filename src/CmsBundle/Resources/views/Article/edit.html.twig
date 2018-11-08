@@ -14,6 +14,13 @@
 	{{ form_errors(edit_form.title) }}
 </div>
 
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.slug'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_errors(edit_form.slug) }}
+	{{ form_widget(edit_form.slug) }}
+</div>
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.seo.image'|trans() }}*</label>
@@ -22,11 +29,12 @@
 	{{ form_widget(edit_form.seo.image) }}
 	{{ form_errors(edit_form.seo.image) }}
 	{% if article.seo.image.src is defined %}
-	<div class="image">
-		<img src="{{ upload_uri }}/{{ article.seo.image.src }}" width="100%" />
-	</div>
+		{% if article.seo.image.src is not null %}
+		<div class="image">
+			<img src="{{ upload_uri }}/{{ article.seo.image.src }}" width="100%" />
+		</div>
+		{% endif %}
 	{% endif %}
-	
 </div>
 
 
@@ -95,6 +103,16 @@
 {{ form_widget(edit_form.is_published) }}
 <label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
 </div>
+
+{% if members_mode == true %}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.article.is_member'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(edit_form.is_member) }}
+<label for="cmsbundle_article_is_member">{{ 'article.message.is_member'|trans() }}</label>
+</div>
+{% endif %}
 
 <div class="12u$ 12u$(xsmall)">
 	<input type="submit" class="special fit" value="{{ 'page.button.edit'|trans }}" id="submit-button" />

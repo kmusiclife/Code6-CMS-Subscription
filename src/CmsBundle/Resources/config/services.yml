@@ -14,3 +14,20 @@ services:
         arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
         public: true
 
+    CmsBundle\Form\Type\ArticleFormType:
+        arguments: ["@service_container"]
+        tags: [form.type]
+
+    CmsBundle\Form\Type\ArticleEditFormType:
+        arguments: ["@service_container"]
+        tags: [form.type]
+
+    CmsBundle\Form\Type\PageFormType:
+        arguments: ["@service_container"]
+        tags: [form.type]
+        public: true
+
+    CmsBundle\Form\Type\PageEditFormType:
+        arguments: ["@service_container"]
+        tags: [form.type]
+        public: true

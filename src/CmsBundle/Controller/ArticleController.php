@@ -46,10 +46,6 @@ class ArticleController extends Controller
         ));
     }
 	
-	public function getImageIds()
-	{
-		return $this->get('cms.cms_helper')->getImageIds();
-	}
     /**
      * @Route("/new", name="article_new")
      * @Method({"GET", "POST"})
@@ -57,6 +53,8 @@ class ArticleController extends Controller
     public function newAction(Request $request)
     {
 	    $em = $this->getDoctrine()->getManager();
+	    $helper = $this->get('cms.cms_helper');
+	    
 	    $user = $this->getUser();
         $article = new Article();
         $seo = new Seo();
@@ -64,7 +62,7 @@ class ArticleController extends Controller
         $seo->setImage( new Image() );
         $article->setSeo( $seo );
         
-        $image_ids = $this->getImageIds();
+        $image_ids = $this->get('cms.cms_helper')->getImageIds();
         
         foreach($image_ids as $image_id)
         {
@@ -76,35 +74,23 @@ class ArticleController extends Controller
         $form = $this->createForm(ArticleFormType::class, $article);
         $form->handleRequest($request);
         
-		$this->get('cms.cms_helper')->validImage($article->getSeo()->getImage(), $form['seo']['image']);
+		$helper->validImage($article->getSeo()->getImage(), $form['seo']['image']);
 		
 		if($article->getImages()){
 	        foreach( $article->getImages() as $image ){
 		        if(!$image->getFile()) $article->removeImage($image);
 	        }
-			$this->get('cms.cms_helper')->validationImages($form['images'], $article->getImages());
+			$helper->validationImages($form['images'], $article->getImages());
 	    }
 		
         if( $form->isSubmitted() && $form->isValid() )
         {
-	        
-	        $this->get('cms.cms_helper')->uploadImage($article->getSeo()->getImage());
-	        $article->getSeo()->getimage()
-	        	->setIsLock(true)
-			    ->setTitle($article->getTitle())
-			    ->setBody($article->getBody())
-		        ->setCreatedUser($this->getUser());
-	        
-	        $this->get('cms.cms_helper')->uploadImages($article->getImages());
-	        foreach($article->getImages() as $image)
-	        {
-		        $image
-		        	->setTitle($article->getTitle())
-		        	->setBody($article->getBody())
-		        	->setCreatedUser($user)
-		        	->setIsLock(true);
+	        $helper->uploadImage($article->getSeo()->getImage());
+	        $helper->createImage($article->getSeo()->getImage(), $article->getTitle(), $article->getBody());
+	        $helper->uploadImages($article->getImages());
+	        foreach($article->getImages() as $image){
+		        $helper->createImage($image, $article->getTitle(), $article->getBody());
 	        }
-
 	        $em->persist($article->getSeo());
             $em->persist($article);
             $em->flush();
@@ -128,7 +114,9 @@ class ArticleController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $image_ids = $this->getImageIds();
+        $helper = $this->get('cms.cms_helper');
+        
+        $image_ids = $this->get('cms.cms_helper')->getImageIds();
         
         foreach($image_ids as $i => $image_id)
         {
@@ -147,42 +135,34 @@ class ArticleController extends Controller
 		if($editForm->isSubmitted()){
 			
 			$current_seo_image_filename = $article->getSeo()->getImage()->getSrc();
-			$this->get('cms.cms_helper')->validImage($article->getSeo()->getImage(), $editForm['seo']['image']);
+			$helper->validImage($article->getSeo()->getImage(), $editForm['seo']['image']);
 			
 			if($article->getImages()){
 		       
 		        foreach( $article->getImages() as $image ){
-			        
 			        if(!$image->getFile() and !$image->getSrc()) {
 				        $article->removeImage($image);
 				    }
 		        }
-				$this->get('cms.cms_helper')->validationImages($editForm['images'], $article->getImages());
+				$helper->validationImages($editForm['images'], $article->getImages());
 				
 		    }
 		    
 	        if ($editForm->isValid()) {
 				
 				if($article->getSeo()->getImage()->getFile()){
-			        $this->get('cms.cms_helper')->uploadImage($article->getSeo()->getImage());
-			        $article->getSeo()->getImage()
-			        	->setIsLock(true)
-					    ->setTitle($article->getTitle())
-					    ->setBody($article->getBody())
-				        ->setCreatedUser($this->getUser());
+			        
+			        $helper->uploadImage($article->getSeo()->getImage());
+			        $helper->createImage($article->getSeo()->getImage(), $article->getTitle(), $article->getBody());
+				    $helper->deleteImageFromFilename($current_seo_image_filename);
 				    
-				    $this->get('cms.cms_helper')->deleteImageFromFilename($current_seo_image_filename);
-				    
+			    } elseif(!$page->getSeo()->getImage()->getSrc()) {
+				    $article->getSeo()->setImage(null);
 			    }
 				
-		        $this->get('cms.cms_helper')->uploadImages($article->getImages());
-		        foreach($article->getImages() as $image)
-		        {
-			        $image
-			        	->setTitle($article->getTitle())
-			        	->setBody($article->getBody())
-						->setIsLock(true)
-				        ->setCreatedUser($this->getUser());
+		        $helper->uploadImages($article->getImages());
+		        foreach($article->getImages() as $image){
+			        $helper->createImage($image, $article->getTitle(), $article->getBody());
 		        }
 	            
 	            $em = $this->getDoctrine()->getManager();
@@ -209,10 +189,13 @@ class ArticleController extends Controller
      */
     public function deleteAction(Request $request, Article $article)
     {
+		
+		$em = $this->getDoctrine()->getManager();
+		$helper = $this->get('cms.cms_helper');
+		
         $form = $this->createDeleteForm($article);
         $form->handleRequest($request);
-		$em = $this->getDoctrine()->getManager();
-		
+        
         if ($form->isSubmitted() && $form->isValid()) {
             
             $images = $article->getImages();
@@ -221,12 +204,12 @@ class ArticleController extends Controller
             
             $seo = $article->getSeo();
             if(is_object($seo->getImage())){
-	            $seo_image = $this->get('cms.cms_helper')->deleteImage( $seo->getImage() );
+	            $seo_image = $helper->deleteImage( $seo->getImage() );
 				$em->remove($seo_image);
             }
             if($seo) $em->remove($seo);
             
-            $images = $this->get('cms.cms_helper')->deleteImages( $images );            
+            $images = $helper->deleteImages( $images );            
             foreach($images as $image)
             {
 	            $em->remove($image);

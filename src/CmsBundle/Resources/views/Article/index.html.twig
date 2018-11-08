@@ -4,7 +4,7 @@
 {% block title %}{{ 'article.title.index'|trans() }}{% endblock title %}
 {% block body %}
 <div>
-<a href="{{ path('article_new') }}" class="button special small"><i class="fas fa-plus"></i> {{ 'article.button.new'|trans() }}</a>
+<a href="{{ path('article_new') }}" class="button special small fit"><i class="fas fa-plus"></i> {{ 'article.button.new'|trans() }}</a>
 </div>
 <div class="table-wrapper">
 <table class="table">
@@ -17,7 +17,11 @@
     <tbobdy>
 {% for article in articles %}
     <tr>
-        <td><img src="{{ asset('/uploads/'~article.seo.image.src)| imagine_filter('image_small') }}" alt="" /></td>
+        <td>
+        	{% if article.seo.image %}
+        	<img src="{{ asset('/uploads/'~article.seo.image.src)| imagine_filter('image_small') }}" alt="" />
+			{% endif %}
+        </td>
         <td>
 			<div style="padding: 10px 0;">{{ article.title|trans() }}</div>
 	        <div>

@@ -1,16 +1,13 @@
 entity:
-    page:
-        title: "タイトル"
-        slug: "ページスラッグ"
-        body: "ページ本文"
     
     image:
         title: "タイトル"
         body: "本文"
         image: "画像"
 
-    article:
+    page:
         title: "記事名"
+        slug: "ページスラッグ"
         date: "記事開催日"
         time: "記事開催時間"
         body: "記事内容"
@@ -22,6 +19,23 @@ entity:
         is_published: "公開・非公開"
         images: "アップロード画像"
         published_at: "公開時間"
+        is_member: "会員のみ公開"
+
+    article:
+        title: "記事名"
+        slug: "ページスラッグ"
+        date: "記事開催日"
+        time: "記事開催時間"
+        body: "記事内容"
+        price: "記事参加費"
+        report: "記事のレポート"
+        files: "画像"
+        eyecatch: "メイン画像"
+        place: "開催場所"
+        is_published: "公開・非公開"
+        images: "アップロード画像"
+        published_at: "公開時間"
+        is_member: "会員のみ公開"
         
     seo:
         image: "メインイメージ"
@@ -45,6 +59,7 @@ article:
         delete: "削除する"
     message:
         is_published: "公開する場合はチェックを入れてください"
+        is_member: "会員のみに公開する場合はチェックを入れてください"
         
 page:
     title:
@@ -54,12 +69,14 @@ page:
         policy: "プライバシーポリシー"
         about: "本サービスについて"
         config: "ページ初期設定"
-        
     button:
         new: "追加する"
         edit: "編集する"
         show: "表示する"
         delete: "削除する"
+    message:
+        is_published: "公開する場合はチェックを入れてください"
+        is_member: "会員のみに公開する場合はチェックを入れてください"
     
 image:
     title:

@@ -6,12 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Article
  *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="CmsBundle\Repository\ArticleRepository")
+ * @UniqueEntity(
+ *     fields={"slug"},
+ *     message="ページスラッグはすでに利用されています"
+ * )
  */
 class Article
 {
@@ -22,6 +27,18 @@ class Article
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="slugを入力してください")
+     * @Assert\Regex(
+     *     pattern = "/^[a-zA-Z0-9]+$/i",
+     *     message = "半角英数・数字のみ入力が可能です"
+     * )
+     */
+    private $slug;
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
@@ -81,9 +98,15 @@ class Article
     private $updatedAt;
 
     /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+    */
+    protected $createdUser;
+
+    /**
     * @ORM\OneToOne(targetEntity="CmsBundle\Entity\Seo", cascade={"persist"})
     */
     protected $seo;
+
 
 
 
@@ -104,6 +127,30 @@ class Article
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug.
+     *
+     * @param string $slug
+     *
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug.
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -356,6 +403,30 @@ class Article
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set createdUser.
+     *
+     * @param \AppBundle\Entity\User|null $createdUser
+     *
+     * @return Article
+     */
+    public function setCreatedUser(\AppBundle\Entity\User $createdUser = null)
+    {
+        $this->createdUser = $createdUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createdUser.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getCreatedUser()
+    {
+        return $this->createdUser;
     }
 
     /**

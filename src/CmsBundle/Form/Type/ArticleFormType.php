@@ -21,16 +21,31 @@ use CmsBundle\Form\Type\ImageSimpleFormType;
 use CmsBundle\Entity\Image;
 use CmsBundle\Entity\Article;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ArticleFormType extends AbstractType
 {
 
+    protected $serviceContainer;
+
+    public function __construct(
+    	ContainerInterface $serviceContainer
+    ){
+        $this->serviceContainer = $serviceContainer;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
+        $builder->add('slug');
         $builder->add('is_published', CheckboxType::class, array(
 			'required' => false,
         ));
+        if( $this->serviceContainer->getParameter('members_mode') ){
+	        $builder->add('is_member', CheckboxType::class, array(
+				'required' => false,
+	        ));
+	    }
         $builder->add('body');
 
         $builder->add('images', CollectionType::class, array(

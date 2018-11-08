@@ -60,6 +60,7 @@ twig:
         project_dir: '%project_dir%'
         upload_uri: '%upload_uri%'
         facebook_app_id: '%facebook_app_id%'
+        members_mode: '%members_mode%'
         theme_name: '%theme_name%'
         
 doctrine:

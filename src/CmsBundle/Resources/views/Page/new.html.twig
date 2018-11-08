@@ -1,52 +1,66 @@
 {% trans_default_domain 'message' %}
-{% extends "@AppBundle/Resources/views/Template/layout.html.twig" %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
 
-{% block title %}{{ 'page.title.new'|trans() }}{% endblock title %}
+{% block title %}{{ 'page.title.new'|trans() }}{% endblock %}
 
 {% block body %}
-{{ 
-	form_start(
-		form, {
-			'method': 'post', 
-			'attr': {
-				'class': 'page_add row uniform'
-		}
-	}) 
-}}
+{{ form_start(form, {'attr':{'class':'row uniform'}}) }}
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.page.title'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.title, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_widget(form.title, {'attr': { 'placeholder':'例) Page Name' }}) }}
 	{{ form_errors(form.title) }}
 </div>
 
+
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.seo.image'|trans() }}</label>
+	<label>{{ 'entity.article.slug'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.slug, {'attr': {'placeholder':'例) article01'}}) }}
+	{{ form_errors(form.slug) }}
+</div>
+
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.seo.image'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
 	{{ form_errors(form.seo.image.file) }}
 	{{ form_widget(form.seo.image.file) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.page.slug'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.slug, {'attr': { 'placeholder':'例) example' }}) }}
-	{{ form_errors(form.slug) }}
-</div>
 
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.page.body'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.body, {'attr': { 'placeholder':'例) example', 'style': 'height: 300px;'}}) }}
+	{{ form_widget(form.body, {'attr': { 'placeholder':'例) example', 'style': 'height: 200px;' }}) }}
 	{{ form_errors(form.body) }}
 </div>
 
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.published_at'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.publishedat, {'attr': { 'class' : 'js-datepicker-datetime', 'placeholder':'例) 2018' }}) }}
+</div>
+
+
+{% for image in form.images %}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.images'|trans() }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(image) }}
+	{{ form_errors(image) }}
+</div>
+{% endfor %}
 
 
 
@@ -75,11 +89,26 @@
 </div>
 
 
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.is_published'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(form.is_published) }}
+<label for="cmsbundle_page_is_published">{{ 'page.message.is_published'|trans() }}</label>
+</div>
 
-
+{% if members_mode == true %}
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.page.is_member'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+{{ form_widget(form.is_member) }}
+<label for="cmsbundle_page_is_member">{{ 'page.message.is_member'|trans() }}</label>
+</div>
+{% endif %}
 
 <div class="12u$ 12u$(xsmall)">
-	<input type="submit" class="special fit" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+	<input type="submit" class="special fit" value="{{ 'form.button.create'|trans }}" id="submit-button" />
 </div>
 
 
@@ -89,3 +118,48 @@
 
 {% endblock %}
 
+{% block stylesheets %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+{% endblock %}
+
+{% block javascript %}
+{# http://eonasdan.github.io/bootstrap-datetimepicker/ #}
+<script>
+$(document).ready(function() {
+	
+	var defaultDate = new Date('{{ 'now'|date('Y/m/d H:i') }}');
+
+	$('.js-datepicker-datetime').datetimepicker({
+		format: 'YYYY-MM-DD HH:ss',
+		locale: '{{ app.request.locale }}',
+		inline: false,
+		defaultDate: defaultDate
+	});
+	$('.js-datepicker-date').datetimepicker({
+		format: 'YYYY-MM-DD',
+		locale: '{{ app.request.locale }}',
+		inline: false,
+		defaultDate: defaultDate
+	});
+	$('.js-datepicker-time').datetimepicker({
+		format: 'HH:ss',
+		locale: '{{ app.request.locale }}',
+		inline: false,
+		defaultDate: defaultDate
+	});
+
+});
+</script>
+{% endblock %}

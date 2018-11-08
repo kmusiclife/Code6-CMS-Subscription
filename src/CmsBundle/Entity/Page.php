@@ -3,6 +3,8 @@
 namespace CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Role\Role;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -18,30 +20,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Page
 {
+
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\NotBlank(message="タイトルを入力してください")
-     */
-    private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="body", type="text")
-     * @Assert\NotBlank(message="本文を入力してください")
-     */
-    private $body;
 
     /**
      * @var string
@@ -56,18 +41,58 @@ class Page
     private $slug;
 
     /**
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(name="body", type="text")
+     */
+    private $body;
+
+    /**
+     * @ORM\Column(name="body_extra", type="text", nullable=true)
+     */
+    private $body_extra;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Image", cascade={"persist"})
+     * @ORM\JoinTable(name="page_images",
+     *   joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+     *   inverseJoinColumns={@ORM\JoinColumn(name="image_id", referencedColumnName="id")}
+     * )
+     */
+	private $images;
+	
+    /**
+     * @ORM\Column(name="is_published", type="boolean")
+     */
+    private $is_published = true;
+    
+    /**
+     * @ORM\Column(name="is_deleted", type="boolean")
+     */
+    private $is_deleted = false;
+
+    /**
      * @ORM\Column(name="is_member", type="boolean")
      */
     private $is_member = false;
 
     /**
-     * @Assert\DateTime()
+	 * @Assert\DateTime()
+     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
+     */
+    private $publishedAt;
+    
+    /**
+	 * @Assert\DateTime()
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
     
     /**
-     * @Assert\DateTime()
+	 * @Assert\DateTime()
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
@@ -86,6 +111,14 @@ class Page
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -93,6 +126,30 @@ class Page
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug.
+     *
+     * @param string $slug
+     *
+     * @return Page
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug.
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -144,27 +201,75 @@ class Page
     }
 
     /**
-     * Set slug.
+     * Set bodyExtra.
      *
-     * @param string $slug
+     * @param string|null $bodyExtra
      *
      * @return Page
      */
-    public function setSlug($slug)
+    public function setBodyExtra($bodyExtra = null)
     {
-        $this->slug = $slug;
+        $this->body_extra = $bodyExtra;
 
         return $this;
     }
 
     /**
-     * Get slug.
+     * Get bodyExtra.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSlug()
+    public function getBodyExtra()
     {
-        return $this->slug;
+        return $this->body_extra;
+    }
+
+    /**
+     * Set isPublished.
+     *
+     * @param bool $isPublished
+     *
+     * @return Page
+     */
+    public function setIsPublished($isPublished)
+    {
+        $this->is_published = $isPublished;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublished.
+     *
+     * @return bool
+     */
+    public function getIsPublished()
+    {
+        return $this->is_published;
+    }
+
+    /**
+     * Set isDeleted.
+     *
+     * @param bool $isDeleted
+     *
+     * @return Page
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->is_deleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeleted.
+     *
+     * @return bool
+     */
+    public function getIsDeleted()
+    {
+        return $this->is_deleted;
     }
 
     /**
@@ -189,6 +294,30 @@ class Page
     public function getIsMember()
     {
         return $this->is_member;
+    }
+
+    /**
+     * Set publishedAt.
+     *
+     * @param \DateTime|null $publishedAt
+     *
+     * @return Page
+     */
+    public function setPublishedAt($publishedAt = null)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get publishedAt.
+     *
+     * @return \DateTime|null
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
     }
 
     /**
@@ -237,6 +366,42 @@ class Page
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add image.
+     *
+     * @param \CmsBundle\Entity\Image $image
+     *
+     * @return Page
+     */
+    public function addImage(\CmsBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image.
+     *
+     * @param \CmsBundle\Entity\Image $image
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeImage(\CmsBundle\Entity\Image $image)
+    {
+        return $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 
     /**
