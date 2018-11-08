@@ -146,6 +146,7 @@ class ArticleController extends Controller
 		
 		if($editForm->isSubmitted()){
 			
+			$current_seo_image_filename = $article->getSeo()->getImage()->getSrc();
 			$this->get('cms.cms_helper')->validImage($article->getSeo()->getImage(), $editForm['seo']['image']);
 			
 			if($article->getImages()){
@@ -169,8 +170,11 @@ class ArticleController extends Controller
 					    ->setTitle($article->getTitle())
 					    ->setBody($article->getBody())
 				        ->setCreatedUser($this->getUser());
+				    
+				    $this->get('cms.cms_helper')->deleteImageFromFilename($current_seo_image_filename);
+				    
 			    }
-
+				
 		        $this->get('cms.cms_helper')->uploadImages($article->getImages());
 		        foreach($article->getImages() as $image)
 		        {
@@ -215,10 +219,12 @@ class ArticleController extends Controller
             
             $em->remove($article);
             
-			$seo = $article->getSeo();
-            $seo_image = $this->get('cms.cms_helper')->deleteImage( $seo->getImage() );
-			$em->remove($seo_image);
-            $em->remove($seo);
+            $seo = $article->getSeo();
+            if(is_object($seo->getImage())){
+	            $seo_image = $this->get('cms.cms_helper')->deleteImage( $seo->getImage() );
+				$em->remove($seo_image);
+            }
+            if($seo) $em->remove($seo);
             
             $images = $this->get('cms.cms_helper')->deleteImages( $images );            
             foreach($images as $image)
@@ -227,7 +233,7 @@ class ArticleController extends Controller
             }
             
             $em->flush();
-            
+			$this->addFlash('notice', 'message.deleted');
         }
 		
         return $this->redirectToRoute('article_index');

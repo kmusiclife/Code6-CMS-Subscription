@@ -3,6 +3,8 @@
 namespace CmsBundle\Controller;
 
 use CmsBundle\Entity\Page;
+use CmsBundle\Entity\Seo;
+use CmsBundle\Entity\Image;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -36,6 +38,11 @@ class ConfigController extends Controller
         
         $page->setTitle($default_page_title);
         $page->setBody($default_page_body);
+        
+        $seo = new Seo();
+        $seo->setDescription(strip_tags($default_page_body));
+        $seo->setImage(null);
+        $page->setSeo($seo);
         
         $form = $this->createForm('CmsBundle\Form\Type\ConfigPageFormType', $page);
         $form->handleRequest($request);

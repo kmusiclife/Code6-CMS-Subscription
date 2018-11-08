@@ -23,6 +23,20 @@
 	{{ form_errors(edit_form.title) }}
 </div>
 
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.seo.image'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(edit_form.seo.image) }}
+	{{ form_errors(edit_form.seo.image) }}
+	{% if page.seo.image.src is defined %}
+	<div class="image">
+		<img src="{{ upload_uri }}/{{ page.seo.image.src }}" width="100%" />
+	</div>
+	{% endif %}
+	
+</div>
+
 
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.page.slug'|trans() }}*</label>
@@ -41,11 +55,32 @@
 	{{ form_errors(edit_form.body) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
-	&nbsp;
+<div class="12u$ 12u$(xsmall)">
+	<div class="box">
+		<div>
+		<h3>{{ 'seo.title.form_title'|trans }}</h3>
+		<p>{{ 'seo.title.form_description'|trans }}</p>
+		</div>
+		
+		<h4>{{ 'entity.seo.description'|trans }}</h4>
+		<div class="12u$ 12u$(xsmall)">
+			<p>
+			{{ form_widget(edit_form.seo.description) }}
+			{{ form_errors(edit_form.seo.description) }}
+			</p>
+		</div>
+		<h4>{{ 'entity.seo.keywords'|trans }}</h4>
+		<div class="12u$ 12u$(xsmall)">
+			<p>
+			{{ form_widget(edit_form.seo.keywords) }}
+			{{ form_errors(edit_form.seo.keywords) }}
+			</p>
+		</div>
+	</div>
 </div>
-<div class="9u$ 12u$(xsmall)">
-	<input type="submit" class="special" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
+
+<div class="12u$ 12u$(xsmall)">
+	<input type="submit" class="special fit" value="{{ 'page.button.edit'|trans }}" id="submit-button" />
 </div>
 
 {{ form_end(edit_form) }}

@@ -1,7 +1,7 @@
 {% trans_default_domain 'message' %}
 {% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
 
-{% block title %}{{ 'article.title.edit'|trans }}{% endblock %}
+{% block title %}{{ 'article.title.edit'|trans() }}{% endblock %}
 
 {% block body %}
 {{ form_start(edit_form, {'attr':{'class':'row uniform'}}) }}

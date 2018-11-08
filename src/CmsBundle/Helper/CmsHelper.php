@@ -121,9 +121,18 @@ class CmsHelper
 	}
 	public function deleteImage(Image $image)
 	{
-		
 		$file_system = new Filesystem();
 		$filename = $image->getSrc();
+		
+		if($this->deleteImageFromFilename($filename)) return $image;
+		
+		return false;
+		
+	}
+	public function deleteImageFromFilename($filename)
+	{
+		if(!$filename) return false;
+		$file_system = new Filesystem();
 		
 		try {
 			$file_system->remove($this->serviceContainer->getParameter('upload_path').'/'.$filename);
@@ -131,8 +140,8 @@ class CmsHelper
 		} catch (IOExceptionInterface $exception) {
 			return false;
 		}
-		return $image;
-	
+		return true;
+		
 	}
 	public function deleteImages($images)
 	{

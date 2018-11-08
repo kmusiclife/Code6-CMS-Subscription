@@ -4,12 +4,17 @@ namespace CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Page
  *
  * @ORM\Table(name="page")
  * @ORM\Entity(repositoryClass="CmsBundle\Repository\PageRepository")
+ * @UniqueEntity(
+ *     fields={"slug"},
+ *     message="ページスラッグはすでに利用されています"
+ * )
  */
 class Page
 {
@@ -43,6 +48,10 @@ class Page
      *
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="slugを入力してください")
+     * @Assert\Regex(
+     *     pattern = "/^[a-zA-Z0-9]+$/i",
+     *     message = "半角英数・数字のみ入力が可能です"
+     * )
      */
     private $slug;
 
@@ -52,13 +61,13 @@ class Page
     private $is_member = false;
 
     /**
-	 * @Assert\DateTime()
+     * @Assert\DateTime()
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
     
     /**
-	 * @Assert\DateTime()
+     * @Assert\DateTime()
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
@@ -67,6 +76,12 @@ class Page
     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
     */
     protected $createdUser;
+
+    /**
+    * @ORM\OneToOne(targetEntity="CmsBundle\Entity\Seo", cascade={"persist"})
+    */
+    protected $seo;
+
 
 
 
@@ -246,5 +261,29 @@ class Page
     public function getCreatedUser()
     {
         return $this->createdUser;
+    }
+
+    /**
+     * Set seo.
+     *
+     * @param \CmsBundle\Entity\Seo|null $seo
+     *
+     * @return Page
+     */
+    public function setSeo(\CmsBundle\Entity\Seo $seo = null)
+    {
+        $this->seo = $seo;
+
+        return $this;
+    }
+
+    /**
+     * Get seo.
+     *
+     * @return \CmsBundle\Entity\Seo|null
+     */
+    public function getSeo()
+    {
+        return $this->seo;
     }
 }

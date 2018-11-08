@@ -33,7 +33,7 @@ class Seo
     private $keywords;
 
     /**
-    * @ORM\ManyToOne(targetEntity="CmsBundle\Entity\Image", cascade={"persist"})
+    * @ORM\OneToOne(targetEntity="CmsBundle\Entity\Image", cascade={"persist"})
     */
     private $image;
 

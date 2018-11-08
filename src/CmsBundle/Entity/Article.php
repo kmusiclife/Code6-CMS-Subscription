@@ -81,7 +81,7 @@ class Article
     private $updatedAt;
 
     /**
-    * @ORM\ManyToOne(targetEntity="CmsBundle\Entity\Seo")
+    * @ORM\OneToOne(targetEntity="CmsBundle\Entity\Seo", cascade={"persist"})
     */
     protected $seo;
 
