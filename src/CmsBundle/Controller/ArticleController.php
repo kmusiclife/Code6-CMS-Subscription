@@ -156,7 +156,7 @@ class ArticleController extends Controller
 			        $helper->createImage($article->getSeo()->getImage(), $article->getTitle(), $article->getBody());
 				    $helper->deleteImageFromFilename($current_seo_image_filename);
 				    
-			    } elseif(!$page->getSeo()->getImage()->getSrc()) {
+			    } elseif(!$article->getSeo()->getImage()->getSrc()) {
 				    $article->getSeo()->setImage(null);
 			    }
 				
