@@ -1,6 +1,7 @@
 /private
 *.DS_Store
 *.php~
+*config.rb
 /.gitignore
 /.web-server-pid
 /web/themes/*
@@ -11,6 +12,7 @@
 /web/media
 /web/uploads/*
 /web/admin/assets
+/web/admin/sass
 /app/Resources/views/themes/*
 !/app/Resources/views/themes/default
 /app/config/parameters.yml
