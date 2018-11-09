@@ -18,8 +18,10 @@
 {% for page in pages %}
     <tr>
         <td>
-        	{% if page.seo.image %}
-        	<img src="{{ asset('/uploads/'~page.seo.image.src)| imagine_filter('image_small') }}" alt="" />
+        	{% if page.seo.image is defined %}
+        		{% if page.seo.image is not null %}
+	        		<img src="{{ asset('/uploads/'~page.seo.image.src)| imagine_filter('image_small') }}" alt="" />
+				{% endif %}
 			{% endif %}
         </td>
         <td>
