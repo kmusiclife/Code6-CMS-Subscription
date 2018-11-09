@@ -1,6 +1,6 @@
 entity:
     contact:
-        title: "メールタイトル"
+        title: "タイトル"
         name: "お名前"
         email: "メールアドレス"
         zip: "郵便番号"
@@ -16,7 +16,7 @@ message:
     
 contact:
     title:
-        index: "受信メール一覧"
+        index: "お問い合わせ一覧"
     button:
         new: "メールを送信する"
         

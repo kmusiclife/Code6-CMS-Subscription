@@ -1,5 +1,14 @@
 setting:
     default:
+        parameter_members_mode_label: "設定：メンバーモード"
+        parameter_members_mode: "true"
+        
+        parameter_image_count_label: "設定：アップロード画像数"
+        parameter_image_count: 4
+        
+        parameter_theme_name_label: "設定：テーマID"
+        parameter_theme_name: "default"
+        
         register_email_subject_label: "メールタイトル：会員登録完了時"
         register_email_subject: "【重要】登録完了のお知らせ"
         

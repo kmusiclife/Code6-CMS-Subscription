@@ -25,7 +25,7 @@
         <td>
 			<div style="padding: 10px 0;">{{ article.title|trans() }}</div>
 	        <div>
-	        <a href="{{ path('article_show', {'id': article.id}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
+	        <a href="{{ path('article_show', {'slug': article.slug}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
 	        	<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
 			</div>
         </td>

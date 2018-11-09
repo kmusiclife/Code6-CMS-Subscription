@@ -10,9 +10,10 @@ parameters:
     mailer_user: ~
     mailer_password: ~
 
+    recaptcha_site_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    recaptcha_secret_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
     secret: ThisTokenIsNotSoSecretChangeIt
-    members_mode: true
-    image_count: 4
     
     mailer_address: info@example.com
     mailer_name: 'Code6 CMS'
@@ -27,5 +28,3 @@ parameters:
     stripe_secret_token: sk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     stripe_email: info@example.com
     stripe_zip: 1230001
-    
-    theme_name: ~

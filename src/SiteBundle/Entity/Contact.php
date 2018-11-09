@@ -33,6 +33,10 @@ class Contact
      *
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\NotBlank(message="メールアドレスを入力してください")
+     * @Assert\Email(
+     *     message = "メールアドレスが正しくありません",
+     *     checkMX = true
+     * )
      */
     private $email;
 
@@ -76,6 +80,13 @@ class Contact
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="recaptcha", type="string")
+     */
+    private $recaptcha;
+
+
 
 
     /**
@@ -302,5 +313,29 @@ class Contact
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set recaptcha.
+     *
+     * @param string $recaptcha
+     *
+     * @return Contact
+     */
+    public function setRecaptcha($recaptcha)
+    {
+        $this->recaptcha = $recaptcha;
+
+        return $this;
+    }
+
+    /**
+     * Get recaptcha.
+     *
+     * @return string
+     */
+    public function getRecaptcha()
+    {
+        return $this->recaptcha;
     }
 }

@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class InitHelper 
 {
+
 	protected $userManager;
 	protected $serviceContainer;
 	protected $entityManager;
@@ -70,7 +71,7 @@ class InitHelper
 	}
 	// Do not forget change AppBundle:ConfigController also
 	static function getSettingSlugs(){
-		return array('register_email_subject', 'register_email', 'registered_description', 'cancel_email_subject', 'cancel_email', 'cancel_description', 'contact_email_subject', 'contact_email', 'canceled_description', 'contacted_description');
+		return array('parameter_members_mode', 'parameter_image_count', 'parameter_theme_name', 'register_email_subject', 'register_email', 'registered_description', 'cancel_email_subject', 'cancel_email', 'cancel_description', 'canceled_description', 'contact_email_subject', 'contact_email', 'contacted_description');
 	}
 	public function hasSettings()
 	{

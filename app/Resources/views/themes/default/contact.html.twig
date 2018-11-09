@@ -4,10 +4,10 @@
 {% block title %}{{ 'contact.title.new'|trans }}{% endblock title %}
 
 {% block body %}
-{{ form_start(form, { 'attr':{ 'class': 'row gtr-uniform' } }) }}
+{{ form_start(form, { 'attr':{ 'class': 'row gtr-uniform', 'id':'contact_form' } }) }}
 
 <div>
-	<label>{{ 'entity.contact.title'|trans() }}</label>
+	<label>{{ 'entity.contact.title'|trans() }}{{ form.title.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.title, {'attr': { 'placeholder':'例)' }}) }}
@@ -16,7 +16,7 @@
 
 
 <div>
-	<label>{{ 'entity.contact.name'|trans() }}</label>
+	<label>{{ 'entity.contact.name'|trans() }}{{ form.name.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.name, {'attr': { 'placeholder':'例)' }}) }}
@@ -25,7 +25,7 @@
 
 
 <div>
-	<label>{{ 'entity.contact.email'|trans() }}</label>
+	<label>{{ 'entity.contact.email'|trans() }}{{ form.email.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.email, {'attr': { 'placeholder':'例)' }}) }}
@@ -34,7 +34,7 @@
 
 
 <div>
-	<label>{{ 'entity.contact.tel'|trans() }}</label>
+	<label>{{ 'entity.contact.tel'|trans() }}{{ form.tel.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.tel, {'required':false, 'attr': { 'placeholder':'例)' }}) }}
@@ -44,7 +44,7 @@
 
 
 <div>
-	<label>{{ 'entity.contact.zip'|trans() }}</label>
+	<label>{{ 'entity.contact.zip'|trans() }}{{ form.zip.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.zip, {'required':false, 'attr': { 'placeholder':'例)' }}) }}
@@ -53,33 +53,48 @@
 
 
 <div>
-	<label>{{ 'entity.contact.address'|trans() }}</label>
+	<label>{{ 'entity.contact.address'|trans() }}{{ form.address.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.address, {'required':false, 'attr': { 'placeholder':'例)' }}) }}
 	{{ form_errors(form.address) }}
 </div>
 
-
 <div>
-	<label>{{ 'entity.contact.body'|trans() }}</label>
+	<label>{{ 'entity.contact.body'|trans() }}{{ form.body.vars.required ? '*' : '' }}</label>
 </div>
 <div>
 	{{ form_widget(form.body, {'attr': { 'placeholder':'例)' }}) }}
 	{{ form_errors(form.body) }}
 </div>
 
-
-
 <div>
-	&nbsp;
+    
+    <script src="https://www.google.com/recaptcha/api.js?render={{ getParameter('recaptcha_site_key') }}"></script>
+	<script>
+	grecaptcha.ready(function() {
+	  grecaptcha.execute('{{ getParameter('recaptcha_site_key') }}', {action: 'homepage'}).then(function(token) {
+		    recaptcha = document.getElementById('sitebundle_contact_recaptcha');
+		    recaptcha.value = token;
+	  });
+	});
+	</script>
+	
+	{{ form_widget(form.recaptcha, {type: 'hidden'}) }}
+	{{ form_errors(form.recaptcha) }}
+	
 </div>
+
 <div>
 	<input type="submit" class="special" value="{{ 'contact.button.new'|trans }}" id="submit-button" />
 </div>
 
 
-
-
 {{ form_end(form) }}
+
 {% endblock %}
+
+{% block javascripts %}
+<!-- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script> -->
+{% endblock javascripts %}
+

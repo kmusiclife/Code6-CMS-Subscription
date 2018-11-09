@@ -54,7 +54,8 @@ class SiteController extends Controller
     }
 	
     /**
-     * @Route("article/{id}", name="article_show")
+     * @Route("article/{slug}", name="article_show")
+     * @ParamConverter("Article", class="CmsBundle:Article", options={"mapping":{"slug"="slug"}})
      * @Method("GET")
      */
     public function articleShowAction(Article $article, Request $request)

@@ -41,7 +41,7 @@ class PageFormType extends AbstractType
         $builder->add('is_published', CheckboxType::class, array(
 			'required' => false,
         ));
-        if( $this->serviceContainer->getParameter('members_mode') ){
+        if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_members_mode') ){
 	        $builder->add('is_member', CheckboxType::class, array(
 				'required' => false,
 	        ));

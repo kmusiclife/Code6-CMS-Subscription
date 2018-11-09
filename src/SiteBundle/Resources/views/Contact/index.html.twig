@@ -1,6 +1,6 @@
 {% trans_default_domain 'message' %}
 {% extends 
-	theme_name ? 
-		"themes/"~theme_name~"/contact.html.twig" : 
+	getSetting('parameter_theme_name') ? 
+		"themes/"~getSetting('parameter_theme_name')~"/contact.html.twig" : 
 		"themes/default/contact.html.twig" 
 %}

@@ -106,7 +106,7 @@
 <label for="cmsbundle_page_is_published">{{ 'page.message.is_published'|trans() }}</label>
 </div>
 
-{% if members_mode == true %}
+{% if getSetting('parameter_members_mode') == true %}
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.page.is_member'|trans() }}*</label>
 </div>

@@ -76,7 +76,7 @@ class RegistrationListener implements EventSubscriberInterface
 		//$user = $event->getUser();
 		//$request = $event->getRequest();
 		
-		if( $this->serviceContainer->getParameter('members_mode') == false ){
+		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_members_mode') == false ){
 			return $event->setResponse(
 				new RedirectResponse( $this->router->generate('site_index'))
 			);

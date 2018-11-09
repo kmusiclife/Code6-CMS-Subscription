@@ -25,7 +25,7 @@ use AppBundle\Entity\Setting;
 class ConfigController extends Controller
 {
     /**
-     * @Route("admin/config/setting/{slug}", name="setting_config", requirements={"slug"="register_email_subject|register_email|registered_description|cancel_email_subject|cancel_email|cancel_description|contact_email_subject|contact_email|canceled_description|contacted_description"})
+     * @Route("admin/config/setting/{slug}", name="setting_config", requirements={"slug"="parameter_members_mode|parameter_image_count|parameter_theme_name|register_email_subject|register_email|registered_description|cancel_email_subject|cancel_email|cancel_description|contact_email_subject|contact_email|canceled_description|contacted_description"})
      * @Method({"GET", "POST"})
      */
     public function configSettingAction(Request $request)

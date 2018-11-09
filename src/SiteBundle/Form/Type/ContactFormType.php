@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 class ContactFormType extends AbstractType
 {
     
@@ -18,13 +20,12 @@ class ContactFormType extends AbstractType
         $builder->add('zip');
         $builder->add('address');
         $builder->add('body');
+        $builder->add('recaptcha');
     }
     
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'SiteBundle\Entity\Contact'
-        ));
+
     }
 
     public function getBlockPrefix()
