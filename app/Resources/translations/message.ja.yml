@@ -101,6 +101,9 @@ subscription:
             index: "カード番号登録"
             edit: "カード番号更新"
             completed: "カード番号更新完了"
+    button:
+        cancel: "解約に進む"
+        execute: "本当に解約する"
     
     plan:
         amount: "料金"
