@@ -21,7 +21,7 @@
         <tr>
             <th>{{ 'entity.image.image'|trans() }}</th>
             <td>
-            	<img src="{{ asset('uploads/'~image.image) | imagine_filter('image_normal') }}" alt="" style="width: 100%;">
+            	<img src="{{ asset(upload_uri~'/'~image.src) | imagine_filter('image_normal') }}" alt="" style="width: 100%;">
 			</td>
         </tr>
     </tbody>
