@@ -56,6 +56,7 @@ class CmsHelper
 
 	public function getImageIds()
 	{
+		
 		$max =  (int)$this->serviceContainer->get('app.app_helper')->getSetting('parameter_image_count');
 		$images = array();
 		
