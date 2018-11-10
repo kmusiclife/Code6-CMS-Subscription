@@ -19,6 +19,8 @@ contact:
         index: "お問い合わせ一覧"
     button:
         new: "メールを送信する"
+        edit: "メルを編集する"
+        delete: "メールを削除する"
         
 config:
     title:
