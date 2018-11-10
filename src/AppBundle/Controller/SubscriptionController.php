@@ -142,8 +142,8 @@ class SubscriptionController extends Controller
 				
 		        $this->get('app.app_helper')->sendEmailBySetting(
 		        	$user->getEmail(), 
-		        	'register_email_subject_leave', 
-		        	'register_email_leave', 
+		        	'cancel_email_subject', 
+		        	'cancel_email', 
 		        	array('user' => $user, 'subscription' => $subscription),
 		        	true
 		        );
