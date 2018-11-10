@@ -166,7 +166,7 @@ $(document).ready(function() {
 	var defaultDate = new Date('{{ 'now'|date('Y/m/d 10:00') }}');
 
 	$('.js-datepicker-datetime').datetimepicker({
-		format: 'YYYY-MM-DD HH:ss',
+		format: 'YYYY-MM-DD HH:mm',
 		locale: '{{ app.request.locale }}',
 		inline: false,
 		defaultDate: defaultDate
