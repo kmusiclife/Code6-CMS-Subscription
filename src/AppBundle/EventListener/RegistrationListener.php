@@ -124,7 +124,7 @@ class RegistrationListener implements EventSubscriberInterface
 					"items" => array(
 						array("plan" => $this->user->getStripePlanId()),
 					),
-					"application_fee_percent" => 10,
+					"application_fee_percent" => $this->serviceContainer->get('app.app_helper')->getParameter('stripe_application_fee'),
 				),
 				array(
 					"stripe_account" => $this->serviceContainer->get('app.app_helper')->getSetting('access_token')
