@@ -1,6 +1,6 @@
 {% trans_default_domain 'message' %}
 {% extends 
-	theme_name ? 
+	getSetting('parameter_theme_name') ? 
 		"themes/"~theme_name~"/layout.html.twig" : 
 		"themes/default/layout.html.twig" 
 %}
