@@ -31,7 +31,7 @@
 	{% if article.seo.image.src is defined %}
 		{% if article.seo.image.src is not null %}
 		<div class="image">
-			<img src="{{ (upload_uri~'/'~article.seo.image.src)| imagine_filter('image_normal') }}" width="100%" />
+			<img src="{{ asset(upload_uri~'/'~article.seo.image.src)| imagine_filter('image_normal') }}" width="100%" />
 		</div>
 		{% endif %}
 	{% endif %}
@@ -58,7 +58,7 @@
 	{{ form_errors(image) }}
 	{% if image.vars.value.src is not null %}
 	<div class="image">
-		<img src="{{ upload_uri }}/{{ image.vars.value.src }}" width="100%" />
+		<img src="{{ asset(upload_uri~'/'~image.vars.value.src)| imagine_filter('image_normal') }}" width="100%" />
 	</div>
 	{% endif %}
 </div>

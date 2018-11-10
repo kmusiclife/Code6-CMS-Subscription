@@ -16,17 +16,19 @@
 	</thead>
 	<tbody>
 	{% for image in images %}
-    <tr>
-        <td><img src="{{ asset('/uploads/'~image.src)| imagine_filter('image_small') }}" alt="" /></td>
-        <td>{{ image.title|trans() }}</td>
-        <td>
-        	<a href="{{ path('image_show', {'id': image.id}) }}" class="button small" target="_blank">{{ 'image.button.show'|trans() }}</a>
-        </td>
-        <td>
-        	<a href="{{ path('image_edit', {'id': image.id}) }}" class="button small special">{{ 'image.button.edit'|trans() }}</a>
-        </td>
-
-    </tr>
+	    <tr>
+	        <td>
+				<img src="{{ asset(upload_uri~'/'~image.src)| imagine_filter('image_small') }}" width="100%" />
+	        </td>
+	        <td>{{ image.title|trans() }}</td>
+	        <td>
+	        	<a href="{{ path('image_show', {'id': image.id}) }}" class="button small" target="_blank">{{ 'image.button.show'|trans() }}</a>
+	        </td>
+	        <td>
+	        	<a href="{{ path('image_edit', {'id': image.id}) }}" class="button small special">{{ 'image.button.edit'|trans() }}</a>
+	        </td>
+	
+	    </tr>
 	{% endfor %}
     </tbobdy>
     

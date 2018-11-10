@@ -14,7 +14,6 @@
 	{{ form_errors(edit_form.title) }}
 </div>
 
-
 <div class="3u 12u$(xsmall)">
 	<label>{{ 'entity.page.slug'|trans() }}*</label>
 </div>
@@ -33,7 +32,7 @@
 	{% if page.seo.image.src is defined %}
 		{% if page.seo.image.src is not null %}
 		<div class="image">
-			<img src="{{ upload_uri }}/{{ page.seo.image.src }}" width="100%" />
+			<img src="{{ asset(upload_uri~'/'~page.seo.image.src)| imagine_filter('image_normal') }}" width="100%" />
 		</div>
 		{% endif %}
 	{% endif %}
@@ -60,7 +59,7 @@
 	{{ form_errors(image) }}
 	{% if image.vars.value.src is not null %}
 	<div class="image">
-		<img src="{{ upload_uri }}/{{ image.vars.value.src }}" width="100%" />
+		<img src="{{ asset(upload_uri~'/'~image.vars.value.src)| imagine_filter('image_normal') }}" width="100%" />
 	</div>
 	{% endif %}
 </div>

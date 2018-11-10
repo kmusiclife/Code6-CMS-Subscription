@@ -20,7 +20,7 @@
         <td>
         	{% if article.seo.image is defined %}
 	        	{% if article.seo.image is not null %}
-		        	<img src="{{ asset('/uploads/'~article.seo.image.src)| imagine_filter('image_small') }}" alt="" />
+		        	<img src="{{ asset(upload_uri~'/'~article.seo.image.src)| imagine_filter('image_small') }}" alt="" />
 				{% endif %}
 			{% endif %}
         </td>
