@@ -97,6 +97,9 @@ subscription:
         cancel: 
             index: "解約の確認"
             completed: "解約完了"
+        canceled:
+            index: "解約完了しました"
+            
         card: 
             index: "カード番号登録"
             edit: "カード番号更新"
@@ -104,7 +107,7 @@ subscription:
     button:
         cancel: "解約に進む"
         execute: "本当に解約する"
-    
+        
     plan:
         amount: "料金"
         interval: "課金の間隔"
