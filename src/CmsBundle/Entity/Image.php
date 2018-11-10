@@ -51,7 +51,7 @@ class Image
 	 *    maxSize = "3M",
 	 *    maxSizeMessage = "3MB以下のサイズの画像をアップロードしてください",
 	 *    minWidth = 1000,
-	 *    maxWidth = 2000,
+	 *    maxWidth = 4100,
 	 *    minWidthMessage = "1000px以上の画像をアップロードしてください",
 	 *    maxWidthMessage = "2000px以上の画像はアップロードできません",
 	 *    minRatio = 1.1,
