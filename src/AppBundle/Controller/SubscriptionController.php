@@ -147,8 +147,8 @@ class SubscriptionController extends Controller
 		        	array('user' => $user, 'subscription' => $subscription),
 		        	true
 		        );
-				
-				return new RedirectResponse($this->generateUrl('subscription_cancel_completed'));
+		        
+                return new RedirectResponse($this->generateUrl('public_canceled'));
 				
             }
         }
