@@ -1,9 +1,14 @@
 {% trans_default_domain 'message' %}
-{% extends "themes/default/layout.html.twig" %}
+{% extends 
+    is_granted('ROLE_ADMIN') ?
+        "@AppBundle/Resources/views/Template/layout.html.twig" :
+        "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" 
+%}
 
 {% block title %}{{ 'profile.title.show'|trans }}{% endblock %}
 
 {% block fos_user_content %}
+
 <div class="uniform">
     
 <table class="table">
@@ -34,4 +39,7 @@
 </div>
     
 </div>
+
+
 {% endblock fos_user_content %}
+

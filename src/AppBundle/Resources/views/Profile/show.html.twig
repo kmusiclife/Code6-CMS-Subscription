@@ -1,6 +1,8 @@
 {% trans_default_domain 'message' %}
 {% extends 
-	getSetting('parameter_theme_name') ? 
-		"themes/"~getSetting('parameter_theme_name')~"/profile.show.html.twig" : 
-		"themes/default/profile.show.html.twig" 
+	is_granted('ROLE_ADMIN') ? 
+		"@AppBundle/Resources/views/Profile/profile.show.html.twig" :
+		getSetting('parameter_theme_name') ? 
+			"themes/"~getSetting('parameter_theme_name')~"/profile.show.html.twig" : 
+			"themes/default/profile.show.html.twig" 
 %}
