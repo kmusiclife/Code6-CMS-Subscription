@@ -53,6 +53,23 @@ class AppHelper
 		
 		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
+	public function curlRequest($url, $params=array()){
+		
+		if(!$url) return;
+		
+		$curl = curl_init($url);
+		
+		curl_setopt($curl,CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+		curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl,CURLOPT_COOKIEJAR,      'cookie');
+		curl_setopt($curl,CURLOPT_COOKIEFILE,     'tmp');
+		curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE);
+		
+		return curl_exec($curl);
+		
+	}
 	public function getParameter($name)
 	{
 		return $this->serviceContainer->getParameter($name);

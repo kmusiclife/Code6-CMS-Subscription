@@ -117,8 +117,12 @@ class User extends BaseUser
      */
     protected $stripe_subscription_id;
     
-
-
+    /**
+     * @ORM\Column(name="recaptcha", type="string")
+     */
+    private $recaptcha;
+    public function getRecaptcha(){ return $this->recaptcha; }
+    public function setRecaptcha($recaptcha){ $this->recaptcha = $recaptcha; }
 
 
 

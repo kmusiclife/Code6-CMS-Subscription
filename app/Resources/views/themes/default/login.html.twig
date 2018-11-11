@@ -28,13 +28,31 @@
 	    <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
 	</div>
 
-	<div></div>
+
 	<div>
 	    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
 	    <label for="remember_me">{{ 'message.remember_me'|trans }}</label>
 	</div>
 
-	<div></div>
+
+	<div>
+	    
+	    <script src="https://www.google.com/recaptcha/api.js?render={{ getParameter('recaptcha_site_key') }}"></script>
+		<script>
+		grecaptcha.ready(function() {
+		  grecaptcha.execute('{{ getParameter('recaptcha_site_key') }}', {action: 'homepage'}).then(function(token) {
+			    recaptcha = document.getElementById('recaptcha');
+			    recaptcha.value = token;
+		  });
+		});
+		</script>
+		
+		<input type="hidden" id="recaptcha" name="_recaptcha" value="" />
+		
+	</div>
+
+
+
 	<div>
 	    <input type="submit" id="_submit" name="_submit" class="special" value="{{ 'form.button.login'|trans }}" />
 	</div>
