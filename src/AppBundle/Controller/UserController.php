@@ -115,6 +115,22 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+			try{
+				
+				$this->get('app.stripe_helper')->setApiKey();
+				
+				$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
+				$subscription->cancel();
+
+				$customer = \Stripe\Customer::retrieve( $user->getStripeCustomerId() );
+				$customer->delete();
+				
+			} catch (Exception $e) {
+				throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
+			}
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
