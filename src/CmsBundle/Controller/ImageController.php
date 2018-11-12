@@ -31,7 +31,7 @@ class ImageController extends Controller
         
         $images = $pager->getRepository( 'CmsBundle:Image', array(), array('id' => 'DESC') );
 
-        return $this->render('CmsBundle::Image:index.html.twig', array(
+        return $this->render('CmsBundle:Image:index.html.twig', array(
 	        'pager' => $pager,
             'images' => $images,
         ));
