@@ -20,7 +20,7 @@ class PublicController extends Controller
      */
     public function canceledAction()
     {
-        return $this->render('@AppBundle/Resources/views/Public/canceled.html.twig', array(
+        return $this->render('AppBundle:Public:canceled.html.twig', array(
         ));
     }
 }

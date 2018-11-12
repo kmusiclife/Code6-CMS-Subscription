@@ -60,7 +60,7 @@ class ConfigController extends Controller
             
         }
         
-        return $this->render('@CmsBundle/Resources/views/Config/new.html.twig', array(
+        return $this->render('CmsBundle:Config:new.html.twig', array(
             'page' => $page,
             'form' => $form->createView(),
         ));

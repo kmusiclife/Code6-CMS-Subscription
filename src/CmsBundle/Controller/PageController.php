@@ -40,7 +40,7 @@ class PageController extends Controller
         
         $pages = $pager->getRepository( 'CmsBundle:Page', array(), array('id' => 'DESC') );
 
-        return $this->render('@CmsBundle/Resources/views/Page/index.html.twig', array(
+        return $this->render('CmsBundle:Page:index.html.twig', array(
 	        'pager' => $pager,
             'pages' => $pages,
         ));
@@ -100,7 +100,7 @@ class PageController extends Controller
 			
         }
         
-        return $this->render('@CmsBundle/Resources/views/Page/new.html.twig', array(
+        return $this->render('CmsBundle:Page:new.html.twig', array(
             'page' => $page,
             'form' => $form->createView(),
         ));
@@ -174,7 +174,7 @@ class PageController extends Controller
 
 		}
         
-        return $this->render('@CmsBundle/Resources/views/Page/edit.html.twig', array(
+        return $this->render('CmsBundle:Page:edit.html.twig', array(
             'page' => $page,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

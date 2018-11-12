@@ -29,7 +29,7 @@ class UserController extends Controller
         
         $users = $pager->getRepository( 'AppBundle:User', array(), array('id' => 'DESC') );
 
-        return $this->render('@AppBundle/Resources/views/User/index.html.twig', array(
+        return $this->render('AppBundle:User:index.html.twig', array(
 	        'pager' => $pager,
             'users' => $users,
         ));
@@ -64,7 +64,7 @@ class UserController extends Controller
 			throw new Exception('Stripe Plan::retrieve Error');
 		}
 		
-        return $this->render('@AppBundle/Resources/views/User/show.html.twig', array(
+        return $this->render('AppBundle:User:show.html.twig', array(
             'user' => $user,
             'subscription' => isset($subscription) ? $subscription : null,
             'invoices' => isset($invoices) ? $invoices : null,
@@ -91,7 +91,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('@AppBundle/Resources/views/User/edit.html.twig', array(
+        return $this->render('AppBundle:User:edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

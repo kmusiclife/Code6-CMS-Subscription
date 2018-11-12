@@ -23,7 +23,7 @@ class ContactController extends Controller
      */
     public function completedAction()
     {
-        return $this->render('@SiteBundle/Resources/views/Contact/completed.html.twig', array(
+        return $this->render('SiteBundle:Contact:completed.html.twig', array(
         ));
     }
 
@@ -73,7 +73,7 @@ class ContactController extends Controller
             return $this->redirectToRoute('contact_completed');
         }
 
-        return $this->render('@SiteBundle/Resources/views/Contact/index.html.twig', array(
+        return $this->render('SiteBundle:Contact:index.html.twig', array(
             'contact' => $contact,
             'form' => $form->createView(),
         ));

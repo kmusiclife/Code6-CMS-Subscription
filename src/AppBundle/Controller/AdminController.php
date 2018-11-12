@@ -34,7 +34,7 @@ class AdminController extends Controller
 			return new RedirectResponse( $this->generateUrl('stripe_config') );
 		}
 
-        return $this->render('@AppBundle/Resources/views/Admin/index.html.twig', array(
+        return $this->render('AppBundle:Admin:index.html.twig', array(
 	        'body' => ''
         ));
 

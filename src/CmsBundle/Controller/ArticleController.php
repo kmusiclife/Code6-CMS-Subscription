@@ -40,7 +40,7 @@ class ArticleController extends Controller
         
         $articles = $pager->getRepository( 'CmsBundle:Article', array(), array('id' => 'DESC') );
 
-        return $this->render('@CmsBundle/Resources/views/Article/index.html.twig', array(
+        return $this->render('CmsBundle:Article:index.html.twig', array(
 	        'pager' => $pager,
             'articles' => $articles,
         ));
@@ -100,7 +100,7 @@ class ArticleController extends Controller
 			
         }
         
-        return $this->render('@CmsBundle/Resources/views/Article/new.html.twig', array(
+        return $this->render('CmsBundle:Article:new.html.twig', array(
             'article' => $article,
             'form' => $form->createView(),
         ));
@@ -176,7 +176,7 @@ class ArticleController extends Controller
 
 		}
         
-        return $this->render('@CmsBundle/Resources/views/Article/edit.html.twig', array(
+        return $this->render('CmsBundle:Article:edit.html.twig', array(
             'article' => $article,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

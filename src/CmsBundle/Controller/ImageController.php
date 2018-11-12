@@ -31,7 +31,7 @@ class ImageController extends Controller
         
         $images = $pager->getRepository( 'CmsBundle:Image', array(), array('id' => 'DESC') );
 
-        return $this->render('@CmsBundle/Resources/views/Image/index.html.twig', array(
+        return $this->render('CmsBundle::Image:index.html.twig', array(
 	        'pager' => $pager,
             'images' => $images,
         ));
@@ -43,7 +43,7 @@ class ImageController extends Controller
      */
     public function newAction(Request $request)
     {
-        return $this->render('@CmsBundle/Resources/views/Image/new.html.twig', array(
+        return $this->render('CmsBundle:Image:new.html.twig', array(
         ));
     }
 
@@ -63,7 +63,7 @@ class ImageController extends Controller
             return $this->redirectToRoute('image_edit', array('id' => $image->getId()));
         }
 
-        return $this->render('@CmsBundle/Resources/views/Image/edit.html.twig', array(
+        return $this->render('CmsBundle:Image:edit.html.twig', array(
             'image' => $image,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

@@ -26,7 +26,7 @@ class ContactController extends Controller
 
         $contacts = $em->getRepository('SiteBundle:Contact')->findAll();
 
-        return $this->render('@CmsBundle/Resources/views/Contact/index.html.twig', array(
+        return $this->render('CmsBundle:Contact:index.html.twig', array(
             'contacts' => $contacts,
         ));
     }
@@ -46,7 +46,7 @@ class ContactController extends Controller
             return $this->redirectToRoute('contact_edit', array('id' => $contact->getId()));
         }
 
-        return $this->render('@CmsBundle/Resources/views/Contact/edit.html.twig', array(
+        return $this->render('CmsBundle:Contact:edit.html.twig', array(
             'contact' => $contact,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

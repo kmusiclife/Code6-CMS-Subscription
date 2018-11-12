@@ -55,7 +55,7 @@ class ConfigController extends Controller
             
         }
 		
-        return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(
+        return $this->render('AppBundle:Setting:config.html.twig', array(
             'setting' => $setting,
             'form' => $form->createView(),
         ));
@@ -89,7 +89,7 @@ class ConfigController extends Controller
 			return $this->redirectToRoute('site_index');
 			
         }
-        return $this->render('@AppBundle/Resources/views/Config/new.html.twig', array(
+        return $this->render('AppBundle:Config:new.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));

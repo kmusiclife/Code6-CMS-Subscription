@@ -36,7 +36,7 @@ class SubscriptionController extends Controller
 		} catch (Exception $e) {
 			throw new Exception('Stripe Plan::retrieve Error');
 		}
-        return $this->render('@AppBundle/Resources/views/Subscription/index.html.twig', array(
+        return $this->render('AppBundle:Subscription:index.html.twig', array(
         	'subscription' => $subscription,
         ));
     }
@@ -77,7 +77,7 @@ class SubscriptionController extends Controller
             }
         }
 
-        return $this->render('@AppBundle/Resources/views/Subscription/card.html.twig', array(
+        return $this->render('AppBundle:Subscription:card.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -102,7 +102,7 @@ class SubscriptionController extends Controller
 			throw new Exception('');
 		}
 
-        return $this->render('@AppBundle/Resources/views/Subscription/invoice.html.twig', array(
+        return $this->render('AppBundle:Subscription:invoice.html.twig', array(
 	        'invoices' => $invoices
         ));
     }
@@ -153,7 +153,7 @@ class SubscriptionController extends Controller
             }
         }
 
-        return $this->render('@AppBundle/Resources/views/Subscription/cancel.html.twig', array(
+        return $this->render('AppBundle:Subscription:cancel.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -166,7 +166,7 @@ class SubscriptionController extends Controller
      */
     public function cardCompletedAction()
     {
-        return $this->render('@AppBundle/Resources/views/Subscription/card.completed.html.twig', array(
+        return $this->render('AppBundle:Subscription:card.completed.html.twig', array(
         ));
     }
     
@@ -176,7 +176,7 @@ class SubscriptionController extends Controller
      */
     public function cancelCompletedAction()
     {
-        return $this->render('@AppBundle/Resources/views/Subscription/cancel.completed.html.twig', array(
+        return $this->render('AppBundle:Subscription:cancel.completed.html.twig', array(
         ));
     }
 
