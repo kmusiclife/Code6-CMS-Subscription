@@ -91,6 +91,8 @@ class ArticleController extends Controller
 	        foreach($article->getImages() as $image){
 		        $helper->createImage($image, $article->getTitle(), $article->getBody());
 	        }
+	        $article->setCreatedUser($user);
+	        
 	        $em->persist($article->getSeo());
             $em->persist($article);
             $em->flush();
