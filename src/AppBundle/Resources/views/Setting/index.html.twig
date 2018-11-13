@@ -20,7 +20,7 @@
     <td>{{ setting.slug|trans() }}</td>
     <td>{{ setting.value }}</td>
     <td>
-        <a class="button special small" href="{{ path('admin_setting_edit', { 'id': setting.id }) }}">{{ 'setting.button.edit'|trans() }}</a>
+        <a class="button special small" href="{{ path('admin_setting_edit', { 'slug': setting.slug }) }}">{{ 'setting.button.edit'|trans() }}</a>
     </td>
 </tr>
 {% endfor %}

@@ -28,7 +28,7 @@
 	<label>{{ 'entity.contact.email'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ contact.email }}
+	<a href="mailto:{{ contact.email }}" target="_blank">{{ contact.email }}</a>
 	{{ form_widget(edit_form.email) }}
 </div>
 

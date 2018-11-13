@@ -29,7 +29,7 @@ class ContactEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'SiteBundle\Entity\Contact'
+            'data_class' => 'CmsBundle\Entity\Contact'
         ));
     }
 

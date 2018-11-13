@@ -8,17 +8,16 @@
 {% block body %}
 <div class="row uniform">
     <div class="4u 12u(small)">
-    	<a class="button special fit" href="{{ path('article_new') }}">{{ 'article.title.new'|trans }}</a>
+    	<a class="button special fit" href="{{ path('article_new') }}"><i class="fas fa-plus"></i> {{ 'article.title.new'|trans }}</a>
     </div>
     <div class="4u 12u(small)">
-    	<a class="button special fit" href="{{ path('article_index') }}">{{ 'article.title.index'|trans }}</a>
+    	<a class="button special fit" href="{{ path('article_index') }}"><i class="fas fa-list-ul"></i> {{ 'article.title.index'|trans }}</a>
     </div>
-
     <div class="4u 12u$(small)">
-    	<a class="button special fit" href="{{ path('admin_contact_index') }}">{{ 'contact.title.index'|trans }}</a>
+    	<a class="button special fit" href="{{ path('admin_contact_index') }}"><i class="far fa-envelope"></i> {{ 'contact.title.index'|trans }}</a>
     </div>
     <div class="12u 12u$(small)">
-    	<a class="button special fit" href="{{ path('user_index') }}">{{ 'user.title.index'|trans }}</a>
+    	<a class="button special fit" href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans }}</a>
     </div>
 
     <div class="12u 12u$(small)">

@@ -1,40 +1,40 @@
 <?php
 
-namespace SiteBundle\Controller;
+namespace CmsBundle\Controller;
 
-use SiteBundle\Entity\Contact;
+use CmsBundle\Entity\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
+use AppBundle\Form\Type\PasswordFormType;
 
 /**
- * @Route("contact")
+ * Contact controller.
+ *
+ * @Route("/")
  */
-class ContactController extends Controller
+class PublicController extends Controller
 {
-
     /**
-     * @Route("/completed", name="contact_completed")
+     * @Route("contact/completed", name="contact_completed")
      * @Method({"GET"})
      */
-    public function completedAction()
+    public function contactCompletedAction()
     {
-        return $this->render('SiteBundle:Contact:completed.html.twig', array(
+        return $this->render('CmsBundle:Contact:public_completed.html.twig', array(
         ));
     }
 
     /**
-     * @Route("/", name="contact_index")
+     * @Route("contact/", name="contact_index")
      * @Method({"GET", "POST"})
      */
-    public function indexAction(Request $request)
+    public function contactIndexAction(Request $request)
     {
         $contact = new Contact();
-        $form = $this->createForm('SiteBundle\Form\Type\ContactFormType', $contact);
+        $form = $this->createForm('CmsBundle\Form\Type\ContactFormType', $contact);
         $form->handleRequest($request);
         
         if($form->isSubmitted()){
@@ -73,10 +73,11 @@ class ContactController extends Controller
             return $this->redirectToRoute('contact_completed');
         }
 
-        return $this->render('SiteBundle:Contact:index.html.twig', array(
+        return $this->render('CmsBundle:Contact:public_index.html.twig', array(
             'contact' => $contact,
             'form' => $form->createView(),
         ));
     }
+
 
 }

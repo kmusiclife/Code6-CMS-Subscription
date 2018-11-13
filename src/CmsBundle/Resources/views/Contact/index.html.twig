@@ -6,24 +6,25 @@
 <table>
     <thead>
         <tr>
-            <th>{{ 'entity.contact.title'|trans }}</th>
-            <th>{{ 'entity.contact.email'|trans }}</th>
-            <th>{{ 'entity.contact.name'|trans }}</th>
-            <th></th>
+            <th>{{ 'entity.contact.createdAt'|trans }}</th>
         </tr>
     </thead>
     <tbody>
     {% for contact in contacts %}
         <tr>
-            <td>{{ contact.title }}</td>
-            <td>{{ contact.email }}</td>
-            <td>{{ contact.name }}</td>
             <td>
-                <a class="button small special" href="{{ path('admin_contact_edit', { 'id': contact.id }) }}">{{ 'contact.button.edit'|trans }}</a>
+        	<h4>{{ contact.title }}</h4>
+            <div class="box">
+	            {{ contact.createdAt|date('Y年m月d日 H:i:s') }} <br />
+	            {{ 'entity.contact.name'|trans }}：{{ contact.name }}{{ 'entity.contact.email'|trans }}：{{ contact.email }}
+            </div>
+				<a class="button small special fit" href="{{ path('admin_contact_edit', { 'id': contact.id }) }}">{{ 'contact.button.show'|trans }}</a>
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+
+{% include '@AppBundle/Resources/views/Template/pager.html.twig' %}
 
 {% endblock %}

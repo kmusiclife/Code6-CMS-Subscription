@@ -1,27 +1,5 @@
-entity:
-    contact:
-        title: "タイトル"
-        name: "お名前"
-        email: "メールアドレス"
-        zip: "郵便番号"
-        address: "住所"
-        tel: "電話番号"
-        body: "本文"
-        createdAt: "送信日時"
-
 message:
     added: "データを追加しました。"
     edited: "編集を完了しました。"
     contact_sent: "お問い合わせありがとうございます。お問い合わせを送信いたしました。"
     
-contact:
-    title:
-        index: "お問い合わせ一覧"
-    button:
-        new: "メールを送信する"
-        edit: "メールを編集する"
-        delete: "メールを削除する"
-        
-config:
-    title:
-        new: "サイト初期設定"

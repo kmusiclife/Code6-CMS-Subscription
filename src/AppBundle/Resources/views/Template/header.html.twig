@@ -26,17 +26,17 @@
 		<li><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}"><i class="fas fa-home"></i> Home</a></li>
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 			{% if is_granted('ROLE_ADMIN') %}
-				<li><a href="{{ path('article_index') }}"><i class="fas fa-images"></i> 記事一覧</a></li>
-				<li><a href="{{ path('admin_contact_index') }}"><i class="fas fa-envelope"></i> お問い合わせ一覧</a></li>
+				<li><a href="{{ path('article_index') }}"><i class="fas fa-list-ul"></i> {{ 'article.title.index'|trans({}, 'message') }}</a></li>
+				<li><a href="{{ path('admin_contact_index') }}"><i class="fas fa-envelope"></i> {{ 'contact.title.index'|trans({}, 'message') }}</a></li>
 			{% endif %}
 		{% endif %}
 	</ul>
 	<ul class="links">
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 			{% if is_granted('ROLE_ADMIN') %}
-				<li><a href="{{ path('page_index') }}"><i class="fas fa-file"></i> 固定ページ</a></li>
-				<li><a href="{{ path('image_index') }}"><i class="fas fa-images"></i> サイト内画像</a></li>
-				<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> ユーザ一覧</a></li>
+				<li><a href="{{ path('page_index') }}"><i class="fas fa-file"></i> {{ 'page.title.index'|trans({}, 'message') }}</a></li>
+				<li><a href="{{ path('image_index') }}"><i class="fas fa-images"></i> {{ 'image.title.index'|trans({}, 'message') }}</a></li>
+				<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans({}, 'message') }}</a></li>
 			{% else %}
 				<li><a href="{{ path('fos_user_profile_show') }}">プロフィール</a></li>
 			{% endif %}

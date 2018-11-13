@@ -2,17 +2,18 @@
 
 namespace CmsBundle\Controller;
 
-use SiteBundle\Entity\Contact;
+use CmsBundle\Entity\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Form\Type\PasswordFormType;
 
 /**
  * Contact controller.
  *
- * @Route("/admin/contact")
+ * @Route("admin/contact")
  */
 class ContactController extends Controller
 {
@@ -22,13 +23,20 @@ class ContactController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $contacts = $em->getRepository('SiteBundle:Contact')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        
+        $pager = $this->get('app.app_pager');
+        $pager->setInc(10);
+        $pager->setPath('admin_contact_index'); 
+        
+        $contacts = $pager->getRepository( 'CmsBundle:Contact', array(), array('id' => 'DESC') );
 
         return $this->render('CmsBundle:Contact:index.html.twig', array(
+	        'pager' => $pager,
             'contacts' => $contacts,
         ));
+
     }
     /**
      * @Route("/{id}/edit", name="admin_contact_edit")
@@ -74,7 +82,6 @@ class ContactController extends Controller
     }
 
     /**
-     * @param Contact $contact The contact entity
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(Contact $contact)
@@ -86,4 +93,5 @@ class ContactController extends Controller
             ->getForm()
         ;
     }
+
 }

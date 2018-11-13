@@ -55,7 +55,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/{id}/edit", name="admin_setting_edit")
+     * @Route("/setting/{slug}/edit", name="admin_setting_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Setting $setting)
@@ -67,7 +67,7 @@ class SettingController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('admin_setting_edit', array('id' => $setting->getId()));
+            return $this->redirectToRoute('admin_setting_edit', array('slug' => $setting->getSlug()));
         }
 
         return $this->render('AppBundle:Setting:edit.html.twig', array(
