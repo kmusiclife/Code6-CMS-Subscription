@@ -1,0 +1,98 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/default/layout.html.twig" %}
+{% block title %}{{ 'subscription.title.card.edit'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+
+{{ 
+	form_start(
+		form, {
+			'method': 'post', 
+			'action': path('subscription_card'), 
+			'attr': {
+				'class': 'subscription_card row gtr-uniform', 
+				'novalidate': 'novalidate',
+				'id': 'payment-form'
+		}
+	}) 
+}}
+
+
+<div>
+	<label>{{ 'entity.user.card'|trans() }}*</label>
+</div>
+<div>
+	<div id="card">
+		<div id="card-element"></div>
+		<div id="card-errors" role="alert"></div>
+	</div>
+	{{ form_widget(form.stripe_token_id) }}
+	{{ form_errors(form.stripe_token_id) }}
+</div>
+
+<div>
+	<input type="submit" class="button special" value="{{ 'subscription.button.card'|trans }}" id="submit-button" />
+</div>
+
+
+{{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock javascripts %}
+
+{% block javascript %}
+<script>
+function stripeTokenHandler(token) {
+  
+  $('#submit-button').attr('disabled', 'disabled');
+  $('#card_form_stripe_token_id').val(token.id);
+  $('#payment-form').submit();
+  
+}
+var style = {
+  base: {
+    fontSize: '16px',
+    color: "#32325d",
+  }
+};
+
+$(function(){
+	
+	var stripe = Stripe('{{ getSetting('stripe_public_token') }}');
+	var elements = stripe.elements();
+	var token = $('#card_form_stripe_token_id').val();
+	
+	$('#card').show();
+	var card = elements.create('card', {hidePostalCode: true, style: style});
+	card.mount('#card-element');
+	
+	card.addEventListener('change', function(event) {
+	  var displayError = document.getElementById('card-errors');
+	  if (event.error) {
+	    displayError.textContent = event.error.message;
+	  } else {
+	    displayError.textContent = '';
+	  }
+	});
+	
+	var form = document.getElementById('payment-form');
+	form.addEventListener('submit', function(event) {
+	  event.preventDefault();
+	
+	  stripe.createToken(card).then(function(result) {
+	    if (result.error) {
+	      var errorElement = document.getElementById('card-errors');
+	      errorElement.textContent = result.error.message;
+	    } else {
+		  stripeTokenHandler(result.token);
+	    }
+	  });
+	});
+
+
+});
+</script>
+{% endblock javascript %}

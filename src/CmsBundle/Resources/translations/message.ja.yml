@@ -1,33 +1,8 @@
 entity:
-    contact:
-        title: "タイトル"
-        name: "お名前"
-        email: "メールアドレス"
-        zip: "郵便番号"
-        address: "住所"
-        tel: "電話番号"
-        body: "本文"
-        createdAt: "送信日時"    
     image:
         title: "タイトル"
         body: "本文"
         image: "画像"
-
-    page:
-        title: "記事名"
-        slug: "ページスラッグ"
-        date: "記事開催日"
-        time: "記事開催時間"
-        body: "記事内容"
-        price: "記事参加費"
-        report: "記事のレポート"
-        files: "画像"
-        eyecatch: "メイン画像"
-        place: "開催場所"
-        is_published: "公開・非公開"
-        images: "アップロード画像"
-        published_at: "公開時間"
-        is_member: "会員のみ公開"
 
     article:
         title: "記事名"
@@ -69,23 +44,6 @@ article:
         is_published: "公開する場合はチェックを入れてください"
         is_member: "会員のみに公開する場合はチェックを入れてください"
         
-page:
-    title:
-        new: "ページ作成"
-        index: "ページ一覧"
-        edit: "ページを編集"
-        policy: "プライバシーポリシー"
-        about: "本サービスについて"
-        config: "ページ初期設定"
-    button:
-        new: "追加する"
-        edit: "編集する"
-        show: "表示する"
-        delete: "削除する"
-    message:
-        is_published: "公開する場合はチェックを入れてください"
-        is_member: "会員のみに公開する場合はチェックを入れてください"
-    
 image:
     title:
         new: "画像追加"
@@ -94,15 +52,8 @@ image:
     button:
         show: "表示する"
         edit: "編集する"
+        delete: "削除する"
 
-contact:
-    title:
-        new: "お問い合わせ"
-        completed: "お問い合わせありがとうございます"
-        index: "お問い合わせ一覧"
-    button:
-        new: "メールを送信する"
-        show: "表示する"
-        edit: "メールを編集する"
-        delete: "メールを削除する"
-        
+
+message:
+    contact_deleted: "お問い合わせを削除しました。"

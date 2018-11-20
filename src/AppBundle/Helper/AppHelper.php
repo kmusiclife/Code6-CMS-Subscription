@@ -2,10 +2,6 @@
 
 namespace AppBundle\Helper;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 // Injection Classes
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -116,9 +112,11 @@ class AppHelper
 		
 		$env = new \Twig_Environment(new \Twig_Loader_Array());
 		$template = $env->createTemplate($source);
-		return $template->render($params);		
+		
+		return $template->render($params);
+		
 	}
-	public function sendEmailBySetting($to, $subject_slug, $body_slug, $params=array(), $bcc=false)
+	public function sendEmailBySetting($to, $subject_slug, $body_slug, $bcc=false, $params=array())
 	{
 		$subject = $this->renderSetting($subject_slug, $params);
 		$body = $this->renderSetting($body_slug, $params);

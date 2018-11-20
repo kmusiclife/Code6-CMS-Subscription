@@ -1,6 +1,8 @@
 {% trans_default_domain 'message' %}
 {% extends 
-	getSetting('parameter_theme_name') ? 
-		"themes/"~getSetting('parameter_theme_name')~"/request.confirm.html.twig" : 
-		"themes/default/request.confirm.html.twig" 
+	getSetting('parameter_members_mode') == "false" ?
+		"AppBundle:Resetting:request.confirm.admin.html.twig" :
+		template_exists( '_system/request.confirm.html.twig' )?
+			"themes/"~getSetting('parameter_theme_name')~"/_system/request.confirm.html.twig" :
+			"themes/default/_system/request.confirm.html.twig"
 %}

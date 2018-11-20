@@ -1,8 +1,0 @@
-{% trans_default_domain 'message' %}
-{% extends "themes/default/layout.html.twig" %}
-
-{% block title %}{{ 'subscription.title.canceled.index'|trans }}{% endblock title %}
-
-{% block body %}
-{{ getSetting('canceled_description') }}
-{% endblock %}

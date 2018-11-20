@@ -6,15 +6,20 @@ cms:
     resource: '@CmsBundle/Controller/'
     type: annotation
 
-site:
-    resource: '@SiteBundle/Controller/'
-    type: annotation
+subscription:
+    resource: "@SubscriptionBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+
+site:
+    resource: '@SiteBundle/Controller/'
+    type: annotation
 
 oneup_uploader:
     resource: .

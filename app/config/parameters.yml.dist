@@ -1,7 +1,7 @@
 parameters:
     database_host: 127.0.0.1
     database_port: ~
-    database_name: symfony
+    database_name: Code6-CMS-Subscription
     database_user: root
     database_password: ~
 
@@ -10,21 +10,19 @@ parameters:
     mailer_user: ~
     mailer_password: ~
 
-    recaptcha_site_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
-    recaptcha_secret_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
     secret: ThisTokenIsNotSoSecretChangeIt
-    
+
     mailer_address: info@example.com
-    mailer_name: 'Code6 CMS'
+    mailer_name: 'Code6 CMS Subscription'
     
     project_dir: '%kernel.project_dir%'
     upload_path: '%kernel.project_dir%/web/uploads'
     upload_uri: /uploads
 
-    facebook_app_id: ~
+    recaptcha_site_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    recaptcha_secret_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+    stripe_connect_client_id: ca_xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    stripe_secret_token: sk_xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    facebook_app_id: null
     stripe_application_fee: 10
-    stripe_connect_client_id: ca_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    stripe_secret_token: sk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    stripe_email: info@example.com
-    stripe_zip: 1230001

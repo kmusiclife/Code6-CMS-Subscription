@@ -29,7 +29,7 @@ class SettingController extends Controller
         return $this->render('@AppBundle/Resources/views/Setting/index.html.twig', array(
             'settings' => $settings,
         ));
-    }	
+    }
     /**
      * @Route("/setting/new", name="admin_setting_new")
      * @Method({"GET", "POST"})
@@ -48,7 +48,7 @@ class SettingController extends Controller
             return $this->redirectToRoute('admin_setting_edit', array('id' => $setting->getId()));
         }
 
-        return $this->render('AppBundle:Setting:new.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/Setting/new.html.twig', array(
             'setting' => $setting,
             'form' => $form->createView(),
         ));
@@ -70,7 +70,7 @@ class SettingController extends Controller
             return $this->redirectToRoute('admin_setting_edit', array('slug' => $setting->getSlug()));
         }
 
-        return $this->render('AppBundle:Setting:edit.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/Setting/edit.html.twig', array(
             'setting' => $setting,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

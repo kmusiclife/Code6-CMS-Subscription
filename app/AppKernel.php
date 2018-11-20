@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new CmsBundle\CmsBundle(),
             new SiteBundle\SiteBundle(),
+            new SubscriptionBundle\SubscriptionBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

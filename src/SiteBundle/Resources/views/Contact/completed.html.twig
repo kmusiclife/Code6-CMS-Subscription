@@ -1,0 +1,6 @@
+{% trans_default_domain 'message' %}
+{% extends 
+	template_exists('_contact/contact.completed.html.twig') ? 
+		"themes/"~getSetting('parameter_theme_name')~"/_contact/contact.completed.html.twig" : 
+		"themes/default/_contact/contact.completed.html.twig" 
+%}

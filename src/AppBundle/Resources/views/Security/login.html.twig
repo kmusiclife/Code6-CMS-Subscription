@@ -1,6 +1,8 @@
 {% trans_default_domain 'message' %}
 {% extends 
-	getSetting('parameter_theme_name') ? 
-		"themes/"~getSetting('parameter_theme_name')~"/login.html.twig" : 
-		"themes/default/login.html.twig" 
+	getSetting('parameter_members_mode') == "false" ?
+		"AppBundle:Security:login.admin.html.twig" :
+		template_exists( '_system/login.html.twig' )?
+			"themes/"~getSetting('parameter_theme_name')~"/_system/login.html.twig" :
+			"themes/default/_system/login.html.twig"
 %}

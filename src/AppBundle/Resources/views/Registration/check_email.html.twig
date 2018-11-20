@@ -1,7 +1,6 @@
-{% extends "layout.html.twig" %}
-
-{% trans_default_domain 'FOSUserBundle' %}
-
-{% block fos_user_content %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
-{% endblock fos_user_content %}
+{% trans_default_domain 'message' %}
+{% extends 
+	template_exists( "_system/register.confirm.html.twig" )?
+		"themes/"~getSetting('parameter_theme_name')~"/_system/register.confirm.html.twig" :
+		"themes/default/_system/register.confirm.html.twig" 
+%}

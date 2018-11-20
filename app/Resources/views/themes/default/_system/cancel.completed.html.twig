@@ -1,0 +1,11 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+
+{% block title %}{{ 'cancel.title.completed'|trans }}{% endblock title %}
+
+{% block body %}
+本サービスのキャンセル処理が完了いたしました。
+サービスのご利用ありがとうございました。
+また何かの機会がありましたらサービスをご利用いただけると幸いです。
+今後ともどうぞよろしくお願いいたします。
+{% endblock %}

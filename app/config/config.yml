@@ -2,8 +2,10 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@CmsBundle/Resources/config/services.yml" }
     - { resource: "@SiteBundle/Resources/config/services.yml" }
+    - { resource: "@SubscriptionBundle/Resources/config/services.yml" }
     
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
@@ -15,10 +17,16 @@ fos_user:
 
     registration:
         confirmation:
-            enabled: false # Symfony-CMS-Stripe does not use FOSUserBundle email confirmation. Always "false".
+            enabled: true
+            template: "@AppBundle/Resources/views/Registration/email.txt.twig"
+            
         form:
             type: AppBundle\Form\Type\RegistrationFormType
 
+    resetting:
+        email:
+            template: "@AppBundle/Resources/views/Resetting/email.txt.twig"
+            
     profile:
         form:
             type: AppBundle\Form\Type\ProfileFormType
@@ -56,10 +64,11 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+#    form_themes:
+#        - 'form.html.twig'
     globals:
         project_dir: '%project_dir%'
         upload_uri: '%upload_uri%'
-        facebook_app_id: '%facebook_app_id%'
         
 doctrine:
     dbal:

@@ -1,0 +1,14 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+
+{% block description %}{{ article.seo.description }}{% endblock description %}
+{% block keywords %}{{ article.seo.keywords }}{% endblock keywords %}
+{% block siteimage %}{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}{% endblock siteimage %}
+{% block siteimage_w %}1000{% endblock siteimage_w %}
+{% block siteimage_h %}666{% endblock siteimage_h %}
+
+{% block title %}{{ article.title }}{% endblock title %}
+
+{% block body %}
+{{ article.body }}
+{% endblock %}

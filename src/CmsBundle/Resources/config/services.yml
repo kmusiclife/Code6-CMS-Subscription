@@ -22,12 +22,3 @@ services:
         arguments: ["@service_container"]
         tags: [form.type]
 
-    CmsBundle\Form\Type\PageFormType:
-        arguments: ["@service_container"]
-        tags: [form.type]
-        public: true
-
-    CmsBundle\Form\Type\PageEditFormType:
-        arguments: ["@service_container"]
-        tags: [form.type]
-        public: true

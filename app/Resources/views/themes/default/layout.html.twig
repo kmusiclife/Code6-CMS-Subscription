@@ -1,10 +1,21 @@
 {% trans_default_domain 'message' %}
+{% set title = block('title') is defined ? block('title') : '' %}
+{% set description = block('description') is defined ? block('description') : '' %}
+{% set keywords = block('keywords') is defined ? block('keywords') : '' %}
+{% set sitename = block('sitename') is defined ? block('sitename') : '' %}
+{% set siteimage = block('siteimage') is defined ? block('siteimage') : 'mainimage.jpg'|absolute_url %}
+{% set siteimage_w = block('siteimage_w') is defined ? block('siteimage_w') : '' %}
+{% set siteimage_h = block('siteimage_h') is defined ? block('siteimage_h') : '' %}
+{% set siteurl = app.request.uri %}
+{% set facebook_app_id = block('facebook_app_id') is defined ? block('facebook_app_id') : '' %}
+{% set og_type = app.request.requestUri == '/' ? 'website' : 'article' %}
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>{% block title %}Code6 CMS{% endblock %}</title>
+<title>{% block title %}Code6 CMS Subscription{% endblock %}</title>
 {% block stylesheets %}{% endblock stylesheets %}
 {% include 'themes/default/header.html.twig' %}
+{% block pre_javascript %}{% endblock pre_javascript %}
 </head>
 <body>
 
@@ -36,7 +47,6 @@
 <!--[if lte IE 8]><script src="{{ asset('admin/js/ie/respond.min.js') }}"></script><![endif]-->
 
 {% block javascripts %}{% endblock javascripts %}
-{# javascript links here #}
 {% block javascript %}{% endblock javascript %}
 
 </body>

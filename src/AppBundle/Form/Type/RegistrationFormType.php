@@ -40,7 +40,7 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		
-		$this->serviceContainer->get('app.stripe_helper')->setApiKey();
+		$this->serviceContainer->get('subscription.stripe_helper')->setApiKey();
 		
 	    $stripe_plans = \Stripe\Plan::all();
 		

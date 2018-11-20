@@ -29,7 +29,7 @@ class ContactEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CmsBundle\Entity\Contact'
+            'data_class' => 'SiteBundle\Entity\Contact'
         ));
     }
 
@@ -38,7 +38,7 @@ class ContactEditFormType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'cmsbundle_contact';
+        return 'sitebundle_contact';
     }
 
 

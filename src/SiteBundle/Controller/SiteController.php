@@ -3,7 +3,6 @@
 namespace SiteBundle\Controller;
 
 use AppBundle\Entity\User;
-use CmsBundle\Entity\Page;
 use CmsBundle\Entity\Article;
 use CmsBundle\Entity\Image;
 
@@ -19,7 +18,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
@@ -29,6 +27,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  */
 class SiteController extends Controller
 {
+
     /**
      * @Route("/", name="site_index")
      * @Method("GET")
@@ -38,21 +37,8 @@ class SiteController extends Controller
 	    $response = $this->get('app.init_helper')->initSite();
 	    if(null != $response) return $response;
 	    
-        return $this->render('@SiteBundle/Resources/views/index.html.twig', array());
+        return $this->render('SiteBundle:Index:show.html.twig', array());
     }
-    /**
-     * @Route("page/{slug}", name="page_show")
-     * @ParamConverter("Page", class="CmsBundle:Page", options={"mapping":{"slug"="slug"}})
-     * @Method("GET")
-     */
-    public function pageShowAction(Page $page)
-    {
-	    
-        return $this->render('@SiteBundle/Resources/views/page.html.twig', array(
-            'page' => $page,
-        ));
-    }
-	
     /**
      * @Route("article/{slug}", name="article_show")
      * @ParamConverter("Article", class="CmsBundle:Article", options={"mapping":{"slug"="slug"}})
@@ -61,7 +47,7 @@ class SiteController extends Controller
     public function articleShowAction(Article $article, Request $request)
     {
 	    
-        return $this->render('@SiteBundle/Resources/views/article.html.twig', array(
+        return $this->render('SiteBundle:Article:show.html.twig', array(
             'article' => $article,
         ));
     }
@@ -72,7 +58,7 @@ class SiteController extends Controller
      */
     public function imageShowAction(Image $image)
     {
-        return $this->render('@SiteBundle/Resources/views/image.html.twig', array(
+        return $this->render('SiteBundle:Image:show.html.twig', array(
             'image' => $image,
         ));
         
@@ -87,6 +73,22 @@ class SiteController extends Controller
 	    	return new RedirectResponse($this->generateUrl('admin_index'));
 	    else
 	    	return new RedirectResponse($this->generateUrl('site_index'));
+    }
+    /**
+     * @Route("/{slug}", name="site_static")
+     * @Method("GET")
+     */
+    public function staticAction($slug)
+    {
+	    $theme_name = $this->get('app.app_helper')->getSetting('parameter_theme_name');
+	    $template_file = $this->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/_static/'.$slug.'.html.twig';
+	    if( false == file_exists($template_file) ){
+		    throw new NotFoundHttpException("Page not found");
+	    }
+        return $this->render(
+        	'SiteBundle:Static:show.html.twig', 
+        	array('slug' => $slug)
+        );
     }
     	
 }

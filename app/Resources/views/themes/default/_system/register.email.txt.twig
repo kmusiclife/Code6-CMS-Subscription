@@ -1,0 +1,39 @@
+{% trans_default_domain 'message' %}
+{% block subject %}
+{%- autoescape false -%}
+【重要】登録完了のお知らせ
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{%- autoescape false -%}
+
+本メールはサービス登録時にお送りしています。
+
+下記URLをクリックすることでメールアドレスの受信を確認し
+アカウントを有効化することが出来ます。必ず下記URLにアクセスしてください。
+
+{{ confirmationUrl }}
+
+登録内容は下記のとおりです。
+
+ユーザーID： {{ user.username }}
+メールアドレス： {{ user.email }}
+パスワード： 登録時に入力したもの
+
+下記ログインURLよりログインしてください。
+ログインURL： {{ absolute_url(path('fos_user_security_login')) }}
+
+なお {{ absolute_url(path('site_index')) }} よりサービスのご利用ができます。
+サービスの利用規約やサービスの内容、変更、解約も上記より
+行ってください。なおパスワードなどを忘れた場合は下記より手続きが可能です。
+
+パスワードを忘れた場合は下記より再発行を行ってください。
+パスワード再発行： {{ absolute_url(path('fos_user_resetting_request')) }}
+
+本サービスをご利用いただき誠にありがとうございます。
+今後ともどうぞよろしくお願いいたします。
+
+{%- endautoescape -%}
+{% endblock %}
+{% block body_html %}{% endblock %}

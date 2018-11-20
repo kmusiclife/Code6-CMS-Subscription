@@ -1,13 +1,6 @@
-{% trans_default_domain 'FOSUserBundle' %}
-{% block subject %}
-{%- autoescape false -%}
-{{ 'resetting.email.subject'|trans({'%username%': user.username}) }}
-{%- endautoescape -%}
-{% endblock %}
-
-{% block body_text %}
-{% autoescape false %}
-{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
-{% endautoescape %}
-{% endblock %}
-{% block body_html %}{% endblock %}
+{% trans_default_domain 'message' %}
+{% extends 
+	template_exists( "_system/resetting.email.txt.twig" )?
+		"themes/"~getSetting('parameter_theme_name')~"/_system/resetting.email.txt.twig" :
+		"themes/default/_system/resetting.email.txt.twig"
+%}

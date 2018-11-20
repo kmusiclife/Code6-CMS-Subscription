@@ -1,0 +1,30 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+
+{% block title %}{{ 'cancel.title.confirm'|trans }}{% endblock title %}
+
+{% block body %}
+本サービスの登録解除を行うと本サービスの利用ができなくなります。
+再度利用の際は再登録の必要があります。
+また、メールアドレスなどの個人情報をはじめ、サービス利用時のデータのすべてを
+登録解除とともに完全に削除いたします。復旧することはできませんのであらかじめご了承ください。
+
+{{ form_start(form) }}
+
+
+<div>
+	{{ 'entity.user.current_password'|trans() }}*</label>
+</div>
+<div>
+	{{ form_widget(form.current_password) }}
+	{{ form_errors(form.current_password) }}
+</div>
+
+<div>
+    <input type="submit" value="{{ 'cancel.button.execute'|trans() }}">
+</div>
+
+
+{{ form_end(form) }}
+
+{% endblock %}

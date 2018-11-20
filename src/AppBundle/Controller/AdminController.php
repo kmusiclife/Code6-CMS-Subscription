@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class AdminController extends Controller
 {
-
     /**
      * @Route("/", name="admin_index")
      * @Method("GET")
@@ -28,16 +27,13 @@ class AdminController extends Controller
     {
 	    $response = $this->get('app.init_helper')->initSite();
 	    if(null != $response) return $response;
-
-		if( !$this->get('app.stripe_helper')->setApiKey() )
-		{
+	    
+		if( !$this->get('subscription.stripe_helper')->setApiKey() )
 			return new RedirectResponse( $this->generateUrl('stripe_config') );
-		}
-
-        return $this->render('AppBundle:Admin:index.html.twig', array(
+	    
+        return $this->render('@AppBundle/Resources/views/Admin/index.html.twig', array(
 	        'body' => ''
         ));
 
     }
-
 }

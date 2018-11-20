@@ -1,5 +1,5 @@
 {% trans_default_domain 'message' %}
-{% extends "themes/default/layout.html.twig" %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
 
 {% block title %}{% endblock title %}
 

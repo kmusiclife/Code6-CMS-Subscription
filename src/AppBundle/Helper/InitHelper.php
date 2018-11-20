@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class InitHelper 
 {
-
+	
 	protected $userManager;
 	protected $serviceContainer;
 	protected $entityManager;
@@ -55,23 +55,10 @@ class InitHelper
 		}
 		return null;
 	}
-	// Do not forget change CmpBundle:ConfigController also
-	static function getPageSlugs(){
-		return array('privacy', 'term');
-	}
-	public function initPage()
-	{
-		$page_slugs = $this->getPageSlugs();
-		foreach($page_slugs as $page_slug){
-			$page = $this->entityManager->getRepository('CmsBundle:Page')->findOneBySlug($page_slug);
-			if( !$page ) return new RedirectResponse( $this->router->generate('site_config_page', array('slug' => $page_slug)));
-		}
-		return null;
-		
-	}
-	// Do not forget change AppBundle:ConfigController also
 	static function getSettingSlugs(){
-		return array('parameter_members_mode', 'parameter_image_count', 'parameter_theme_name', 'register_email_subject', 'register_email', 'registered_description', 'cancel_email_subject', 'cancel_email', 'cancel_description', 'canceled_description', 'contact_email_subject', 'contact_email', 'contacted_description');
+		return array(
+			'parameter_members_mode', 'parameter_image_count', 'parameter_theme_name', 
+		);
 	}
 	public function hasSettings()
 	{
@@ -99,7 +86,6 @@ class InitHelper
 	{
 		if($this->initAdmin()) return $this->initAdmin();
 		if($this->initSettings()) return $this->initSettings();
-		if($this->initPage()) return $this->initPage();
 	}
 
 	

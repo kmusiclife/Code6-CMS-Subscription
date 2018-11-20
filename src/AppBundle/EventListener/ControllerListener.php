@@ -11,13 +11,14 @@ use AppBundle\Entity\User;
 class ControllerListener
 {
 	
-    protected $container;
+    protected $serviceContainer;
     
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $serviceContainer)
     {
-        $this->container = $container;
+        $this->serviceContainer = $serviceContainer;
     }
     public function onKernelController(FilterControllerEvent $event){
+	    
     }
     public function prePersist(LifecycleEventArgs $args)
     {

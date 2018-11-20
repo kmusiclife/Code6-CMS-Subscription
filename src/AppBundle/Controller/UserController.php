@@ -29,22 +29,21 @@ class UserController extends Controller
         
         $users = $pager->getRepository( 'AppBundle:User', array(), array('id' => 'DESC') );
 
-        return $this->render('AppBundle:User:index.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/User/index.html.twig', array(
 	        'pager' => $pager,
             'users' => $users,
         ));
     }
 
     /**
-     * @Route("/{id}/show", name="user_show")
+     * @Route("/{id}", name="user_show")
      * @Method("GET")
      */
     public function showAction(User $user)
     {
-
 		try{
 			
-			$this->get('app.stripe_helper')->setApiKey();
+			$this->get('subscription.stripe_helper')->setApiKey();
 			
 			if( $user->getStripeSubscriptionId() ){
 				$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
@@ -56,6 +55,7 @@ class UserController extends Controller
 				$invoices = \Stripe\Invoice::all(array(
 					"customer" => $user->getStripeCustomerId(),
 				) );
+			
 			} else {
 				$invoices = null;
 			}
@@ -64,7 +64,7 @@ class UserController extends Controller
 			throw new Exception('Stripe Plan::retrieve Error');
 		}
 		
-        return $this->render('AppBundle:User:show.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/User/show.html.twig', array(
             'user' => $user,
             'subscription' => isset($subscription) ? $subscription : null,
             'invoices' => isset($invoices) ? $invoices : null,
@@ -91,7 +91,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('AppBundle:User:edit.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/User/edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -114,12 +114,12 @@ class UserController extends Controller
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
 
 			try{
 				
-				$this->get('app.stripe_helper')->setApiKey();
+				$this->get('subscription.stripe_helper')->setApiKey();
 				
 				$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
 				$subscription->cancel();
@@ -131,6 +131,7 @@ class UserController extends Controller
 				throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
 			}
 
+			$this->addFlash('notice', 'message.user.delete.completed');
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();

@@ -1,0 +1,29 @@
+{% trans_default_domain 'message' %}
+{% block subject %}
+{%- autoescape false -%}
+【重要】パスワード再設定
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{%- autoescape false -%}
+
+いつもご利用ありがとうございます。
+
+パスワードの再設定のリクエストを承りました。
+パスワードの再設定に覚えがない場合は本メールを破棄してください。
+
+再設定のユーザー名： {{ user.username }} 
+
+パスワード再設定用URL： 
+{{ confirmationUrl }}
+
+上記リンクよりパスワードの再設定が可能です。
+このメールは {{ user.email }} のメールアドレスのみに配信されています。
+
+本サービスをご利用いただき誠にありがとうございます。
+今後ともどうぞよろしくお願いいたします。
+
+{%- endautoescape -%}
+{% endblock %}
+{% block body_html %}{% endblock %}

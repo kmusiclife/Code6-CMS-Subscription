@@ -1,0 +1,6 @@
+{% trans_default_domain 'message' %}
+{% extends 
+	template_exists( "_system/cancel.index.html.twig" )?
+		"themes/"~getSetting('parameter_theme_name')~"/_system/cancel.index.html.twig" :
+		"themes/default/_system/cancel.index.html.twig" 
+%}

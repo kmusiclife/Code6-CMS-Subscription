@@ -1,0 +1,43 @@
+{% trans_default_domain 'message' %}
+{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+
+{% block title %}{{ 'stripe.title.config'|trans }}{% endblock %}
+{% block body %}
+<h3>STEP1. マスターSTRIPEアカウントへの登録</h3>
+<p>
+アプリケーション利用料受け取りStripeアカウントへURIを登録します。ConnectリダイレクトURISに</strong>下記URIを登録してください。下記URIを登録していないとStripeの登録ができません。
+</p>
+<p>
+<table>
+	<tr>
+		<td>リダイレクトURI</td><td><strong>{{ app.request.scheme ~ '://' ~ app.request.host }}{{ path('stripe_redirect') }}</strong></td>
+	</tr>
+</table>
+<p>
+マスターのSTRIPEアカウントで<a href="https://dashboard.stripe.com/account/applications/settings" target="_blank">こちら</a>より設定が可能です。マスターSTRIPEアカウントの設定は下記のように設定されています。
+<p>
+<table>
+	<tr>
+		<td>Secret Token</td><td><strong>{{stripe_secret_token}}</strong></td>
+	</tr>
+	<tr>
+		<td>Connect Client ID</td><td><strong>{{stripe_connect_client_id}}</strong></td>
+	</tr>
+</table>
+</p>
+
+<h3>STEP2. クライアントSTRIPEアカウントと連結</h3>
+<p>下記のボタンを押してあなたのStripeアカウント(サービス料金受取アカウント)を認証してください。{{stripe_application_fee}}% およびStripeの手数料を足した金額がこちらのアカウントに入金されます。テストキーから本番キーへの変更の際はSettingのStripe tokenを削除してください。</p>
+<p>
+<table>
+	<tr>
+		<td width="35%">Application Fee</td><td><strong>{{stripe_application_fee}}%</strong></td>
+	</tr>
+	<tr>
+</table>
+</p>
+
+<p><a class="button special" href="{{ path('stripe_start') }}">STRIPE CONNECT</a></p>
+<p>登録ができない場合はStripeから完全にログアウトしてください。</p>
+
+{% endblock %}

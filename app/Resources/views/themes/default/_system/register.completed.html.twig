@@ -1,0 +1,18 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+
+{% block title %}{{ 'register.title.completed'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+
+<p>登録誠にありがとうございます。</p>
+
+<p>
+会員登録を完了いたしました。
+ご利用方法など分からない点などがありましたらいつでもお気軽に
+ご連絡いただければと思います。
+</p>
+
+<p>今後ともどうぞよろしくお願いいたします。</p>
+
+{% endblock fos_user_content %}

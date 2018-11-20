@@ -1,0 +1,21 @@
+{% trans_default_domain 'message' %}
+{% extends "AppBundle:Template:layout.html.twig" %}
+{% block title %}{{ 'resetting.title.request'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request row uniform">
+
+<div class="3u 12u(xsmall)">
+{{ 'entity.user.email'|trans() }}
+</div>
+<div class="9u 12u$(xsmall)">
+<input type="text" id="username" name="username" required="required" placeholder="例) yourname@example.com" />
+</div>
+
+<div class="3u 12u(xsmall)"></div>	
+<div class="9u 12u$(xsmall)">
+<input type="submit" class="special" value="{{ 'form.button.submit'|trans }}" />
+</div>
+
+</form>
+{% endblock fos_user_content %}

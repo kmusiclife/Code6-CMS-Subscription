@@ -1,0 +1,31 @@
+{% trans_default_domain 'message' %}
+{% extends 
+	getSetting('parameter_theme_name') ? 
+		"themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" : 
+		"themes/default/layout.html.twig" 
+%}
+
+{% block title %}{{ image.title }}{% endblock title %}
+
+{% block body %}
+<table>
+    <tbody>
+        <tr>
+            <th width="30%">{{ 'entity.image.title'|trans() }}</th>
+            <td>{{ image.title }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'entity.image.body'|trans() }}</th>
+            <td>{{ image.body }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'entity.image.image'|trans() }}</th>
+            <td>
+            	<img src="{{ image.src|upload_uri|imagine_filter('image_normal') }}" alt="" style="width: 100%;">
+			</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+

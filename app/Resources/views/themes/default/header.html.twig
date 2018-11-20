@@ -1,0 +1,18 @@
+{% if description %}<meta name="description" content="{{ description|default }}" />{% endif%}
+{% if keywords %}<meta name="keywords" content="{{ keywords }}" />{% endif %}
+{% if title %}<meta property="og:title" content="{{ title }}" />{% endif %}
+{% if og_type %}<meta property="og:type" content="{{ og_type }}" />{% endif %}
+{% if siteurl %}<meta property="og:url" content="{{ siteurl }}" />{% endif %}
+{% if siteurl %}<link rel="canonical" href="{{ siteurl }}">{% endif %}
+{% if siteimage %}<meta property="og:image" content="{{ siteimage }}" />{% endif %}
+{% if siteimage_w %}<meta property="og:image:width" content="{{ siteimage_w }}" />{% endif %}
+{% if siteimage_h %}<meta property="og:image:height" content="{{ siteimage_h }}" />{% endif %}
+{% if sitename %}<meta property="og:site_name" content="{{ sitename }}" />{% endif %}
+{% if facebook_app_id %}<meta property="fb:app_id" content="{{ facebook_app_id }}" />{% endif %}
+{% if description %}<meta property="og:description" content="{{ description }}" />{% endif %}
+{% if title %}<meta name="twitter:title" content="{{ title }}" />{% endif %}
+{% if description %}<meta name="twitter:description" content="{{ description }}" />{% endif %}
+{% if siteimage %}<meta name="twitter:image" content="{{ siteimage }}" />{% endif %}
+{% if siteimage %}<meta itemprop="image" content="{{ siteimage }}" />{% endif %}
+<meta name="twitter:card" content="summary" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

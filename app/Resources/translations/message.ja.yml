@@ -12,18 +12,12 @@ entity:
         password_confirm: "パスワード(確認)"
         current_password: "現在のパスワード"
         plan: "プラン"
-        card: "カード番号"
-        facebook_url: "Facebookユーザー"
 
     setting:
         slug: "設定ID"
         value: "設定内容"
         slug_config: "初期設定ID"
         value_config: "初期設定内容"
-
-stripe:
-    title:
-        config: "Stripe 初期設定"
 
 setting:
     title:
@@ -53,10 +47,11 @@ resetting:
         request: "パスワードリセット"
         reset: "パスワードリセット"
 
-registration:
+register:
     title:
         index: "新規登録"
-        confirmed: "登録完了しました"
+        confirm: "仮登録しました"
+        completed: "登録完了しました"
         
     button:
         submit: "新規登録"
@@ -74,12 +69,6 @@ profile:
         edit: "編集する"
         detail: "詳細"
 
-button:
-    subscription:
-        cancel: "プランを解約"
-        execute: "本当に解約しますか？"
-        card: "カードを登録する"
-    
 user:
     title:
         index: "ユーザ一覧"
@@ -90,40 +79,16 @@ user:
         edit: "編集"
         delete: "削除"
 
-subscription:
+cancel:
     title:
-        index: "契約プラン詳細"
-        invoice: "お支払い履歴"
-        cancel: 
-            index: "解約の確認"
-            completed: "解約完了"
-        canceled:
-            index: "解約完了しました"
-            
-        card: 
-            index: "カード番号登録"
-            edit: "カード番号更新"
-            completed: "カード番号更新完了"
-    button:
-        cancel: "解約に進む"
-        execute: "本当に解約する"
+        index: "登録解除の確認"
+        confirm: "登録解除の最終確認"
+        completed: "登録解除完了しました"
         
-    plan:
-        amount: "料金"
-        interval: "課金の間隔"
-        name: "プラン名"
-    
-    current_period_start: "現在のプランの開始"
-    current_period_end: "次回の課金のタイミング"
-
-    invoice:
-        date: "請求日"
-        paid: "支払い済み"
-        total: "合計金額"
-        number: "請求番号"
-        hosted_invoice_url: "請求詳細"
-        invoice_pdf: "請求書PDF"
-
+    button:
+        cancel: "登録解除に進む"
+        execute: "本当に登録解除する"
+        
 message:
     added: "データを追加しました"
     edited: "編集を完了しました"
@@ -132,9 +97,6 @@ message:
     resetting:
         request:
             confirm: "パスワードをリセットの情報をメールにお送りしました"
-    subscription:
-        card: 
-            update: "カード情報を変更しました"
 
 form:
     new_password: "新しいパスワード"

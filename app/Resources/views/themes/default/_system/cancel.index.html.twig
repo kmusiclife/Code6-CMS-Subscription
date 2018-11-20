@@ -1,0 +1,20 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+{% block title %}{{ 'cancel.title.index'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+
+<div>
+<p>
+本サービスの登録解除を行うと本サービスの利用ができなくなります。
+再度利用の際は再登録の必要があります。
+また、メールアドレスなどの個人情報をはじめ、サービス利用時のデータのすべてを
+登録解除とともに完全に削除いたします。復旧することはできませんのであらかじめご了承ください。
+</p>
+</div>
+
+<div class="uniform">
+    <a href="{{ path('cancel_confirm') }}" class="button">{{ 'cancel.button.cancel'|trans }}</a>
+</div>
+
+{% endblock  fos_user_content %}

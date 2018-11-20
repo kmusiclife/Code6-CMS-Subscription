@@ -1,0 +1,28 @@
+{% block subject %}【お問い合わせ】{{ contact.title }}{% endblock subject %}
+
+{% block body_text %}
+--------------------------------------------------
+
+
+サイトからのお問い合わせです。
+下記内容でお問い合わせを受け取りました。
+
+
+--------------------------------------------------
+
+メールタイトル： {{ contact.title }}
+お名前： {{ contact.name }}
+メールアドレス： {{ contact.email }}
+
+本文：
+{{ contact.body }}
+
+--------------------------------------------------
+
+入力の場合のみ
+電話番号： {{ contact.tel }}
+郵便番号： {{ contact.zip }} 
+住所：{{ contact.address }}
+
+{% endblock body_text %}
+

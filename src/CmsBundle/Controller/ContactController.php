@@ -2,7 +2,7 @@
 
 namespace CmsBundle\Controller;
 
-use CmsBundle\Entity\Contact;
+use SiteBundle\Entity\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +30,7 @@ class ContactController extends Controller
         $pager->setInc(10);
         $pager->setPath('admin_contact_index'); 
         
-        $contacts = $pager->getRepository( 'CmsBundle:Contact', array(), array('id' => 'DESC') );
+        $contacts = $pager->getRepository( 'SiteBundle:Contact', array(), array('id' => 'DESC') );
 
         return $this->render('CmsBundle:Contact:index.html.twig', array(
 	        'pager' => $pager,

@@ -1,4 +1,16 @@
-Code6 CMS Stripe
+Code6-CMS Subscription
 ============
 
-A Symfony project created on October 18, 2018, 12:30 am.
+Code6 CMS is CMS by building in Symfony 3.4. This CMS has simple function. user authentication by FOSUserBundle, Article, static Page, Uploading Image and user Manager when enabled member mode.
+
+Installation
+============
+```
+$ git clone https://github.com/kmusiclife/Code6-CMS.git -b subscription
+$ cd Code6
+$ composer update
+$ bin/console doctrine:database:create
+$ bin/console doctrine:schema:update
+$ bin/console server:run
+```
+Access to top of your development server which you started below commands.

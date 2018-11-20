@@ -1,0 +1,237 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/default/layout.html.twig" %}
+{% block title %}{{ 'register.title.index'|trans() }}{% endblock %}
+
+{% block body %}
+{{ 
+	form_start(
+		form, {
+			'method': 'post', 
+			'action': path('fos_user_registration_register'), 
+			'attr': {
+				'class': 'fos_user_registration_register',
+				'id': 'payment-form'
+		}
+	}) 
+}}
+
+<div>
+	{{ 'entity.user.username'|trans }}
+</div>
+<div>
+	{{ form_widget(form.username, {'label':'entity.user.username'|trans, 'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(form.username) }}
+</div>
+
+
+<div>
+	{{ 'entity.user.email'|trans }}
+</div>
+<div>
+	{{ form_widget(form.email, {'label':'entity.user.email'|trans(), 'attr': { 'placeholder':'例) info@example.com' }}) }}
+	{{ form_errors(form.email) }}
+</div>
+
+
+
+<div>
+	{{ 'entity.user.fname'|trans }}
+</div>
+<div>
+	{{ form_widget(form.fname, {'label':'entity.user.email'|trans(), 'attr': { 'placeholder':'例) 山田' }}) }}
+	{{ form_errors(form.fname) }}
+</div>
+
+<div>
+	{{ 'entity.user.lname'|trans }}
+</div>
+<div>
+	{{ form_widget(form.lname, {'label':'entity.user.lname'|trans(), 'attr': { 'placeholder':'例) 華子' }}) }}
+	{{ form_errors(form.lname) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.user.zip'|trans() }}*</label>
+</div>
+<div>
+	{{ form_widget(form.zip, {'attr': { 'placeholder':'例) 1200001' }}) }}
+	{{ form_errors(form.zip) }}
+</div>
+
+<div>
+	<label>{{ 'entity.user.address'|trans() }}*</label>
+</div>
+<div>
+	{{ form_widget(form.address, {'attr': { 'placeholder':'例) 東京都港区1-1-1' }}) }}
+	{{ form_errors(form.address) }}
+</div>
+
+
+
+<div>
+	<label>{{ 'entity.user.tel'|trans() }}*</label>
+</div>
+<div>
+	{{ form_widget(form.tel, {'attr': { 'placeholder':'例) 03-1111-2222' }}) }}
+	{{ form_errors(form.tel) }}
+</div>
+
+{% if facebook_app_id %}
+<div>
+	<label>{{ 'entity.user.facebook_url'|trans() }}</label>
+</div>
+<div>
+	{{ form_widget(form.facebook_url, {'attr': { 'placeholder':'' }}) }}
+	{{ form_errors(form.facebook_url) }}
+
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.1&appId={{ facebook_app_id }}&autoLogAppEvents=1';
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	
+	<div id="facebook_button" class="fb-login-button" 
+		data-max-rows="1" 
+		data-size="large" 
+		data-button-type="continue_with" 
+		data-show-faces="false" 
+		data-auto-logout-link="false" 
+		data-use-continue-as="true" 
+		onlogin="checkLoginState();" 
+		scope="user_link"
+	></div>
+	
+	<div id="facebook_info"></div>
+	<script>
+		function checkLoginState() {
+			FB.getLoginStatus(function(response) {
+				if (response && response.status == 'connected') {
+					FB.api('/me?fields=name,id,picture,link', function(response){
+						$('#facebook_info').html(response.name);
+						$('#facebook_button').hide();
+						$('#fos_user_registration_form_facebook_url').val(response.link);
+					});
+				}
+			});
+		}
+	</script>
+
+</div>
+{% endif %}
+
+
+
+<div>
+	{{ 'entity.user.password'|trans }}
+</div>
+<div>
+{{ form_widget(form.plainPassword.first, {'label':'entity.user.password'|trans()}) }}
+{{ form_errors(form.plainPassword.first) }}
+</div>
+
+<div>
+	{{ 'entity.user.password_confirm'|trans }}
+</div>
+<div>
+{{ form_widget(form.plainPassword.second, {'label':'entity.user.password_confirm'|trans()}) }}
+{{ form_errors(form.plainPassword.second) }}
+</div>
+
+
+
+<div>
+	<label>{{ 'entity.user.plan'|trans() }}*</label>
+</div>
+<div>
+	{{ form_widget(form.stripe_plan_id) }}
+	{{ form_errors(form.stripe_plan_id) }}
+</div>
+
+
+<div>
+	<label>{{ 'entity.user.card'|trans() }}*</label>
+</div>
+<div>
+	<div id="card">
+		<div id="card-element"></div>
+		<div id="card-errors" role="alert"></div>
+	</div>
+	{{ form_widget(form.stripe_token_id) }}
+	{{ form_errors(form.stripe_token_id) }}
+</div>
+
+
+
+
+<div></div>
+<div>
+<input type="submit" value="{{ 'register.button.submit'|trans }}" class="special">
+</div>
+
+{{ form_end(form) }}
+
+{% endblock body %}
+
+{% block javascripts %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock javascripts %}
+
+{% block javascript %}
+<script>
+function stripeTokenHandler(token) {
+  
+  $('#submit-button').attr('disabled', 'disabled');
+  $('#fos_user_registration_form_stripe_token_id').val(token.id);
+  $('#payment-form').submit();
+  
+}
+var style = {
+  base: {
+    fontSize: '16px',
+    color: "#32325d",
+  }
+};
+
+$(document).ready(function(){
+	
+	var stripe = Stripe('{{ getSetting('stripe_public_token') }}');
+	var elements = stripe.elements();
+	var token = $('#fos_user_registration_form_stripe_token_id').val();
+	
+	$('#card').show();
+	var card = elements.create('card', {hidePostalCode: true, style: style});
+	card.mount('#card-element');
+	
+	card.addEventListener('change', function(event) {
+	  var displayError = document.getElementById('card-errors');
+	  if (event.error) {
+	    displayError.textContent = event.error.message;
+	  } else {
+	    displayError.textContent = '';
+	  }
+	});
+	
+	var form = document.getElementById('payment-form');
+	form.addEventListener('submit', function(event) {
+	  event.preventDefault();
+	
+	  stripe.createToken(card).then(function(result) {
+	    if (result.error) {
+	      var errorElement = document.getElementById('card-errors');
+	      errorElement.textContent = result.error.message;
+	    } else {
+		  stripeTokenHandler(result.token);
+	    }
+	  });
+	});
+
+
+});
+</script>
+
+{% endblock javascript %}
+

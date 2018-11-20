@@ -11,7 +11,7 @@
 <body>
 
 <header id="header">
-	<h1><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}"><i class="fab fa-cc-stripe"></i> Code6 CMS</a></h1>
+	<h1><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}">Code6 CMS <span>Subscription</span></a></h1>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	    <a href="{{ path('fos_user_profile_show') }}">
 	        {{ app.user.username }}
@@ -23,7 +23,7 @@
 </header>
 <nav id="menu">
 	<ul class="links">
-		<li><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}"><i class="fas fa-home"></i> Home</a></li>
+		<li><a href="{{ path('site_index') }}"><i class="fas fa-home"></i> Home</a></li>
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 			{% if is_granted('ROLE_ADMIN') %}
 				<li><a href="{{ path('article_index') }}"><i class="fas fa-list-ul"></i> {{ 'article.title.index'|trans({}, 'message') }}</a></li>
@@ -34,15 +34,15 @@
 	<ul class="links">
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 			{% if is_granted('ROLE_ADMIN') %}
-				<li><a href="{{ path('page_index') }}"><i class="fas fa-file"></i> {{ 'page.title.index'|trans({}, 'message') }}</a></li>
 				<li><a href="{{ path('image_index') }}"><i class="fas fa-images"></i> {{ 'image.title.index'|trans({}, 'message') }}</a></li>
-				<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans({}, 'message') }}</a></li>
+				{% if getSetting('parameter_members_mode') == true %}
+					<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans({}, 'message') }}</a></li>
+				{% endif %}
 			{% else %}
 				<li><a href="{{ path('fos_user_profile_show') }}">プロフィール</a></li>
 			{% endif %}
 		{% endif %}
 	</ul>
-
 	<ul class="actions vertical">
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 		{% endif %}

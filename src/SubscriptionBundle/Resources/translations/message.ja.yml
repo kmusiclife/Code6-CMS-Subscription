@@ -1,0 +1,65 @@
+entity:
+    user:
+        address: "住所"
+        zip: "郵便番号"
+        tel: "電話番号"
+        fname: "お名前(姓)"
+        lname: "お名前(名)"
+        plan: "プラン名"
+        plan: "プラン"
+        card: "カード番号"
+        facebook_url: "Facebookユーザー"
+
+subscription:
+    title:
+        index: "契約プラン詳細"
+        invoice: "お支払い履歴"
+        cancel: 
+            index: "解約の確認"
+            completed: "解約完了"
+        canceled:
+            index: "解約完了しました"
+            
+        card: 
+            index: "カード番号登録"
+            edit: "カード番号更新"
+            completed: "カード番号更新完了"
+    button:
+        cancel: "解約に進む"
+        execute: "本当に解約する"
+        card: "カードを登録する"
+        
+    plan:
+        amount: "料金"
+        interval: "課金の間隔"
+        name: "プラン名"
+    
+    current_period_start: "現在のプランの開始"
+    current_period_end: "次回の課金のタイミング"
+
+    invoice:
+        date: "請求日"
+        paid: "支払い済み"
+        total: "合計金額"
+        number: "請求番号"
+        hosted_invoice_url: "請求詳細"
+        invoice_pdf: "請求書PDF"
+        
+stripe:
+    title:
+        config: "STRIPE初期設定"
+
+button:
+    subscription:
+        cancel: "登録解除する"
+        
+message:
+    subscription:
+        card: 
+            update: "カード情報を変更しました"
+        stripe:
+            registered: "Stripeの設定が完了しました"
+    user:
+        delete:
+            completed: "ユーザを削除しました。契約も解除いたしました。"
+            

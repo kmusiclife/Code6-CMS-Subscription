@@ -1,0 +1,28 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+{% block title %}{{ 'resetting.title.reset'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+
+<div>
+{{ 'entity.user.password'|trans }}
+</div>
+<div>
+{{ form_widget(form.plainPassword.first) }}
+</div>
+
+<div>
+{{ 'entity.user.password_confirm'|trans }}
+</div>
+<div>
+{{ form_widget(form.plainPassword.second) }}
+</div>
+
+<div>
+    <input type="submit" value="{{ 'form.button.submit'|trans }}" />
+</div>
+{{ form_end(form) }}
+
+{% endblock fos_user_content %}

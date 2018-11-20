@@ -17,11 +17,11 @@
     <tbobdy>
 {% for article in articles %}
     <tr>
-        <td>
+        <td width="35%">
         	{% if article.seo.image is defined %}
 	        	{% if article.seo.image is not null %}
 		        	<div class="image fit">
-			        	<img src="{{ asset(upload_uri~'/'~article.seo.image.src)| imagine_filter('image_small') }}" alt=""/>
+			        	<img src="{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}" alt=""/>
 		        	</div>
 				{% endif %}
 			{% endif %}

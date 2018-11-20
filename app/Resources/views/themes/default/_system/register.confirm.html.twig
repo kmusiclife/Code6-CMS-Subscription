@@ -1,0 +1,41 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+{% block title %}{{ 'register.title.confirm'|trans() }}{% endblock %}
+
+{% block fos_user_content %}
+
+<p>
+ご登録ありがとうございます。クレジットカードの登録および、お支払いが完了いたしました。下記内容でうけたまわりました。
+</p>
+<table class="table">
+	<tr>
+		<td>ユーザID</td><td>{{ user.username }}</td>
+	</tr>
+	<tr>
+		<td>メールアドレス</td><td>{{ user.email }}</td>
+	</tr>
+	<tr>
+		<td>郵便番号</td><td>{{ user.zip }}</td>
+	</tr>
+	<tr>
+		<td>住所</td><td>{{ user.address }}</td>
+	</tr>
+	<tr>
+		<td>電話番号</td><td>{{ user.tel }}</td>
+	</tr>
+
+</table>
+
+<p>メールが本当に正しいかどうかの確認が終わっていないために下記のURLよりメールの確認を行ってください。</p>
+
+<p>
+登録時に入力いただいたメールアドレスに登録内容のメールをお送りいたしました。
+メールに書かれている登録URLをクリックすることでメールアドレスの確認が完了いたします。
+登録確認のメールをご確認ください。
+</p>
+
+<p>
+今後ともどうぞよろしくお願いいたします。
+</p>
+
+{% endblock fos_user_content %}

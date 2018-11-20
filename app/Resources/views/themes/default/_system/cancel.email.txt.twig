@@ -1,0 +1,24 @@
+{% trans_default_domain 'message' %}
+{% block subject %}
+{%- autoescape false -%}
+【重要】登録解除のお知らせ
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{%- autoescape false -%}
+
+サービスのご利用ありがとうございました。
+
+本メールはサービス登録解除時にお送りしています。
+登録解除を完了いたしましたのでこちらでご確認のメールをお送りいたします。
+
+ユーザーID： {{ user.username }}
+メールアドレス： {{ user.email }}
+
+上記内容でサービスの解除を行いました。
+本サービスをご利用いただきありがとうございました。
+
+{%- endautoescape -%}
+{% endblock %}
+{% block body_html %}{% endblock %}

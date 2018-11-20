@@ -1,0 +1,26 @@
+services:
+
+    SubscriptionBundle\:
+        resource: '%kernel.project_dir%/src/SubscriptionBundle/*'
+        exclude: '%kernel.project_dir%/src/SubscriptionBundle/{Entity,Repository,Tests,EventListener,Helper}'
+        
+    SubscriptionBundle\Controller\:
+        resource: '%kernel.project_dir%/src/SubscriptionBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+    
+    subscription.stripe_helper:
+        class: SubscriptionBundle\Helper\StripeHelper
+        arguments: ["@service_container", "@security.token_storage", "@router"]
+        public: true
+
+    subscription.registration_listener:
+        class: SubscriptionBundle\EventListener\RegistrationListener
+        arguments: ["@fos_user.mailer", "@fos_user.util.token_generator", "@service_container", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    SubscriptionBundle\Form\Type\CardFormType:
+        arguments: ["@service_container", "@fos_user.user_manager", "@doctrine.orm.entity_manager"]
+        tags: [form.type]
+
