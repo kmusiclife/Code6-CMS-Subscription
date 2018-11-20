@@ -6,7 +6,7 @@ Code6 CMS is CMS by building in Symfony 3.4. This CMS has simple function. user 
 Installation
 ============
 ```
-$ git clone https://github.com/kmusiclife/Code6-CMS.git -b subscription
+$ git clone https://github.com/kmusiclife/Code6-CMS-Subscription.git
 $ cd Code6
 $ composer update
 $ bin/console doctrine:database:create
