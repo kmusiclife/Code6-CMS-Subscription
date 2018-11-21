@@ -47,7 +47,10 @@ class AppHelper
 		$this->entityManager = $entityManager;
 		$this->router = $router;
 		
-		$this->user = $this->tokenStorage->getToken()->getUser();
+		if( $this->tokenStorage->getToken() ){
+			$this->user = $this->tokenStorage->getToken()->getUser();
+		} else $this->user = null;
+		
 	}
 	public function curlRequest($url, $params=array()){
 		

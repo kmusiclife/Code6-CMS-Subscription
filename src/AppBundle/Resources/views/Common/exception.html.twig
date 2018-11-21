@@ -1,7 +1,8 @@
 {% trans_default_domain 'message' %}
-{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
-
-{% block title %}{{ 'exception.title.index'|trans }}{% endblock %}
-{% block body %}
-{{ message }}
-{% endblock %}
+{% extends 
+	is_granted('ROLE_ADMIN') ?
+		"AppBundle:Common:exception.admin.html.twig" :
+		template_exists( "_system/exception.html.twig" ) ?
+			"themes/"~getSetting('parameter_theme_name')~"/_system/exception.html.twig" :
+			"themes/default/_system/exception.html.twig"
+%}
