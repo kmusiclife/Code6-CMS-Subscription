@@ -1,0 +1,12 @@
+services:
+    
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        
+    app.exception_listener:
+        class: AppBundle\EventListener\ExceptionListener
+        arguments: ["@service_container", "@templating"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
