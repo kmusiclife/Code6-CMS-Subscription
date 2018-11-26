@@ -6,17 +6,30 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TwigExtension extends AbstractExtension
 {
 
     protected $serviceContainer;
     protected $requestStack;
+    protected $entityManager;
+    protected $router;
+    
+    protected $pager;
 
-    public function __construct(ContainerInterface $serviceContainer, RequestStack $requestStack)
+    public function __construct(
+    	ContainerInterface $serviceContainer, 
+    	RequestStack $requestStack,
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface $router
+    )
     {
         $this->serviceContainer = $serviceContainer;
         $this->requestStack = $requestStack;
+        $this->EntityManager = $entityManager;
+        $this->router = $router;
     }
     
     public function getFilters()
@@ -41,11 +54,98 @@ class TwigExtension extends AbstractExtension
 	    return array(
 	        new \Twig_SimpleFunction('is_home', array($this, 'is_home')),
 	        new \Twig_SimpleFunction('get_template_directory_uri', array($this, 'get_template_directory_uri')),
+	        new \Twig_SimpleFunction('get_template_url', array($this, 'get_template_directory_uri')),
 	        new \Twig_SimpleFunction('template_exists', array($this, 'template_exists')),
+	        new \Twig_SimpleFunction('get_header', array($this, 'get_header')),
+	        new \Twig_SimpleFunction('get_footer', array($this, 'get_footer')),
+	        new \Twig_SimpleFunction('get_part', array($this, 'get_part')),
+	        new \Twig_SimpleFunction('get_posts', array($this, 'get_articles')),
+			
+	        new \Twig_SimpleFunction('get_pager', array($this, 'get_pager')),
+	        new \Twig_SimpleFunction('get_pager_vars', array($this, 'get_pager_vars')),
+	        new \Twig_SimpleFunction('have_new_articles', array($this, 'have_new_articles')),
+	        new \Twig_SimpleFunction('get_articles', array($this, 'get_articles')),
+	        new \Twig_SimpleFunction('get_article_embed', array($this, 'get_article_embed')),
+	        new \Twig_SimpleFunction('article_index_permalink', array($this, 'article_index_permalink')),
+	        new \Twig_SimpleFunction('article_permalink', array($this, 'article_permalink')),
 	        
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
 	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
 	    );
+	}
+	public function get_article_embed()
+	{
+	    if( $this->template_exists('_cms/article.index.embed.html.twig') ){
+$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/_cms/article.index.embed.html.twig';
+	    } else {
+			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+			$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/_cms/article.index.embed.html.twig';
+	    }
+	    return $template_file;
+	}
+	public function article_permalink($article)
+	{
+		return $this->router->generate('article_show', array('slug' => $article->getSlug()));
+	}
+	public function article_index_permalink()
+	{
+		return $this->router->generate('article_index_public');
+	}
+	public function have_new_articles()
+	{
+		$article = $this->EntityManager->getRepository('CmsBundle:Article')->findOneBy(array(), array('createdAt' => 'DESC'));
+		if($article){
+			$current_date = new \DateTime();
+			$interval = $current_date->diff( $article->getPublishedAt() );
+			if( (int)$interval->format('%a') < 90 ) return true;
+		}
+		return false;
+	}
+	public function get_articles($limit=5)
+	{
+        $pager = $this->serviceContainer->get('app.app_pager');
+        $pager->setInc($limit);
+        $pager->setPath('article_index_public'); 
+        $articles = $pager->getRepository( 'CmsBundle:Article', array(), array('id' => 'DESC') );
+        
+        $this->pager = $pager;
+        
+		return $articles;
+	}
+	public function get_pager()
+	{
+	    if( $this->template_exists('_cms/pager.html.twig') ){
+		    $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/_cms/pager.html.twig';
+	    } else {
+			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+			$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/_cms/pager.html.twig';
+	    }
+	    return $template_file;
+	}
+	public function get_pager_vars()
+	{
+		return $this->pager;
+	}
+	public function get_part($extname='')
+	{
+	    return $this->get_template('part', $extname);
+	}
+	public function get_footer($extname='')
+	{
+	    return $this->get_template('footer', $extname);
+	}
+	public function get_header($extname='')
+	{
+	    return $this->get_template('header', $extname);
+	}
+	private function get_template($filename, $extname='')
+	{
+	    $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+	    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename.($extname ? '-'.$extname : '').'.html.twig';
+	    
+	    return $template_file;
 	}
 	public function template_exists($filename)
 	{

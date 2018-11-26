@@ -1,0 +1,7 @@
+{% if have_new_articles() %}
+	<ul>
+	{% for article in get_articles() %}
+		<li><date>{{ article.publishedAt|date('Y-m-d') }}</date> <a href="{{ article_permalink(article) }}">{{ article.title }}</a></li>
+	{% endfor %}
+	</ul>
+{% endif %}

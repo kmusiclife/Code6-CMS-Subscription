@@ -1,0 +1,16 @@
+{% trans_default_domain 'message' %}
+{% extends "themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" %}
+
+{% block description %}{% endblock description %}
+{% block keywords %}{% endblock keywords %}
+{% block title %}{{ 'article.title.index'|trans() }}{% endblock title %}
+
+{% block body %}
+{% if have_new_articles() %}
+	<ul>
+	{% for article in get_articles() %}
+		<li><date>{{ article.publishedAt|date('Y-m-d') }}</date> <a href="{{ article_permalink(article) }}">{{ article.title }}</a></li>
+	{% endfor %}
+	</ul>
+{% endif %}
+{% endblock %}

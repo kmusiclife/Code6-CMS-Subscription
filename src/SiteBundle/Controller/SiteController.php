@@ -51,7 +51,18 @@ class SiteController extends Controller
             'article' => $article,
         ));
     }
-	
+
+    /**
+     * @Route("article", name="article_index_public")
+     * @Method("GET")
+     */
+    public function articleIndexAction(Request $request)
+    {
+	    $articles = array();
+        return $this->render('SiteBundle:Article:index.html.twig', array(
+            'articles' => $articles,
+        ));
+    }	
     /**
      * @Route("upload/image/{id}", name="image_show")
      * @Method("GET")
