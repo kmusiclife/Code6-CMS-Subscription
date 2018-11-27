@@ -151,6 +151,13 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	{
 	    $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
 	    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename;
+	    $exists = file_exists($template_file);
+	    if(false == $exists){
+		    if(false == file_exists($this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name)){
+			    $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
+			    return $this->template_exists($filename);
+		    }
+	    }
 	    return file_exists($template_file);
 	}
 	public function get_template_directory_uri()
