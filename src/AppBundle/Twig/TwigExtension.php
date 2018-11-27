@@ -37,7 +37,8 @@ class TwigExtension extends AbstractExtension
         return array(
             new TwigFilter('upload_uri', array($this, 'upload_uri')),
             new TwigFilter('absolute_url', array($this, 'absolute_url')),            
-        );
+            new TwigFilter('autop', array($this, 'autop')),
+		);
     }
     public function absolute_url($src)
     {
@@ -47,7 +48,17 @@ class TwigExtension extends AbstractExtension
     public function upload_uri($src)
     {
 		return $this->serviceContainer->getParameter('upload_uri').'/'.$src;
-    }
+	}
+	public function autop($plain_text, $xhtml=true)
+	{
+		$splited_text = preg_split("/\R\R+/", $plain_text, -1, PREG_SPLIT_NO_EMPTY);
+		$result = "";
+		foreach($splited_text as $paragraph){
+			$paragraph = htmlspecialchars($paragraph, ENT_QUOTES);
+			$result .= '<p>' . nl2br($paragraph, $xhtml) . "</p>\n";
+		}
+		return $result;
+	}
 
 	public function getFunctions()
 	{
