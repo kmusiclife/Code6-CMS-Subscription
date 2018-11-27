@@ -1,10 +1,6 @@
 {% trans_default_domain 'message' %}
 {# require to assign "default" variable when getSetting('parameter_members_mode') is null #}
-{% extends 
-	getSetting('parameter_theme_name') ? 
-		"themes/"~getSetting('parameter_theme_name')~"/layout.html.twig" :
-		"themes/default/layout.html.twig" 
-%}
+{% extends template_layout() %}
 
 {% block title %}{{ 'security.title.index'|trans() }}{% endblock %}
 

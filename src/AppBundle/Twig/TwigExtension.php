@@ -56,7 +56,9 @@ class TwigExtension extends AbstractExtension
 	        new \Twig_SimpleFunction('get_template_directory_uri', array($this, 'get_template_directory_uri')),
 	        new \Twig_SimpleFunction('get_template_url', array($this, 'get_template_directory_uri')),
 	        new \Twig_SimpleFunction('template_exists', array($this, 'template_exists')),
-	        new \Twig_SimpleFunction('get_header', array($this, 'get_header')),
+			new \Twig_SimpleFunction('template_path', array($this, 'template_path')),
+			new \Twig_SimpleFunction('template_layout', array($this, 'template_layout')),
+			new \Twig_SimpleFunction('get_header', array($this, 'get_header')),
 	        new \Twig_SimpleFunction('get_footer', array($this, 'get_footer')),
 	        new \Twig_SimpleFunction('get_part', array($this, 'get_part')),
 	        new \Twig_SimpleFunction('get_posts', array($this, 'get_articles')),
@@ -72,6 +74,21 @@ class TwigExtension extends AbstractExtension
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
 	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
 	    );
+	}
+	public function template_layout()
+	{
+		$template_file = $this->template_path("layout.html.twig");
+		if(null == $template_file) return $this->template_path("layout.html.twig", "default");
+		return $template_file;
+	}
+	public function template_path($filename, $theme_name=null)
+	{
+		if(null == $theme_name){
+			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		}
+		$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename;
+		if( file_exists($template_file) ) return $template_file;
+		return false;
 	}
 	public function get_article_embed()
 	{
