@@ -32,14 +32,15 @@
 {% endfor %}
 {% endif %}
 
-
+{% if block('static_content') is defined %}
+	{{ block('static_content')|autop|raw }}
+{% endif %}
 {% if block('body') is defined %}
 	{{ block('body') }}
 {% endif %}
 {% if block('fos_user_content') is defined %}
 	{{ block('fos_user_content') }}
 {% endif %}
-
 
 {% include "themes/default/footer.html.twig" %}
 
