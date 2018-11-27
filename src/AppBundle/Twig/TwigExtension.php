@@ -70,7 +70,8 @@ class TwigExtension extends AbstractExtension
 	        new \Twig_SimpleFunction('get_article_embed', array($this, 'get_article_embed')),
 	        new \Twig_SimpleFunction('article_index_permalink', array($this, 'article_index_permalink')),
 	        new \Twig_SimpleFunction('article_permalink', array($this, 'article_permalink')),
-	        
+	        new \Twig_SimpleFunction('article_image', array($this, 'article_image')),
+			
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
 	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
 	    );
@@ -100,6 +101,12 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 			$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/_cms/article.index.embed.html.twig';
 	    }
 	    return $template_file;
+	}
+	public function article_image($article, $image_format='image_normal')
+	{
+		if(null == $article->getSeo()->getImage()->getSrc()) return null;
+		$image = $this->serviceContainer->getParameter('upload_uri').'/'.$article->getSeo()->getImage()->getSrc();
+		return $this->serviceContainer->get('liip_imagine.cache.manager')->getBrowserPath($image, $image_format);
 	}
 	public function article_permalink($article)
 	{
