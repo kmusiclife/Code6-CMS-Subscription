@@ -25,7 +25,7 @@ services:
 
     app.app_pager:
         class: AppBundle\Helper\PagerHelper
-        arguments: ["@request_stack", "@doctrine.orm.entity_manager"]
+        arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@security.token_storage"]
         public: true
     
     app.registration_listener:

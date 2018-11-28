@@ -27,7 +27,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  */
 class SiteController extends Controller
 {
-
     /**
      * @Route("/", name="site_index")
      * @Method("GET")
@@ -46,7 +45,7 @@ class SiteController extends Controller
      */
     public function articleShowAction(Article $article, Request $request)
     {
-	    
+        $this->isArticleValid($article);
         return $this->render('SiteBundle:Article:show.html.twig', array(
             'article' => $article,
         ));
@@ -101,5 +100,21 @@ class SiteController extends Controller
         	array('slug' => $slug)
         );
     }
-    	
+    public function isArticleValid($article)
+    {
+        $current_date = new \DateTime();
+        $interval = $current_date->diff( $article->getPublishedAt() );
+        
+        if( (int)$article->getPublishedAt()->format('U') > (int)$current_date->format('U') ){
+            throw new NotFoundHttpException("Page not found");
+        }
+        if( !$article->getIsPublished() ){
+            throw new NotFoundHttpException("Page not found");
+        }
+        if( $article->getIsMember() ){
+            if( !$this->isGranted('ROLE_USER') ) 
+                throw new NotFoundHttpException("Page not found");
+        }
+
+    }    	
 }

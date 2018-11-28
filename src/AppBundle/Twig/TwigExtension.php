@@ -174,7 +174,7 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	{
 		$article = $this->EntityManager->getRepository('CmsBundle:Article')->findOneBy(array(), array('createdAt' => 'DESC'));
 		if($article){
-			$current_date = new \DateTime();
+			$current_date = new \DateTime("now");
 			$interval = $current_date->diff( $article->getPublishedAt() );
 			if( (int)$interval->format('%a') < $date_diff ) return true;
 		}
@@ -185,10 +185,9 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
         $pager = $this->serviceContainer->get('app.app_pager');
         $pager->setInc($limit);
         $pager->setPath('article_index_public'); 
-        $articles = $pager->getRepository( 'CmsBundle:Article', array(), array('id' => 'DESC') );
-        
-        $this->pager = $pager;
-        
+		$articles = $pager->getArticles();
+		$this->pager = $pager;
+		
 		return $articles;
 	}
 	public function get_pager()
