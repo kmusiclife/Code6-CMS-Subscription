@@ -31,14 +31,23 @@ class TwigExtension extends AbstractExtension
         $this->EntityManager = $entityManager;
         $this->router = $router;
     }
-    
     public function getFilters()
     {
         return array(
             new TwigFilter('upload_uri', array($this, 'upload_uri')),
-            new TwigFilter('absolute_url', array($this, 'absolute_url')),            
+            new TwigFilter('absolute_url', array($this, 'absolute_url')),
+            new TwigFilter('autop', array($this, 'autop')),        
         );
     }
+	public function autop($plain_text)
+	{
+		$splited_text = preg_split("/\R\R+/", $plain_text, -1, PREG_SPLIT_NO_EMPTY);
+		$result = null;
+		foreach($splited_text as $paragraph){
+			$result .= "<p>" . $paragraph . "</p>\n";
+		}
+		return $result;
+	}
     public function absolute_url($src)
     {
 	    $request = $this->requestStack->getCurrentRequest();
@@ -48,7 +57,6 @@ class TwigExtension extends AbstractExtension
     {
 		return $this->serviceContainer->getParameter('upload_uri').'/'.$src;
     }
-
 	public function getFunctions()
 	{
 	    return array(
@@ -76,7 +84,8 @@ class TwigExtension extends AbstractExtension
 			new \Twig_SimpleFunction('article_date', array($this, 'article_date')),
 			new \Twig_SimpleFunction('article_permalink', array($this, 'article_permalink')),
 	        new \Twig_SimpleFunction('article_image', array($this, 'article_image')),
-			
+			new \Twig_SimpleFunction('article_body', array($this, 'article_body')),
+
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
 	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
 	    );
@@ -106,6 +115,41 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 			$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/_cms/article.index.embed.html.twig';
 	    }
 	    return $template_file;
+	}
+	public function article_body($article, $params=array())
+	{
+		$image_format = isset($prams['image_format']) ? $prams['image_format'] : 'image_normal';
+		$image_class = isset($prams['image_class']) ? $prams['image_class'] : 'code6-image';
+		$image_style = isset($prams['image_style']) ? $prams['image_style'] : '';
+		$disable_autop = isset($prams['disable_autop']) ? $prams['disable_autop'] : true;
+		$body = $article->getBody();
+		$inc = 1;
+
+		if( $this->template_exists('_cms/article.image.embed.html.twig') ){
+			$template = $this->serviceContainer->get('twig')->load($this->template_path('_cms/article.image.embed.html.twig'));
+		} else {
+			$template = $this->serviceContainer->get('twig')->load($this->template_path('_cms/article.image.embed.html.twig', "default"));
+		}
+		
+		foreach($article->getImages() as $image)
+		{
+			$_image = $this->serviceContainer->getParameter('upload_uri').'/'.$image->getSrc();
+
+			$params = array(
+				'src' 		=> $this->serviceContainer->get('liip_imagine.cache.manager')->getBrowserPath($_image, $image_format), 
+				'class' 	=> $image_class ? $image_class : '', 
+				'id' 		=> 'code6-cms-image-'.$image->getId(), 
+				'alt' 		=> htmlspecialchars($image->getTitle()),
+				'style' 	=> $image_style ? $image_style : ''
+			);
+			$image_tag = $template->render($params);
+			$reg = '\[image'.$inc.'\]';
+			$body = preg_replace('/'.$reg.'/', $image_tag, $body);
+			$inc ++;
+		}
+		if(true == $disable_autop) return $this->autop($body);
+
+		return $body;
 	}
 	public function article_date($article, $date_format='Y-m-d')
 	{
