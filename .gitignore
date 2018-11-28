@@ -14,7 +14,11 @@
 /web/admin/assets
 /web/admin/sass
 /app/Resources/views/themes/*
+/app/Resources/views/themes/default/_static/*
+!/app/Resources/views/themes/default/_static/privacy.html.twig
+!/app/Resources/views/themes/default/_static/term.html.twig
 !/app/Resources/views/themes/default
+!/app/Resources/views/themes/skeleton
 /app/config/parameters.yml
 /app/config/parameters.custom.yml
 /build/
@@ -34,3 +38,4 @@
 /var/cache/*
 /var/logs/*
 /var/sessions/*
+

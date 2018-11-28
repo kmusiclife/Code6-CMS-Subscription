@@ -1,0 +1,25 @@
+{% set title = block('title') is defined ? block('title') : '' %}
+{% set description = block('description') is defined ? block('description') : '' %}
+{% set keywords = block('keywords') is defined ? block('keywords') : '' %}
+{% set sitename = block('sitename') is defined ? block('sitename') : '' %}
+{% set siteimage = block('siteimage') is defined ? block('siteimage') : 'mainimage.jpg'|absolute_url %}
+{% set siteimage_w = block('siteimage_w') is defined ? block('siteimage_w') : '1000' %}
+{% set siteimage_h = block('siteimage_h') is defined ? block('siteimage_h') : '666' %}
+{% set siteurl = app.request.uri %}
+{% set facebook_app_id = block('facebook_app_id') is defined ? block('facebook_app_id') : '' %}
+{% set og_type = app.request.requestUri == '/' ? 'website' : 'article' %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{% block title %}Skeleton{% endblock %}</title>
+{% block stylesheets %}{% endblock stylesheets %}
+{% include 'themes/default/header.html.twig' %}
+</head>
+<body>
+
+{% block body %}{% endblock %}
+{% block fos_user_content %}{% endblock %}
+{% block static_content %}{% endblock %}
+
+</body>
+</html>
