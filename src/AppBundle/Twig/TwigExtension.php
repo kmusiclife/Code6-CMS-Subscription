@@ -37,8 +37,7 @@ class TwigExtension extends AbstractExtension
         return array(
             new TwigFilter('upload_uri', array($this, 'upload_uri')),
             new TwigFilter('absolute_url', array($this, 'absolute_url')),            
-            new TwigFilter('autop', array($this, 'autop')),
-		);
+        );
     }
     public function absolute_url($src)
     {
@@ -48,17 +47,7 @@ class TwigExtension extends AbstractExtension
     public function upload_uri($src)
     {
 		return $this->serviceContainer->getParameter('upload_uri').'/'.$src;
-	}
-	public function autop($plain_text, $xhtml=true)
-	{
-		$splited_text = preg_split("/\R\R+/", $plain_text, -1, PREG_SPLIT_NO_EMPTY);
-		$result = "";
-		foreach($splited_text as $paragraph){
-			$paragraph = htmlspecialchars($paragraph, ENT_QUOTES);
-			$result .= '<p>' . nl2br($paragraph, $xhtml) . "</p>\n";
-		}
-		return $result;
-	}
+    }
 
 	public function getFunctions()
 	{
@@ -66,21 +55,26 @@ class TwigExtension extends AbstractExtension
 	        new \Twig_SimpleFunction('is_home', array($this, 'is_home')),
 	        new \Twig_SimpleFunction('get_template_directory_uri', array($this, 'get_template_directory_uri')),
 	        new \Twig_SimpleFunction('get_template_url', array($this, 'get_template_directory_uri')),
-	        new \Twig_SimpleFunction('template_exists', array($this, 'template_exists')),
+			
+			new \Twig_SimpleFunction('template_exists', array($this, 'template_exists')),
 			new \Twig_SimpleFunction('template_path', array($this, 'template_path')),
 			new \Twig_SimpleFunction('template_layout', array($this, 'template_layout')),
+
 			new \Twig_SimpleFunction('get_header', array($this, 'get_header')),
 	        new \Twig_SimpleFunction('get_footer', array($this, 'get_footer')),
 	        new \Twig_SimpleFunction('get_part', array($this, 'get_part')),
 	        new \Twig_SimpleFunction('get_posts', array($this, 'get_articles')),
 			
 	        new \Twig_SimpleFunction('get_pager', array($this, 'get_pager')),
-	        new \Twig_SimpleFunction('get_pager_vars', array($this, 'get_pager_vars')),
+			new \Twig_SimpleFunction('get_pager_vars', array($this, 'get_pager_vars')),
+			
 	        new \Twig_SimpleFunction('have_new_articles', array($this, 'have_new_articles')),
-	        new \Twig_SimpleFunction('get_articles', array($this, 'get_articles')),
+			new \Twig_SimpleFunction('get_articles', array($this, 'get_articles')),
 	        new \Twig_SimpleFunction('get_article_embed', array($this, 'get_article_embed')),
 	        new \Twig_SimpleFunction('article_index_permalink', array($this, 'article_index_permalink')),
-	        new \Twig_SimpleFunction('article_permalink', array($this, 'article_permalink')),
+
+			new \Twig_SimpleFunction('article_date', array($this, 'article_date')),
+			new \Twig_SimpleFunction('article_permalink', array($this, 'article_permalink')),
 	        new \Twig_SimpleFunction('article_image', array($this, 'article_image')),
 			
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
@@ -113,6 +107,10 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	    }
 	    return $template_file;
 	}
+	public function article_date($article, $date_format='Y-m-d')
+	{
+		return $article->getPublishedAt()->format($date_format);
+	}
 	public function article_image($article, $image_format='image_normal')
 	{
 		if(null == $article->getSeo()->getImage()->getSrc()) return null;
@@ -127,13 +125,13 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	{
 		return $this->router->generate('article_index_public');
 	}
-	public function have_new_articles()
+	public function have_new_articles($date_diff=90)
 	{
 		$article = $this->EntityManager->getRepository('CmsBundle:Article')->findOneBy(array(), array('createdAt' => 'DESC'));
 		if($article){
 			$current_date = new \DateTime();
 			$interval = $current_date->diff( $article->getPublishedAt() );
-			if( (int)$interval->format('%a') < 90 ) return true;
+			if( (int)$interval->format('%a') < $date_diff ) return true;
 		}
 		return false;
 	}
