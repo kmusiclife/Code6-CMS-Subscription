@@ -118,10 +118,10 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	}
 	public function article_body($article, $params=array())
 	{
-		$image_format = isset($prams['image_format']) ? $prams['image_format'] : 'image_normal';
-		$image_class = isset($prams['image_class']) ? $prams['image_class'] : 'code6-image';
-		$image_style = isset($prams['image_style']) ? $prams['image_style'] : '';
-		$disable_autop = isset($prams['disable_autop']) ? $prams['disable_autop'] : true;
+		$image_format = isset($params['image_format']) ? $params['image_format'] : 'image_normal';
+		$image_class = isset($params['image_class']) ? $params['image_class'] : 'code6-image';
+		$image_style = isset($params['image_style']) ? $params['image_style'] : '';
+		$disable_autop = isset($params['disable_autop']) ? $params['disable_autop'] : true;
 		$body = $article->getBody();
 		$inc = 1;
 
@@ -135,14 +135,15 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 		{
 			$_image = $this->serviceContainer->getParameter('upload_uri').'/'.$image->getSrc();
 
-			$params = array(
+			$_params = array(
 				'src' 		=> $this->serviceContainer->get('liip_imagine.cache.manager')->getBrowserPath($_image, $image_format), 
 				'class' 	=> $image_class ? $image_class : '', 
 				'id' 		=> 'code6-cms-image-'.$image->getId(), 
 				'alt' 		=> htmlspecialchars($image->getTitle()),
 				'style' 	=> $image_style ? $image_style : ''
 			);
-			$image_tag = $template->render($params);
+			
+			$image_tag = $template->render($_params);
 			$reg = '\[image'.$inc.'\]';
 			$body = preg_replace('/'.$reg.'/', $image_tag, $body);
 			$inc ++;
