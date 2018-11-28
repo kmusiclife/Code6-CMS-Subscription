@@ -61,6 +61,7 @@ class ArticleController extends Controller
         
         $seo->setImage( new Image() );
         $article->setSeo( $seo );
+        $article->setSlug(date('Ymd'));
         
         $image_ids = $this->get('cms.cms_helper')->getImageIds();
         
