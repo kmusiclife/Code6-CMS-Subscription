@@ -6,9 +6,31 @@
 {% block siteimage %}{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}{% endblock siteimage %}
 {% block siteimage_w %}1000{% endblock siteimage_w %}
 {% block siteimage_h %}666{% endblock siteimage_h %}
-
 {% block title %}{{ article.title }}{% endblock title %}
 
 {% block body %}
-{{ article.body }}
+
+<p>{{ article.title }}</p>
+<p><img src="{{ article_image(article) }}"></p>
+<p>{{ article_body(article)|raw }}</p>
+<p>{{ article_date(article) }}</p>
+<p>{{ article_permalink(article, 'Y-m-d') }}</p>
+
+<h2>EMBED LIST</h2>
+{% include get_article_embed() %}
+<p><a href="{{ article_index_permalink() }}">All of article</a></p>
+
+<h2>MANUAL LIST</h2>
+{% if have_new_articles(30) %}
+<ul>
+{% for article in get_articles(5) %}
+    <li>
+        <date>{{ article_date(article) }}</date> 
+        <a href="{{ article_permalink(article) }}">{{ article.title }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% include get_pager() %}
+{% endif %}
+
 {% endblock %}
