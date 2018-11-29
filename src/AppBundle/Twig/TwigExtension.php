@@ -240,7 +240,8 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	public function get_template_directory_uri()
 	{
 		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name') ){
-			return '/themes/'.$this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+			$uri = 'themes/'.$this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+			return $this->absolute_url($uri);
 		}
 		return '/';
 	}
