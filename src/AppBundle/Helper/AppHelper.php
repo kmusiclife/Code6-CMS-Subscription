@@ -77,7 +77,11 @@ class AppHelper
 		if( isset($this->settings_cache[$slug]) ) return $this->settings_cache[$slug];
 
 		$setting = $this->entityManager->getRepository('AppBundle:Setting')->findOneBySlug($slug);
-		$this->settings_cache[$slug] = $setting->getValue();
+
+		if($setting){
+			$this->settings_cache[$slug] = $setting->getValue();
+		} else return null;
+		
 		if(!$this->settings_cache[$slug]) return null;
 		
 		return $this->settings_cache[$slug];
