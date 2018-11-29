@@ -32,6 +32,7 @@ class AppHelper
 	protected $router;
 	
 	protected $user;
+	protected $settings_cache;
 	
 	public function __construct(
 		ContainerInterface $serviceContainer, 
@@ -47,10 +48,8 @@ class AppHelper
 		$this->entityManager = $entityManager;
 		$this->router = $router;
 		
-		if( $this->tokenStorage->getToken() ){
-			$this->user = $this->tokenStorage->getToken()->getUser();
-		} else $this->user = null;
-		
+		$this->settings_cache = array();
+		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
 	public function curlRequest($url, $params=array()){
 		
@@ -75,9 +74,13 @@ class AppHelper
 	}
 	public function getSetting($slug)
 	{
+		if( isset($this->settings_cache[$slug]) ) return $this->settings_cache[$slug];
+
 		$setting = $this->entityManager->getRepository('AppBundle:Setting')->findOneBySlug($slug);
-		if(!$setting) return null;
-		return $setting->getValue();
+		$this->settings_cache[$slug] = $setting->getValue();
+		if(!$this->settings_cache[$slug]) return null;
+		
+		return $this->settings_cache[$slug];
 		
 	}
 	public function setSetting($slug, $value=null)
