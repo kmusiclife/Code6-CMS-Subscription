@@ -51,7 +51,7 @@ class TwigExtension extends AbstractExtension
     public function absolute_url($src)
     {
 	    $request = $this->requestStack->getCurrentRequest();
-	    return $request->getScheme() . '://' . $request->getHttpHost() . '/' .$src;
+	    return $request->getScheme() . '://' . $request->getHttpHost() . $request->getBaseURL(). '/' .$src;
     }
     public function upload_uri($src)
     {
