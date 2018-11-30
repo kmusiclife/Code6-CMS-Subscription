@@ -1,5 +1,5 @@
 {% trans_default_domain 'message' %}
-{% extends '@AppBundle/Resources/views/Template/layout.html.twig' %}
+{% extends admin_template_layout() %}
 
 {% block title %}{{ 'image.title.index'|trans() }}{% endblock %}
 
@@ -34,7 +34,7 @@
     
 </table>
 
-{% include '@AppBundle/Resources/views/Template/pager.html.twig' %}
+{% include admin_template_path('pager.html.twig') %}
 
 {% endblock body %}
 

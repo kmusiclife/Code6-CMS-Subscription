@@ -64,9 +64,14 @@ class TwigExtension extends AbstractExtension
 	        new \Twig_SimpleFunction('get_template_directory_uri', array($this, 'get_template_directory_uri')),
 	        new \Twig_SimpleFunction('get_template_url', array($this, 'get_template_directory_uri')),
 			
+			new \Twig_SimpleFunction('get_admin_template_directory_uri', array($this, 'get_admin_template_directory_uri')),
+	        new \Twig_SimpleFunction('get_admin_template_url', array($this, 'get_admin_template_directory_uri')),
+
 			new \Twig_SimpleFunction('template_exists', array($this, 'template_exists')),
 			new \Twig_SimpleFunction('template_path', array($this, 'template_path')),
+			new \Twig_SimpleFunction('admin_template_path', array($this, 'admin_template_path')),
 			new \Twig_SimpleFunction('template_layout', array($this, 'template_layout')),
+			new \Twig_SimpleFunction('admin_template_layout', array($this, 'admin_template_layout')),
 
 			new \Twig_SimpleFunction('get_header', array($this, 'get_header')),
 	        new \Twig_SimpleFunction('get_footer', array($this, 'get_footer')),
@@ -96,6 +101,12 @@ class TwigExtension extends AbstractExtension
 		if(null == $template_file) return $this->template_path("layout.html.twig", "default");
 		return $template_file;
 	}
+	public function admin_template_layout()
+	{
+		$template_file = $this->admin_template_path("layout.html.twig");
+		if(null == $template_file) return $this->admin_template_path("layout.html.twig", "default");
+		return $template_file;
+	}
 	public function template_path($filename, $theme_name=null)
 	{
 		if(null == $theme_name){
@@ -105,6 +116,16 @@ class TwigExtension extends AbstractExtension
 		if( file_exists($template_file) ) return $template_file;
 		return false;
 	}
+	public function admin_template_path($filename, $theme_name=null)
+	{
+		if(null == $theme_name){
+			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name');
+		}
+		$template_file = $this->serviceContainer->getParameter('project_dir').'/src/AppBundle/Resources/views/Template/'.$theme_name.'/'.$filename;		
+		if( file_exists($template_file) ) return $template_file;
+		return false;
+	}
+
 	public function get_article_embed()
 	{
 	    if( $this->template_exists('_cms/article.index.embed.html.twig') ){
@@ -231,11 +252,20 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	    $exists = file_exists($template_file);
 	    if(false == $exists){
 		    if(false == file_exists($this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name)){
-			    $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
+				$this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
+				$this->serviceContainer->get('app.app_helper')->updateSettingCache('parameter_theme_name', 'default');
 			    return $this->template_exists($filename);
 		    }
 	    }
 	    return file_exists($template_file);
+	}
+	public function get_admin_template_directory_uri()
+	{
+		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name') ){
+			$uri = 'admin/'.$this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name');
+			return $this->absolute_url($uri);
+		}
+		return '/';
 	}
 	public function get_template_directory_uri()
 	{

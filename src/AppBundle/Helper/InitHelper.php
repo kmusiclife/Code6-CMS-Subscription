@@ -57,7 +57,7 @@ class InitHelper
 	}
 	static function getSettingSlugs(){
 		return array(
-			'parameter_members_mode', 'parameter_image_count', 'parameter_theme_name', 
+			'parameter_members_mode', 'parameter_image_count', 
 		);
 	}
 	public function hasSettings()
@@ -73,6 +73,12 @@ class InitHelper
 	public function initSettings()
 	{
 		$slugs = $this->getSettingSlugs();
+		if( null == $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name') ){
+			$this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
+		}
+		if( null == $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name') ){
+			$this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', 'default');
+		}
 		foreach($slugs as $slug){
 			if( !$this->serviceContainer->get('app.app_helper')->getSetting($slug) ){
 				return new RedirectResponse( $this->router->generate('setting_config', array('slug' => $slug)) );

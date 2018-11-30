@@ -2,9 +2,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>{% block title %}Code6 CMS Subscription{% endblock %}</title>
+<title>{% block title %}Code6 CMS{% endblock %}</title>
 {% block stylesheets %}{% endblock stylesheets %}
-{% include '@AppBundle/Resources/views/Template/header.html.twig' %}
+{% include admin_template_path('header.html.twig') %}
 
 {% block banner %}{% endblock banner %}
 
@@ -35,15 +35,15 @@
 	</section>
 </article>
 
-{% include "@AppBundle/Resources/views/Template/footer.html.twig" %}
+{% include admin_template_path('footer.html.twig') %}
 
-<script src="{{ asset('admin/js/jquery.js') }}"></script>
+<script src="{{ get_admin_template_directory_uri() }}/js/jquery.js"></script>
 {% block javascripts %}{% endblock javascripts %}
-<script src="{{ asset('admin/js/jquery.scrolly.min.js') }}"></script>
-<script src="{{ asset('admin/js/skel.min.js') }}"></script>
-<script src="{{ asset('admin/js/util.js') }}"></script>
-<!--[if lte IE 8]><script src="{{ asset('admin/js/ie/respond.min.js') }}"></script><![endif]-->
-<script src="{{ asset('admin/js/main.js') }}"></script>
+<script src="{{ get_admin_template_directory_uri() }}/js/jquery.scrolly.min.js"></script>
+<script src="{{ get_admin_template_directory_uri() }}/js/skel.min.js"></script>
+<script src="{{ get_admin_template_directory_uri() }}/js/util.js"></script>
+<!--[if lte IE 8]><script src="{{ get_admin_template_directory_uri() }}/js/ie/respond.min.js"></script><![endif]-->
+<script src="{{ get_admin_template_directory_uri() }}/js/main.js"></script>
 {% block javascript %}{% endblock javascript %}
 
 </body>

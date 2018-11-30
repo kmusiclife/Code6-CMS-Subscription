@@ -1,17 +1,17 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-<link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
-<!--[if lte IE 8]><script src="{{ asset('admin/assets/js/ie/html5shiv.js') }}"></script><![endif]-->
-<link rel="stylesheet" href="{{ asset('admin/css/main.css') }}" />
+<link rel="shortcut icon" type="image/x-icon" href="{{ get_admin_template_directory_uri() }}/favicon.ico" />
+<link rel="apple-touch-icon" href="{{ get_admin_template_directory_uri() }}/apple-touch-icon.png" />
+<!--[if lte IE 8]><script src="{{ get_admin_template_directory_uri() }}/assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="{{ get_admin_template_directory_uri() }}/css/main.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<!--[if lte IE 9]><link rel="stylesheet" href="{{ asset('admin/css/ie9.css') }}" /><![endif]-->
-<!--[if lte IE 8]><link rel="stylesheet" href="{{ asset('admin/css/ie8.css') }}" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="{{ get_admin_template_directory_uri() }}/css/ie9.css" /><![endif]-->
+<!--[if lte IE 8]><link rel="stylesheet" href="{{ get_admin_template_directory_uri() }}/css/ie8.css" /><![endif]-->
 </head>
 <body>
 
 <header id="header">
-	<h1><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}">Code6 CMS <span>Subscription</span></a></h1>
+	<h1><a href="{{ is_granted('ROLE_ADMIN') ? path('admin_index') : path('site_index') }}">Code6 CMS</a></h1>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	    <a href="{{ path('fos_user_profile_show') }}">
 	        {{ app.user.username }}

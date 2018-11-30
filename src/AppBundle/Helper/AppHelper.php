@@ -87,6 +87,10 @@ class AppHelper
 		return $this->settings_cache[$slug];
 		
 	}
+	public function updateSettingCache($slug, $value)
+	{
+		$this->settings_cache[$slug] = $value;
+	}
 	public function setSetting($slug, $value=null)
 	{
 		
