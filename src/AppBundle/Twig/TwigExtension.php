@@ -112,6 +112,7 @@ class TwigExtension extends AbstractExtension
 		if(null == $theme_name){
 			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
 		}
+		if(!$theme_name) $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', "default");
 		$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename;
 		if( file_exists($template_file) ) return $template_file;
 		return false;
@@ -121,6 +122,7 @@ class TwigExtension extends AbstractExtension
 		if(null == $theme_name){
 			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name');
 		}
+		if(!$theme_name) $this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', "default");
 		$template_file = $this->serviceContainer->getParameter('project_dir').'/src/AppBundle/Resources/views/Template/'.$theme_name.'/'.$filename;		
 		if( file_exists($template_file) ) return $template_file;
 		return false;
