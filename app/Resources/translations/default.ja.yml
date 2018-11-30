@@ -9,3 +9,5 @@ setting:
         parameter_theme_name_label: "設定：テーマID"
         parameter_theme_name: "skeleton"
 
+        parameter_demo_mode_label: "設定：デモモード"
+        parameter_demo_mode: "false"

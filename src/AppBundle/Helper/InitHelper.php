@@ -57,7 +57,7 @@ class InitHelper
 	}
 	static function getSettingSlugs(){
 		return array(
-			'parameter_members_mode', 'parameter_image_count', 
+			'parameter_members_mode', 'parameter_image_count', 'parameter_demo_mode',
 		);
 	}
 	public function hasSettings()
