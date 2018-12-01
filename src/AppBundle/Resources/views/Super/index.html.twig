@@ -1,0 +1,46 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block banner %}
+{% endblock %}
+
+{% block title %}マスター管理{% endblock title %}
+{% block body %}
+
+<div class="row uniform">
+    <div class="4u 12u(small)">
+    	<a class="button special fit" href="{{ path('admin_index') }}">{{ 'super.title.admin'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button special fit" href="{{ path('super_theme') }}">{{ 'super.title.theme'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button special fit" href="{{ path('super_demo') }}">{{ 'super.title.demo'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button special fit" href="{{ path('super_members') }}">{{ 'super.title.members'|trans }}</a>
+    </div>
+
+    <div class="12u 12u$(small)">
+    	<div class="box">
+    		<h4>マスター管理はサイト全体の設定を行います</h4>
+    		<p>こちらの設定はサイト全体の管理の設定を行います。通常はこちらの設定は必要ありません。</p>
+    		<table class="table">
+    			<tr>
+    				<td width="35%">現在のテーマ</td>
+    				<td>{{ getSetting('parameter_theme_name') }}</td>
+    			</tr>
+    			<tr>
+    				<td>デモモードかどうか</td>
+    				<td>{{ getSetting('parameter_demo_mode') }}</td>
+    			</tr>
+    			<tr>
+    				<td>会員登録サイトかどうか</td>
+    				<td>{{ getSetting('parameter_members_mode') }}</td>
+    			</tr>
+    		</table>
+    	</div>
+    </div>
+
+</div>
+{% endblock body %}

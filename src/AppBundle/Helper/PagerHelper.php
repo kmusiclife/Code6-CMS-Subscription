@@ -3,6 +3,7 @@
 namespace AppBundle\Helper;
 
 // Injection Classes
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class PagerHelper 
 {
 	
+	protected $serviceContainer;
 	protected $requestStack;
 	protected $entityManager;
 	protected $tokenStorage;
@@ -23,11 +25,13 @@ class PagerHelper
     protected $path;
 	
 	public function __construct(
+		ContainerInterface $serviceContainer, 
 		RequestStack $requestStack,
 		EntityManagerInterface $entityManager,
 		TokenStorageInterface $tokenStorage
 	){
 		
+		$this->serviceContainer = $serviceContainer;
 		$this->requestStack = $requestStack;
 		$this->entityManager = $entityManager;
 		$this->tokenStorage = $tokenStorage;
@@ -47,7 +51,6 @@ class PagerHelper
 	public function setInc($inc){
 		$this->inc = $inc;
 	}
-
 	public function getArticles()
 	{
 		$now = new \DateTime("now");
@@ -80,6 +83,30 @@ class PagerHelper
 	    $this->is_next = $this->count >= $this->inc ? true : false;
 	    
 		return $articles;
+		
+	}
+	public function getUsers()
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		$qb
+			->select('e')
+			->from('AppBundle:User', 'e')
+			->setFirstResult( $this->offset )
+            ->setMaxResults( $this->inc )
+		;
+		if( $this->serviceContainer->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') ){
+		} else {
+			$qb
+	            ->where('e.roles not LIKE :roles')
+    	        ->setParameter('roles', '%ROLE_SUPER_ADMIN%');
+		}
+		
+		$users = $qb->getQuery()->getResult();
+
+	    $this->count = count($users);
+	    $this->is_next = $this->count >= $this->inc ? true : false;
+	    
+		return $users;
 		
 	}
 	public function getRepository($namespace, $where = array(), $orderby = array()){

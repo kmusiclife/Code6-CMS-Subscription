@@ -26,15 +26,39 @@ class UserController extends Controller
         $pager = $this->get('app.app_pager');
         $pager->setInc(10);
         $pager->setPath('user_index'); 
-        
-        $users = $pager->getRepository( 'AppBundle:User', array(), array('id' => 'DESC') );
+        $users = $pager->getUsers();
 
         return $this->render('@AppBundle/Resources/views/User/index.html.twig', array(
 	        'pager' => $pager,
             'users' => $users,
         ));
     }
+    /**
+     * @Route("/new", name="user_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newAction(Request $request)
+    {
+        $new_user = new User();
+        $new_user->setEnabled(true);
+        
+        $form = $this->createForm('AppBundle\Form\Type\ConfigUserFormType', $new_user);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($new_user);
+            $em->flush();
+            
+            $this->addFlash('notice', 'message.added');
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('@AppBundle/Resources/views/User/new.html.twig', array(
+            'new_user' => $new_user,
+            'form' => $form->createView(),
+        ));
+    }
     /**
      * @Route("/{id}", name="user_show")
      * @Method("GET")
@@ -76,18 +100,20 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-	    
-	    $is_admin = in_array('ROLE_ADMIN', $user->getRoles());
+        if(
+            in_array('ROLE_SUPER_ADMIN', $user->getRoles()) OR
+            in_array('ROLE_ADMIN', $user->getRoles())
+        ) {
+            $is_admin = true;
+        } else $is_admin = false;
 	    
 	    $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('AppBundle\Form\Type\UserFormType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-	        
 	        $userManager = $this->get('fos_user.user_manager');
             $userManager->updateUser($user);
-            
             return $this->redirectToRoute('user_index');
         }
 
@@ -105,8 +131,9 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, User $user)
     {
-	    
-	    $is_admin = in_array('ROLE_ADMIN', $user->getRoles());
+        if(in_array('ROLE_ADMIN', $user->getRoles()) or in_array('ROLE_SUPER_ADMIN', $user->getRoles())){
+            $is_admin = true;
+        } else $is_admin = false;
 	    
 	    if($is_admin) {
 	    	return $this->redirectToRoute('user_index');
@@ -117,20 +144,22 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) 
         {
 
-			try{
-				
-				$this->get('subscription.stripe_helper')->setApiKey();
-				
-				$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
-				$subscription->cancel();
+            if( $user->getStripeSubscriptionId() ){
+                try{
+                    
+                    $this->get('subscription.stripe_helper')->setApiKey();
+                    
+                    $subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
+                    $subscription->cancel();
 
-				$customer = \Stripe\Customer::retrieve( $user->getStripeCustomerId() );
-				$customer->delete();
-				
-			} catch (Exception $e) {
-				throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
-			}
-
+                    $customer = \Stripe\Customer::retrieve( $user->getStripeCustomerId() );
+                    $customer->delete();
+                    
+                } catch (Exception $e) {
+                    throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
+                }
+            }
+            
 			$this->addFlash('notice', 'message.user.delete.completed');
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);

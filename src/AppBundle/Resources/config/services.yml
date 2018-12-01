@@ -25,9 +25,9 @@ services:
 
     app.app_pager:
         class: AppBundle\Helper\PagerHelper
-        arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@security.token_storage"]
+        arguments: ["@service_container", "@request_stack", "@doctrine.orm.entity_manager", "@security.token_storage"]
         public: true
-    
+
     app.registration_listener:
         class: AppBundle\EventListener\RegistrationListener
         arguments: ["@fos_user.mailer", "@fos_user.util.token_generator", "@service_container", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
@@ -64,3 +64,7 @@ services:
         arguments: ["@service_container", "@fos_user.user_manager", "@router"]
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
+    AppBundle\Form\Type\SettingThemeFormType:
+        arguments: ["@service_container"]
+        tags: [form.type]

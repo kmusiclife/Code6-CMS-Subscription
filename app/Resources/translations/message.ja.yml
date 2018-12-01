@@ -19,12 +19,22 @@ entity:
         slug_config: "初期設定ID"
         value_config: "初期設定内容"
 
+super:
+    title:
+        theme: "テーマ設定・変更"
+        demo: "デモモード設定・変更"
+        admin: "管理者モード"
+        members: "メンバーモード"
+        
 setting:
     title:
         index: "設定一覧"
         edit: "設定変更"
         new: "新しい設定"
-        config: "初期設定"
+        config:
+            setting: "初期設定"
+            admin: "管理ユーザ作成 (ADMIN)"
+            super: "マスターユーザ作成 (SUPER ADMIN)"
     button:
         submit: "送信する"
         edit:  "編集する"
@@ -74,9 +84,11 @@ user:
         index: "ユーザ一覧"
         show: "ユーザ詳細"
         edit: "ユーザ変更"
+        new: "ユーザ追加"
     button:
         show: "詳細"
         edit: "編集"
+        new: "追加"
         delete: "削除"
 
 cancel:

@@ -1,7 +1,7 @@
 {% trans_default_domain 'message' %}
 {% extends admin_template_layout() %}
 
-{% block title %}{{ 'setting.title.config'|trans }}{% endblock title %}
+{% block title %}{{ 'setting.title.config.super'|trans }}{% endblock title %}
 {% block body %}
 <p>サイトの初期設定を行います。管理者のユーザ名、パスワードなど必要項目を入力してください。</p>
 
@@ -37,19 +37,18 @@
 
 
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.fname'|trans() }}*</label>
+	{{ 'entity.user.fname'|trans }}
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.fname, {'attr': { 'placeholder':'例) 山田' }}) }}
+	{{ form_widget(form.fname, {'label':'entity.user.email'|trans(), 'attr': { 'placeholder':'例) 山田' }}) }}
 	{{ form_errors(form.fname) }}
 </div>
 
-
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.lname'|trans() }}*</label>
+	{{ 'entity.user.lname'|trans }}
 </div>
 <div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.lname, {'attr': { 'placeholder':'例) 次郎' }}) }}
+	{{ form_widget(form.lname, {'label':'entity.user.lname'|trans(), 'attr': { 'placeholder':'例) 華子' }}) }}
 	{{ form_errors(form.lname) }}
 </div>
 
@@ -79,6 +78,7 @@
 	{{ form_widget(form.tel, {'attr': { 'placeholder':'例) 03-1111-2222' }}) }}
 	{{ form_errors(form.tel) }}
 </div>
+
 
 
 

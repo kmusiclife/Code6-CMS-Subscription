@@ -25,17 +25,19 @@ class SubscriptionController extends Controller
     {
 		$user = $this->getUser();
 		
-		if( !$user->getStripeSubscriptionId() ){
-			throw new NotFoundHttpException("Page not found");
-		}
+		if( $user->getStripeSubscriptionId() ){
 		
-		try{
-			$this->get('subscription.stripe_helper')->setApiKey();
-			// $customer = \Stripe\Customer::retrieve( $user->getStripeCustomerId() );
-			$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
-		} catch (Exception $e) {
-			throw new Exception('Stripe Plan::retrieve Error');
-		}
+            try{
+                $this->get('subscription.stripe_helper')->setApiKey();
+                // $customer = \Stripe\Customer::retrieve( $user->getStripeCustomerId() );
+                $subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
+            } catch (Exception $e) {
+                throw new Exception('Stripe Plan::retrieve Error');
+            }
+
+        } else {
+            $subscription = null;
+        }
         return $this->render('SubscriptionBundle:Subscription:index.html.twig', array(
         	'subscription' => $subscription,
         ));
@@ -47,12 +49,13 @@ class SubscriptionController extends Controller
     public function cardAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$user = $this->getUser();
-
+        $user = $this->getUser();
+        
         $form = $this->createForm('SubscriptionBundle\Form\Type\CardFormType', $user);
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
+
             if ($form->isValid()) {
 				
 				try{
@@ -89,16 +92,18 @@ class SubscriptionController extends Controller
     public function invoiceAction()
     {
 		$user = $this->getUser();
-		
-		try{
-			$this->get('subscription.stripe_helper')->setApiKey();
-			$invoices = \Stripe\Invoice::all(array(
-				"customer" => $user->getStripeCustomerId(),
-			) );
-			
-		} catch (Exception $e) {
-			throw new Exception('');
-		}
+        
+        if( $user->getStripeSubscriptionId() ){
+            try{
+                $this->get('subscription.stripe_helper')->setApiKey();
+                $invoices = \Stripe\Invoice::all(array(
+                    "customer" => $user->getStripeCustomerId(),
+                ) );
+                
+            } catch (Exception $e) {
+                throw new Exception('');
+            }
+        } else $invoices = null;
 
         return $this->render('SubscriptionBundle:Subscription:invoice.html.twig', array(
 	        'invoices' => $invoices

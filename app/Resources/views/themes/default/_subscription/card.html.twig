@@ -4,6 +4,7 @@
 
 {% block fos_user_content %}
 
+{% if app.user.getStripeSubscriptionId() %}
 {{ 
 	form_start(
 		form, {
@@ -16,8 +17,6 @@
 		}
 	}) 
 }}
-
-
 <div>
 	<label>{{ 'entity.user.card'|trans() }}*</label>
 </div>
@@ -34,8 +33,11 @@
 	<input type="submit" class="button special" value="{{ 'subscription.button.card'|trans }}" id="submit-button" />
 </div>
 
-
 {{ form_end(form) }}
+
+{% else %}
+このアカウントではカードを登録できません。
+{% endif %}
 
 {% endblock %}
 
@@ -91,7 +93,6 @@ $(function(){
 	    }
 	  });
 	});
-
 
 });
 </script>

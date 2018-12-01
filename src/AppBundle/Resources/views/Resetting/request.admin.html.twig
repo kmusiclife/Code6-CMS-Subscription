@@ -1,5 +1,6 @@
 {% trans_default_domain 'message' %}
-{% extends "AppBundle:Template:layout.html.twig" %}
+
+{% extends admin_template_layout() %}
 {% block title %}{{ 'resetting.title.request'|trans() }}{% endblock %}
 
 {% block fos_user_content %}

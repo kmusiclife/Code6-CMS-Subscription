@@ -4,24 +4,23 @@
 
 {% block fos_user_content %}
 
+{% if app.user.getStripeSubscriptionId() %}
 <table class="table">
-<tr>
-	<th>
-		{{ 'subscription.invoice.date'|trans }} 
-	</th>
-	<th>
-		{{ 'subscription.invoice.number'|trans }}
-	</th>
-	<th>
-		{{ 'subscription.invoice.total'|trans }}
-	</th>
-	<th>
-		{{ 'subscription.invoice.hosted_invoice_url'|trans }}
-	</th>
-</tr>
-
+	<tr>
+		<td>
+			{{ 'subscription.invoice.date'|trans }} 
+		</td>
+		<td>
+			{{ 'subscription.invoice.number'|trans }}
+		</td>
+		<td>
+			{{ 'subscription.invoice.total'|trans }}
+		</td>
+		<td>
+			{{ 'subscription.invoice.hosted_invoice_url'|trans }}
+		</td>
+	</tr>
 {% for invoice in invoices.data %}
-	
 	<tr>
 		<td>
 			{{ invoice.date|date('Y-m-d') }} 
@@ -36,8 +35,12 @@
 			<a href="{{ invoice.hosted_invoice_url }}" target="_blank" class="button small special">{{ 'subscription.invoice.hosted_invoice_url'|trans }}</a>
 		</td>
 	</tr>
-	
 {% endfor %}
+
+{% else %}
+このアカウントでは請求がありません。
+{% endif %}
+
 </table>
 
 {% endblock  fos_user_content %}

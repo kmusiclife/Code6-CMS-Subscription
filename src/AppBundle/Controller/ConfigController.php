@@ -27,7 +27,6 @@ use AppBundle\Helper\InitHelper;
  */
 class ConfigController extends Controller
 {
-	
     /**
      * @Route("admin/config/setting/{slug}", name="setting_config")
      * @Method({"GET", "POST"})
@@ -73,16 +72,14 @@ class ConfigController extends Controller
         ));
     }
     /**
-     * @Route("config/user", name="config_user")
+     * @Route("config/user/admin", name="config_admin_user")
      * @Method("GET,POST")
      */
-    public function configUserAction(Request $request)
+    public function configAdminUserAction(Request $request)
     {
-		
 		if( $this->get('app.app_helper')->hasAdmin() > 0 ){
 			return $this->redirectToRoute('admin_index');
 		}
-		
         $em = $this->getDoctrine()->getManager();
 
         $user = new User();
@@ -96,6 +93,41 @@ class ConfigController extends Controller
             $user->addRole('ROLE_ADMIN');
             $em->persist($user);
             $em->flush();
+
+            // Manual login
+	        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+	        $this->get('security.token_storage')->setToken($token);
+            
+			return $this->redirectToRoute('admin_index');
+			
+        }
+        return $this->render('@AppBundle/Resources/views/Config/admin.html.twig', array(
+            'user' => $user,
+            'form' => $form->createView(),
+        ));
+    }
+    /**
+     * @Route("config/user/super", name="config_super_user")
+     * @Method("GET,POST")
+     */
+    public function configSuperUserAction(Request $request)
+    {
+		if( $this->get('app.app_helper')->hasSuper() > 0 ){
+			return $this->redirectToRoute('admin_index');
+		}
+        $em = $this->getDoctrine()->getManager();
+
+        $user = new User();
+        $form = $this->createForm('AppBundle\Form\Type\ConfigUserFormType', $user);
+        $form->handleRequest($request);
+		
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $user->setEnabled(true);
+            $user->addRole('ROLE_SUPER_ADMIN');
+            $em->persist($user);
+            $em->flush();
             
             // Manual login
 	        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
@@ -104,11 +136,9 @@ class ConfigController extends Controller
 			return $this->redirectToRoute('admin_index');
 			
         }
-        return $this->render('@AppBundle/Resources/views/Config/new.html.twig', array(
+        return $this->render('@AppBundle/Resources/views/Config/super.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
-        
-    }
-    	
+    }    	
 }

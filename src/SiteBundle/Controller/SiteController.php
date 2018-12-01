@@ -35,7 +35,6 @@ class SiteController extends Controller
     {
 	    $response = $this->get('app.init_helper')->initSite();
 	    if(null != $response) return $response;
-	    
         return $this->render('SiteBundle:Index:show.html.twig', array());
     }
     /**
@@ -45,6 +44,8 @@ class SiteController extends Controller
      */
     public function articleShowAction(Article $article, Request $request)
     {
+	    $response = $this->get('app.init_helper')->initSite();
+	    if(null != $response) return $response;
         $this->isArticleValid($article);
         return $this->render('SiteBundle:Article:show.html.twig', array(
             'article' => $article,
@@ -57,7 +58,9 @@ class SiteController extends Controller
      */
     public function articleIndexAction(Request $request)
     {
-	    $articles = array();
+	    $response = $this->get('app.init_helper')->initSite();
+	    if(null != $response) return $response;
+        $articles = array();
         return $this->render('SiteBundle:Article:index.html.twig', array(
             'articles' => $articles,
         ));
@@ -68,6 +71,8 @@ class SiteController extends Controller
      */
     public function imageShowAction(Image $image)
     {
+	    $response = $this->get('app.init_helper')->initSite();
+	    if(null != $response) return $response;
         return $this->render('SiteBundle:Image:show.html.twig', array(
             'image' => $image,
         ));
@@ -79,10 +84,14 @@ class SiteController extends Controller
      */
     public function afterLogin(AuthorizationCheckerInterface $authChecker)
     {
-	    if($authChecker->isGranted('ROLE_ADMIN'))
-	    	return new RedirectResponse($this->generateUrl('admin_index'));
-	    else
-	    	return new RedirectResponse($this->generateUrl('site_index'));
+	    if($authChecker->isGranted('ROLE_SUPER_ADMIN')){
+            return new RedirectResponse($this->generateUrl('super_index'));
+        }
+        if($authChecker->isGranted('ROLE_ADMIN')){
+            return new RedirectResponse($this->generateUrl('admin_index'));
+        }
+        return new RedirectResponse($this->generateUrl('site_index'));
+
     }
     /**
      * @Route("/{slug}", name="site_static")
@@ -90,7 +99,10 @@ class SiteController extends Controller
      */
     public function staticAction($slug)
     {
-	    $theme_name = $this->get('app.app_helper')->getSetting('parameter_theme_name');
+	    $response = $this->get('app.init_helper')->initSite();
+        if(null != $response) return $response;
+        
+        $theme_name = $this->get('app.app_helper')->getSetting('parameter_theme_name');
 	    $template_file = $this->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/_static/'.$slug.'.html.twig';
 	    if( false == file_exists($template_file) ){
 		    throw new NotFoundHttpException("Page not found");

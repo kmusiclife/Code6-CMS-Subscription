@@ -4,6 +4,7 @@
 
 {% block fos_user_content %}
 
+{% if app.user.getStripeSubscriptionId() %}
 <table class="table">
 	<tr>
 		<th width="32%">{{ 'subscription.current_period_start'|trans }}</th>
@@ -13,7 +14,6 @@
 		<th>{{ 'subscription.current_period_end'|trans }}</th>
 		<td>{{ subscription.current_period_end|date('Y-m-d H:i:s') }}</td>
 	</tr>
-	
 	<tr>
 		<th>{{ 'subscription.plan.amount'|trans }}</th>
 		<td>{{ subscription.plan.amount }}</td>
@@ -26,11 +26,12 @@
 		<th>{{ 'subscription.plan.interval'|trans }}</th>
 		<td>{{ subscription.plan.interval }}</td>
 	</tr>
-	
 </table>
-
 <div>
     <a href="{{ path('cancel_index') }}" class="button">{{ 'button.subscription.cancel'|trans }}</a>
 </div>
+{% else %}
+このアカウントには契約がありません。
+{% endif %}
 
 {% endblock  fos_user_content %}

@@ -13,12 +13,12 @@ use AppBundle\Form\Type\PasswordFormType;
 /**
  * Setting Controller
  * 
- * @Route("/admin")
+ * @Route("/super")
  */
 class SettingController extends Controller
 {
     /**
-     * @Route("/setting/index", name="admin_setting_index")
+     * @Route("/setting/index", name="super_setting_index")
      * @Method({"GET"})
      */
     public function indexAction(Request $request)
@@ -31,7 +31,7 @@ class SettingController extends Controller
         ));
     }
     /**
-     * @Route("/setting/new", name="admin_setting_new")
+     * @Route("/setting/new", name="super_setting_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -45,7 +45,7 @@ class SettingController extends Controller
             $em->persist($setting);
             $em->flush();
 
-            return $this->redirectToRoute('admin_setting_edit', array('id' => $setting->getId()));
+            return $this->redirectToRoute('super_setting_edit', array('id' => $setting->getId()));
         }
 
         return $this->render('@AppBundle/Resources/views/Setting/new.html.twig', array(
@@ -55,7 +55,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/{slug}/edit", name="admin_setting_edit")
+     * @Route("/setting/{slug}/edit", name="super_setting_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Setting $setting)
@@ -67,7 +67,7 @@ class SettingController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('admin_setting_edit', array('slug' => $setting->getSlug()));
+            return $this->redirectToRoute('super_setting_edit', array('slug' => $setting->getSlug()));
         }
 
         return $this->render('@AppBundle/Resources/views/Setting/edit.html.twig', array(
@@ -92,7 +92,7 @@ class SettingController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin_setting_index');
+        return $this->redirectToRoute('super_setting_index');
     }
 
     private function createDeleteForm(Setting $setting)

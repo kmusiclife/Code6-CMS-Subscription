@@ -36,28 +36,19 @@ class InitHelper
 		
 		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
-
-	public function hasAdmin()
-	{
-	    $qb = $this->entityManager->createQueryBuilder();
-	    $qb->select('count(u)')
-	        ->from('AppBundle:User', 'u')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%ROLE_ADMIN%');
-	
-	    return (int)$qb->getQuery()->getSingleScalarResult();
-	    
-	}
 	public function initAdmin()
 	{
-		if(!$this->hasAdmin()){
-			return new RedirectResponse( $this->router->generate('config_user') );
+		if(!$this->serviceContainer->get('app.app_helper')->hasSuper()){
+			return new RedirectResponse( $this->router->generate('config_super_user') );
+		}
+		if(!$this->serviceContainer->get('app.app_helper')->hasAdmin()){
+			return new RedirectResponse( $this->router->generate('config_admin_user') );
 		}
 		return null;
 	}
 	static function getSettingSlugs(){
 		return array(
-			'parameter_members_mode', 'parameter_image_count', 'parameter_demo_mode',
+			'parameter_members_mode', 'parameter_image_count', 'parameter_demo_mode', 
 		);
 	}
 	public function hasSettings()

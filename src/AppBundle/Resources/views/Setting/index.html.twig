@@ -4,7 +4,7 @@
 {% block title %}{{ 'setting.title.index'|trans }}{% endblock %}
 {% block body %}
 <div>
-<a href="{{ path('admin_setting_new') }}" class="button special small"><i class="fas fa-plus"></i> {{ 'page.button.new'|trans() }}</a>
+<a href="{{ path('super_setting_new') }}" class="button special small"><i class="fas fa-plus"></i> {{ 'page.button.new'|trans() }}</a>
 </div>
 <table>
 <thead>
@@ -20,7 +20,7 @@
     <td>{{ setting.slug|trans() }}</td>
     <td>{{ setting.value }}</td>
     <td>
-        <a class="button special small" href="{{ path('admin_setting_edit', { 'slug': setting.slug }) }}">{{ 'setting.button.edit'|trans() }}</a>
+        <a class="button special small" href="{{ path('super_setting_edit', { 'slug': setting.slug }) }}">{{ 'setting.button.edit'|trans() }}</a>
     </td>
 </tr>
 {% endfor %}

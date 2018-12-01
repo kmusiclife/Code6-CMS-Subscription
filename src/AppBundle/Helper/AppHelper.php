@@ -22,6 +22,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
+use Symfony\Component\Finder\Finder;
+
 class AppHelper 
 {
 	
@@ -93,7 +95,6 @@ class AppHelper
 	}
 	public function setSetting($slug, $value=null)
 	{
-		
 		$setting = $setting = $this->entityManager->getRepository('AppBundle:Setting')->findOneBySlug($slug);
 		if(!$setting) $setting = new Setting();
 		
@@ -102,8 +103,9 @@ class AppHelper
 		
 		$this->entityManager->persist($setting);
 		$this->entityManager->flush();
-		
-		return $setting;
+		$this->updateSettingCache($slug, $value);
+
+		return $setting->getValue();
 	}
 	public function setSettings($key, $parameters)
 	{
@@ -169,5 +171,31 @@ class AppHelper
 	
 	    return (int)$qb->getQuery()->getSingleScalarResult();
 	    
+	}
+	public function hasSuper()
+	{
+	    $qb = $this->entityManager->createQueryBuilder();
+	    $qb->select('count(u)')
+	        ->from('AppBundle:User', 'u')
+	        ->where('u.roles LIKE :roles')
+	        ->setParameter('roles', '%ROLE_SUPER_ADMIN%');
+	
+	    return (int)$qb->getQuery()->getSingleScalarResult();
+	    
+	}
+	public function getThemeNames()
+	{
+		$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes';
+
+		$finder = new Finder();
+		$finder->depth('== 0')->ignoreUnreadableDirs()->directories()->in( $theme_dir );
+		
+		$theme_names = array();
+		foreach ($finder as $dir) {
+			$theme_name = $dir->getRelativePathname();
+			array_push($theme_names, $theme_name);
+		}
+
+		return $theme_names;
 	}
 }

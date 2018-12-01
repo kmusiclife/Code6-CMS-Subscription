@@ -3,6 +3,9 @@
 
 {% block title %}{{ 'user.title.index'|trans }}{% endblock %}
 {% block body %}
+<div>
+<a href="{{ path('user_new') }}" class="button special small fit"><i class="fas fa-plus"></i> {{ 'user.title.new'|trans() }}</a>
+</div>
 <table class="table">
     <thead>
         <tr>

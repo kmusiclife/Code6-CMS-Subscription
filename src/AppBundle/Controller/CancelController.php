@@ -37,42 +37,43 @@ class CancelController extends Controller
      */
     public function cancelAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
 		$user = $this->getUser();
+
+        if( $this->isGranted('ROLE_ADMIN') or $this->isGranted('ROLE_SUPER_ADMIN') ){
+            return new RedirectResponse($this->generateUrl('site_index'));
+        }
 
         $form = $this->createForm('AppBundle\Form\Type\PasswordFormType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            
             if ($form->isValid()) {
-				
-				try{
+                
+                if( $user->getStripeSubscriptionId() ){
+                    
+                    try{
 
-					$this->get('subscription.stripe_helper')->setApiKey();
+                        $this->get('subscription.stripe_helper')->setApiKey();
+                        $subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
+                        $subscription->cancel();
+                        $userManager = $this->container->get('fos_user.user_manager');
+                        $userManager->deleteUser($user);
+                        
+                    } catch (Exception $e) {
+                        throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
+                    }
 
-					$subscription = \Stripe\Subscription::retrieve( $user->getStripeSubscriptionId() );
-					$subscription->cancel();
-
-					$userManager = $this->container->get('fos_user.user_manager');
-					$userManager->deleteUser($user);
-					
-				} catch (Exception $e) {
-					throw new Exception('登録解除中にエラーが発生しました。管理者にご連絡ください。');
-				}
-
-		        $template = $this->get('twig')->load('AppBundle:Cancel:cancel.email.txt.twig');
-		        
-		        $subject = $template->renderBlock('subject', array('user' => $user));
-		        $textBody = $template->renderBlock('body_text', array('user' => $user));
-				
-		        $this->get('app.app_helper')->sendEmail(
-		        	$user->getEmail(), 
-		        	$subject, $textBody, 
-		        	array(), false
-		        );
-				
+                    $template = $this->get('twig')->load('AppBundle:Cancel:cancel.email.txt.twig');
+                    $subject = $template->renderBlock('subject', array('user' => $user));
+                    $textBody = $template->renderBlock('body_text', array('user' => $user));
+                    
+                    $this->get('app.app_helper')->sendEmail(
+                        $user->getEmail(), 
+                        $subject, $textBody, 
+                        array(), false
+                    );
+                }
                 return new RedirectResponse($this->generateUrl('cancel_completed'));
             }
         }
@@ -81,7 +82,7 @@ class CancelController extends Controller
             'user' => $user,
             'form' => $form->createView(),
         ));
-		
+        
     }
     /**
      * @Route("/completed", name="cancel_completed")

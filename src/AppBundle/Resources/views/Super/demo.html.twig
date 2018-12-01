@@ -1,0 +1,29 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block banner %}
+{% endblock %}
+
+{% block title %}デモモード変更{% endblock title %}
+{% block body %}
+
+<div class="row uniform">
+
+{{ form_start(form, {'attr':{'class':'row uniform'}}) }}
+	<div class="6u 12u">
+		<div class="select-wrapper">
+			{{ form_widget(form.slug) }}
+			{{ form_widget(form.value) }}
+		</div>
+	</div>
+	<div class="6u 12u$">
+		<input type="submit" class="special fit" value="モードを変更する" id="submit-button">
+	</div>
+	<div class="12u$">
+		<p>サイトのテーマを変更します。サイトのページ内容の変更、デザインの変更となりますので十分に注意して設定してください。</p>
+	</div>
+{{ form_end(form) }}
+
+</div>
+
+{% endblock body %}
