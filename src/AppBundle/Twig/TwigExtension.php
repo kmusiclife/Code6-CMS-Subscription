@@ -8,28 +8,33 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use AppBundle\Entity\User;
 
 class TwigExtension extends AbstractExtension
 {
-
     protected $serviceContainer;
     protected $requestStack;
     protected $entityManager;
     protected $router;
-    
+	protected $tokenStorage;
+	
     protected $pager;
 
     public function __construct(
     	ContainerInterface $serviceContainer, 
     	RequestStack $requestStack,
         EntityManagerInterface $entityManager,
-        UrlGeneratorInterface $router
+		UrlGeneratorInterface $router,
+		TokenStorageInterface $tokenStorage
     )
     {
         $this->serviceContainer = $serviceContainer;
         $this->requestStack = $requestStack;
         $this->EntityManager = $entityManager;
-        $this->router = $router;
+		$this->router = $router;
+		$this->tokenStorage = $tokenStorage;
+		
     }
     public function getFilters()
     {
@@ -38,7 +43,7 @@ class TwigExtension extends AbstractExtension
             new TwigFilter('absolute_url', array($this, 'absolute_url')),
             new TwigFilter('autop', array($this, 'autop')),        
         );
-    }
+	}
 	public function autop($plain_text)
 	{
 		$splited_text = preg_split("/\R\R+/", $plain_text, -1, PREG_SPLIT_NO_EMPTY);
@@ -99,6 +104,7 @@ class TwigExtension extends AbstractExtension
 	{
 		$template_file = $this->template_path("layout.html.twig");
 		if(null == $template_file) return $this->template_path("layout.html.twig", "default");
+
 		return $template_file;
 	}
 	public function admin_template_layout()
@@ -108,14 +114,12 @@ class TwigExtension extends AbstractExtension
 		return $template_file;
 	}
 	public function template_path($filename, $theme_name=null)
-	{
-		if(null == $theme_name){
-			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
-		}
-		if(!$theme_name) $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', "default");
+	{	
+		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
 		$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename;
+		
 		if( file_exists($template_file) ) return $template_file;
-		return false;
+		return $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/'.$filename;
 	}
 	public function admin_template_path($filename, $theme_name=null)
 	{
@@ -133,11 +137,10 @@ class TwigExtension extends AbstractExtension
 
 	public function get_article_embed()
 	{
+		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
 	    if( $this->template_exists('_cms/article.index.embed.html.twig') ){
-$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
 		    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/_cms/article.index.embed.html.twig';
 	    } else {
-			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
 			$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/_cms/article.index.embed.html.twig';
 	    }
 	    return $template_file;
@@ -218,11 +221,12 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	}
 	public function get_pager()
 	{
-	    if( $this->template_exists('_cms/pager.html.twig') ){
-		    $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		$user = $this->tokenStorage->getToken()->getUser();
+
+		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
+		if( $this->template_exists('_cms/pager.html.twig') ){
 		    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/_cms/pager.html.twig';
 	    } else {
-			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
 			$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/default/_cms/pager.html.twig';
 	    }
 	    return $template_file;
@@ -245,15 +249,15 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	}
 	private function get_template($filename, $extname='')
 	{
-	    $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
-	    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename.($extname ? '-'.$extname : '').'.html.twig';
+		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
+		$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename.($extname ? '-'.$extname : '').'.html.twig';
 	    
 	    return $template_file;
 	}
 	public function template_exists($filename)
 	{
-	    $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
-	    $template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename;
+		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
+		$template_file = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name.'/'.$filename;
 	    $exists = file_exists($template_file);
 	    if(false == $exists){
 		    if(false == file_exists($this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name)){
@@ -274,8 +278,9 @@ $theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parame
 	}
 	public function get_template_directory_uri()
 	{
-		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name') ){
-			$uri = 'themes/'.$this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
+		if( $theme_name ){
+			$uri = 'themes/'.$theme_name;
 			return $this->absolute_url($uri);
 		}
 		return '/';
