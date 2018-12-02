@@ -52,7 +52,9 @@ class ProfileFormType extends AbstractType
 	    
 	    // $this->serviceContainer->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
 	    $builder->add('username');
-	    $builder->add('email');
+	    $builder->add('fname');
+	    $builder->add('lname');
+        $builder->add('email');
 	    $builder->add('zip');
 	    $builder->add('address');
 	    $builder->add('tel');

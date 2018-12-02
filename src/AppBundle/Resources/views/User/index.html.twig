@@ -11,14 +11,16 @@
         <tr>
             <th>{{ 'entity.user.username'|trans() }}</th>
             <th>{{ 'entity.user.email'|trans() }}</th>
+            <th>Stripe</th>
             <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
     {% for user in users %}
         <tr>
-            <td>{{ user.username }}</td>
+            <td>{{ user.username }} ({{ user.fname }} {{ user.lname }})</td>
             <td>{{ user.email }}</td>
+            <td>{{ user.stripesubscriptionid ? '<i class="far fa-credit-card"></i>' : '-' }}</td>
             <td>
                 <a href="{{ path('user_edit', { 'id': user.id }) }}" class="button small special">{{ 'user.button.edit'|trans() }}</a>
                 <a href="{{ path('user_show', { 'id': user.id }) }}" class="button small">{{ 'user.button.show'|trans() }}</a>

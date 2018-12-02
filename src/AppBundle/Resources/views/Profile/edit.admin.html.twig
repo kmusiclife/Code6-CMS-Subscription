@@ -25,6 +25,47 @@
 	{{ form_errors(form.email) }}
 </div>
 
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.fname'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.fname, {'attr': { 'placeholder':'例) 山田' }}) }}
+	{{ form_errors(form.fname) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.lname'|trans() }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.lname, {'attr': { 'placeholder':'例) 華子' }}) }}
+	{{ form_errors(form.lname) }}
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.zip'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.zip, {'attr': { 'placeholder':'例) 123-0000' }}) }}
+	{{ form_errors(form.zip) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.address'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.address, {'attr': { 'placeholder':'例) 東京都港区1-1' }}) }}
+	{{ form_errors(form.address) }}
+</div>
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.tel'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	{{ form_widget(form.tel, {'attr': { 'placeholder':'例) 000-000-000' }}) }}
+	{{ form_errors(form.tel) }}
+</div>
+
 
 
 <div class="3u 12u$(xsmall)">
