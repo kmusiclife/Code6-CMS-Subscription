@@ -116,6 +116,18 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $stripe_subscription_id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $theme;
+    public function setTheme($theme = null){
+        $this->theme = $theme;
+        return $this;
+    }
+    public function getTheme(){
+        return $this->theme;
+    }
     
     /* Google Recaptcha */
     private $recaptcha;

@@ -33,7 +33,18 @@
 
 
 <div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.current_password'|trans() }}*</label>
+	<label>{{ 'entity.user.theme'|trans() }}</label>
+</div>
+<div class="9u$ 12u$(xsmall)">
+	<div class="select-wrapper">
+	{{ form_widget(edit_form.theme, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(edit_form.theme) }}
+	</div>
+</div>
+
+
+<div class="3u 12u$(xsmall)">
+	<label>{{ 'entity.user.current_password'|trans() }}</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
 	{{ form_widget(edit_form.plainPassword, {'attr': { 'placeholder':'例) example' }}) }}

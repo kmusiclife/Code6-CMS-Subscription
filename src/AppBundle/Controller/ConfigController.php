@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\Setting;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,8 +18,6 @@ use Symfony\Component\HttpKernel\Exception\HttpNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use AppBundle\Form\Type\PasswordFormType;
-use AppBundle\Entity\Setting;
-use AppBundle\Helper\InitHelper;
 
 /**
  * Config controller.
@@ -28,57 +27,13 @@ use AppBundle\Helper\InitHelper;
 class ConfigController extends Controller
 {
     /**
-     * @Route("admin/config/setting/{slug}", name="setting_config")
-     * @Method({"GET", "POST"})
-     */
-    public function configSettingAction(Request $request)
-    {
-
-	    $em = $this->getDoctrine()->getManager();
-	    $slug = $request->get('slug');
-	    $allow_slugs = InitHelper::getSettingSlugs();
-	    $allow_slug_flag = false;
-	    
-	    foreach($allow_slugs as $allow_slug){
-		    if($allow_slug == $slug) $allow_slug_flag = true;
-	    }
-	    if(false == $allow_slug_flag) {
-		    throw new HttpNotFoundException("Page not found");
-	    }
-	    
-	    $setting = $em->getRepository('AppBundle:Setting')->findOneBySlug($slug);
-	    if($setting) return $this->redirectToRoute('admin_index');
-	    
-	    $setting = new Setting();
-		$setting->setSlug( $request->get('slug') );
-		$default_value = $this->get('translator')->trans('setting.default.'.$request->get('slug'), [], 'default');
-		$setting->setValue($default_value);
-        
-        $form = $this->createForm('AppBundle\Form\Type\SettingRequireFormType', $setting)->remove('slug')->add('slug', HiddenType::class);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($setting);
-            $em->flush();
-            
-            return $this->redirectToRoute('admin_index');
-        }
-		
-        return $this->render('@AppBundle/Resources/views/Setting/config.html.twig', array(
-            'setting' => $setting,
-            'form' => $form->createView(),
-        ));
-    }
-    /**
      * @Route("config/user/admin", name="config_admin_user")
      * @Method("GET,POST")
      */
     public function configAdminUserAction(Request $request)
     {
-		if( $this->get('app.app_helper')->hasAdmin() > 0 ){
-			return $this->redirectToRoute('admin_index');
+		if( $this->get('app.init_helper')->checkUsers() ){
+			throw new NotFoundHttpException("Page not found");
 		}
         $em = $this->getDoctrine()->getManager();
 
@@ -112,8 +67,8 @@ class ConfigController extends Controller
      */
     public function configSuperUserAction(Request $request)
     {
-		if( $this->get('app.app_helper')->hasSuper() > 0 ){
-			return $this->redirectToRoute('admin_index');
+		if( $this->get('app.init_helper')->checkUsers() ){
+			throw new NotFoundHttpException("Page not found");
 		}
         $em = $this->getDoctrine()->getManager();
 

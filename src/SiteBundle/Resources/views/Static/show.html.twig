@@ -1,2 +1,2 @@
 {% trans_default_domain 'message' %}
-{% extends "themes/"~getSetting('parameter_theme_name')~"/_static/"~slug~".html.twig" %}
+{% extends template_path( "_static/"~slug~".html.twig" ) %}

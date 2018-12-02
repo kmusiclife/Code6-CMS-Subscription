@@ -68,3 +68,13 @@ services:
     AppBundle\Form\Type\SettingThemeFormType:
         arguments: ["@service_container"]
         tags: [form.type]
+
+    AppBundle\Form\Type\UserFormType:
+        arguments: ["@service_container"]
+        tags: [form.type]
+    
+    AppBundle\EventListener\RequestListener:
+        arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }

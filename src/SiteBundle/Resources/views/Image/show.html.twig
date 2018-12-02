@@ -1,6 +1,2 @@
 {% trans_default_domain 'message' %}
-{% extends 
-	template_exists("_cms/image.html.twig") ?
-		"themes/"~getSetting('parameter_theme_name')~"/_cms/image.html.twig" :
-		"themes/default/_cms/image.html.twig"
-%}
+{% extends template_path('_cms/image.html.twig') %}

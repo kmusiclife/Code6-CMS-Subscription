@@ -81,10 +81,6 @@ class RegistrationListener implements EventSubscriberInterface
 				new RedirectResponse( $this->router->generate('site_index'))
 			);
 		}
-	    $response = $this->serviceContainer->get('app.init_helper')->initSite();
-	    if(null != $response) {
-			return $event->setResponse( $response );
-	    }
 	}
 	public function onRegistrationSuccess(FormEvent $event)
 	{

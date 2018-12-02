@@ -17,15 +17,34 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class UserFormType extends AbstractType
 {
+    protected $serviceContainer;
 
+    public function __construct(
+    	ContainerInterface $serviceContainer
+    ){
+        $this->serviceContainer = $serviceContainer;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	    
 	    $builder->add('username');
 	    $builder->add('email');
-	    $builder->remove('current_password');
+
+        $_theme_names = $this->serviceContainer->get('app.app_helper')->getThemeNames();
+        $_theme_name_choice = array();
+        foreach($_theme_names as $_theme_name){
+            $_theme_name_choice[$_theme_name] = $_theme_name;
+        }
+        $builder->add('theme', ChoiceType::class, array(
+            'required'   => false,
+            'empty_data' => null,
+            'choices'  => $_theme_name_choice,
+        ));
+
+        $builder->remove('current_password');
         $builder->add('plainPassword', RepeatedType::class, array(
             'type' => PasswordType::class,
             'options' => array(

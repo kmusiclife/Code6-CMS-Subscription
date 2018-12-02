@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Setting;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Admin controller.
@@ -23,17 +28,11 @@ class AdminController extends Controller
      * @Route("/", name="admin_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-	    $response = $this->get('app.init_helper')->initSite();
-	    if(null != $response) return $response;
-	    
-		if( !$this->get('subscription.stripe_helper')->setApiKey() )
-			return new RedirectResponse( $this->generateUrl('stripe_config') );
-	    
         return $this->render('@AppBundle/Resources/views/Admin/index.html.twig', array(
 	        'body' => ''
         ));
-
     }
+    
 }

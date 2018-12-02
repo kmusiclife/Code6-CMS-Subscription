@@ -30,11 +30,6 @@ class SuperController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-	    $response = $this->get('app.init_helper')->initSite();
-        if(null != $response) return $response;
-        
         return $this->render('@AppBundle/Resources/views/Super/index.html.twig', array(
 	        'body' => ''
         ));

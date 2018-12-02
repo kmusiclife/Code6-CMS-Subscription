@@ -12,6 +12,7 @@ entity:
         password_confirm: "パスワード(確認)"
         current_password: "現在のパスワード"
         plan: "プラン"
+        theme: "個別テーマ"
 
     setting:
         slug: "設定ID"

@@ -53,6 +53,17 @@ class AppHelper
 		$this->settings_cache = array();
 		$this->user = $this->tokenStorage->getToken()->getUser();
 	}
+	public function theme_name()
+	{
+		$user = $this->tokenStorage->getToken()->getUser();
+		if(is_object($user)){
+			if($user->getTheme()) return $user->getTheme();
+		}
+		
+		$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		if($theme_name) return $theme_name;
+		return $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', "default");
+	}
 	public function curlRequest($url, $params=array()){
 		
 		if(!$url) return;
@@ -160,28 +171,6 @@ class AppHelper
 		}
 		return $this->serviceContainer->get('mailer')->send($message);
 		
-	}
-	public function hasAdmin()
-	{
-	    $qb = $this->entityManager->createQueryBuilder();
-	    $qb->select('count(u)')
-	        ->from('AppBundle:User', 'u')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%ROLE_ADMIN%');
-	
-	    return (int)$qb->getQuery()->getSingleScalarResult();
-	    
-	}
-	public function hasSuper()
-	{
-	    $qb = $this->entityManager->createQueryBuilder();
-	    $qb->select('count(u)')
-	        ->from('AppBundle:User', 'u')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%ROLE_SUPER_ADMIN%');
-	
-	    return (int)$qb->getQuery()->getSingleScalarResult();
-	    
 	}
 	public function getThemeNames()
 	{
