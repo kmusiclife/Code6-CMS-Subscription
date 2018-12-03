@@ -8,14 +8,33 @@
     
 <table class="table">
 	<tr>
-		<th width="32%">{{ 'entity.user.username'|trans }}</th>
+		<td width="32%">{{ 'entity.user.username'|trans }}</td>
 		<td>{{ app.user.username }}</td>
 	</tr>
 	<tr>
-		<th>{{ 'entity.user.email'|trans }}</th>
+		<td>{{ 'entity.user.email'|trans }}</td>
 		<td>{{ app.user.email }}</td>
 	</tr>
-	
+	<tr>
+		<td>{{ 'entity.user.fname'|trans }}</td>
+		<td>{{ app.user.fname }}</td>
+	</tr>
+	<tr>
+		<td>{{ 'entity.user.lname'|trans }}</td>
+		<td>{{ app.user.lname }}</td>
+	</tr>
+	<tr>
+		<td>{{ 'entity.user.zip'|trans }}</td>
+		<td>{{ app.user.zip }}</td>
+	</tr>	
+	<tr>
+		<td>{{ 'entity.user.address'|trans }}</td>
+		<td>{{ app.user.address }}</td>
+	</tr>
+	<tr>
+		<td>{{ 'entity.user.tel'|trans }}</td>
+		<td>{{ app.user.tel }}</td>
+	</tr>
 </table>
 <div>
 	<a class="button special" href="{{ path('fos_user_profile_edit') }}">{{ 'profile.button.edit'|trans }}</a>

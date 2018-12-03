@@ -2,7 +2,5 @@
 {% extends 
 	getSetting('parameter_members_mode') == "false" ?
 		"AppBundle:Resetting:request.admin.html.twig" :
-		template_exists( '_system/request.html.twig' ) ?
-			"themes/"~getSetting('parameter_theme_name')~"/_system/request.html.twig" :
-			"themes/default/_system/request.html.twig"
+		template_path( "_system/request.html.twig" )
 %}

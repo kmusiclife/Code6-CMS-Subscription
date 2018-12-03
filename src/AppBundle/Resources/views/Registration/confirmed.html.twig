@@ -1,6 +1,2 @@
 {% trans_default_domain 'message' %}
-{% extends 
-	template_exists( "_system/register.completed.html.twig" )?
-		"themes/"~getSetting('parameter_theme_name')~"/_system/register.completed.html.twig" :
-		"themes/default/_system/register.completed.html.twig" 
-%}
+{% extends template_path( "_system/register.completed.html.twig" ) %}

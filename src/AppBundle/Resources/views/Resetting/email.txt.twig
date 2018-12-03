@@ -1,6 +1,2 @@
 {% trans_default_domain 'message' %}
-{% extends 
-	template_exists( "_system/resetting.email.txt.twig" )?
-		"themes/"~getSetting('parameter_theme_name')~"/_system/resetting.email.txt.twig" :
-		"themes/default/_system/resetting.email.txt.twig"
-%}
+{% extends template_path("_system/resetting.email.txt.twig") %}

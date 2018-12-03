@@ -1,6 +1,2 @@
 {% trans_default_domain 'message' %}
-{% extends 
-	template_exists("_subscription/card.html.twig") ?
-		"themes/"~getSetting('parameter_theme_name')~"/_subscription/card.html.twig" :
-		"themes/default/_subscription/card.html.twig"
-%}
+{% extends template_path("_subscription/card.html.twig") %}
