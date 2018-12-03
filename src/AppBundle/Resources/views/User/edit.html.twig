@@ -17,7 +17,7 @@
 <div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.email'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.email, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(edit_form.email) }}
 </div>
@@ -26,7 +26,7 @@
 <div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.username'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.username, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(edit_form.username) }}
 </div>
@@ -35,7 +35,7 @@
 <div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.theme'|trans() }}</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	<div class="select-wrapper">
 	{{ form_widget(edit_form.theme, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(edit_form.theme) }}
@@ -46,7 +46,7 @@
 <div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.current_password'|trans() }}</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.plainPassword, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(edit_form.plainPassword) }}
 </div>
@@ -54,7 +54,7 @@
 
 
 <div class="3u 12u$(xsmall) col-3 col-12-small"></div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	<input type="submit" class="special" value="{{ 'user.button.edit'|trans }}" id="submit-button" />
 </div>
 
@@ -68,12 +68,12 @@
 <div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.current_password'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(delete_form.password.current_password) }}
 	{{ form_errors(delete_form.password.current_password) }}
 </div>
 <div class="3u 12u$(xsmall) col-3 col-12-small"></div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
     <input type="submit" value="{{ 'user.button.delete'|trans() }}">
 </div>
 {{ form_end(delete_form) }}
