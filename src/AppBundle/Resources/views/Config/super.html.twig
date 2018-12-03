@@ -10,7 +10,7 @@
 		form, {
 			'method': 'post', 
 			'attr': {
-				'class': 'site_config row uniform', 
+				'class': 'site_config row uniform gtr-uniform', 
 				'novalidate': 'novalidate'
 		}
 	}) 
@@ -18,83 +18,37 @@
 {# 'attr': {'novalidate': 'novalidate'} #}
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.username'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.username, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(form.username) }}
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.email'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.email, {'attr': { 'placeholder':'例) info@example.com' }}) }}
 	{{ form_errors(form.email) }}
 </div>
 
 
-<div class="3u 12u$(xsmall)">
-	{{ 'entity.user.fname'|trans }}
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.fname, {'label':'entity.user.email'|trans(), 'attr': { 'placeholder':'例) 山田' }}) }}
-	{{ form_errors(form.fname) }}
-</div>
-
-<div class="3u 12u$(xsmall)">
-	{{ 'entity.user.lname'|trans }}
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.lname, {'label':'entity.user.lname'|trans(), 'attr': { 'placeholder':'例) 華子' }}) }}
-	{{ form_errors(form.lname) }}
-</div>
-
-
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.zip'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.zip, {'attr': { 'placeholder':'例) 1200001' }}) }}
-	{{ form_errors(form.zip) }}
-</div>
-
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.address'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.address, {'attr': { 'placeholder':'例) 東京都港区1-1-1' }}) }}
-	{{ form_errors(form.address) }}
-</div>
-
-
-
-<div class="3u 12u$(xsmall)">
-	<label>{{ 'entity.user.tel'|trans() }}*</label>
-</div>
-<div class="9u$ 12u$(xsmall)">
-	{{ form_widget(form.tel, {'attr': { 'placeholder':'例) 03-1111-2222' }}) }}
-	{{ form_errors(form.tel) }}
-</div>
-
-
-
-
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.password'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.plainPassword.first) }}
 	{{ form_errors(form.plainPassword.first) }}
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.password_confirm'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.plainPassword.second) }}
 	{{ form_errors(form.plainPassword.second) }}
 </div>
@@ -102,8 +56,8 @@
 
 
 
-<div class="3u 12u$(xsmall)"></div>
-<div class="9u$ 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small"></div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	<input type="submit" class="special" value="{{ 'register.button.submit'|trans }}" id="submit-button" />
 </div>
 

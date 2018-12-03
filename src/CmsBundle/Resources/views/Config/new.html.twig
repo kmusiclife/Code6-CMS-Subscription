@@ -19,41 +19,41 @@
 		form, {
 			'method': 'post', 
 			'attr': {
-				'class': 'page_add row uniform'
+				'class': 'page_add row uniform gtr-uniform'
 		}
 	}) 
 }}
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.page.title'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.title, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(form.title) }}
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.page.slug'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.slug, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(form.slug) }}
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.page.body'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(form.body, {'attr': { 'placeholder':'例) example', 'style': 'height: 300px;'}}) }}
 	{{ form_errors(form.body) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	&nbsp;
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	<input type="submit" class="special" value="{{ 'page.button.new'|trans }}" id="submit-button" />
 </div>
 

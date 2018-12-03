@@ -18,7 +18,7 @@
 	            {{ contact.createdAt|date('Y年m月d日 H:i:s') }} <br />
 	            {{ 'entity.contact.name'|trans }}：{{ contact.name }}{{ 'entity.contact.email'|trans }}：{{ contact.email }}
             </div>
-				<a class="button small special fit" href="{{ path('admin_contact_edit', { 'id': contact.id }) }}">{{ 'contact.button.show'|trans }}</a>
+				<a class="button small special fit primary" href="{{ path('admin_contact_edit', { 'id': contact.id }) }}">{{ 'contact.button.show'|trans }}</a>
             </td>
         </tr>
     {% endfor %}

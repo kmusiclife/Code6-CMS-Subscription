@@ -14,7 +14,7 @@
 	}) 
 }}
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.email'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.username'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -32,7 +32,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.theme'|trans() }}</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -43,7 +43,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.current_password'|trans() }}</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -53,7 +53,7 @@
 
 
 
-<div class="3u 12u$(xsmall)"></div>
+<div class="3u 12u$(xsmall) col-3 col-12-small"></div>
 <div class="9u$ 12u$(xsmall)">
 	<input type="submit" class="special" value="{{ 'user.button.edit'|trans }}" id="submit-button" />
 </div>
@@ -65,14 +65,14 @@
 <hr />
 
 {{ form_start(delete_form, {'attr':{'class':'row uniform'}}) }}
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.current_password'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
 	{{ form_widget(delete_form.password.current_password) }}
 	{{ form_errors(delete_form.password.current_password) }}
 </div>
-<div class="3u 12u$(xsmall)"></div>
+<div class="3u 12u$(xsmall) col-3 col-12-small"></div>
 <div class="9u$ 12u$(xsmall)">
     <input type="submit" value="{{ 'user.button.delete'|trans() }}">
 </div>

@@ -9,33 +9,33 @@
     <div class="box">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post" class="row uniform">
+<form action="{{ path("fos_user_security_check") }}" method="post" class="row uniform gtr-uniform">
 
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     {% endif %}
 
-<div class="3u 12u(xsmall)">
+<div class="3u 12u(xsmall) col-3 col-12-small">
 	<label for="username">{{ 'entity.user.username'|trans }}</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
 </div>
 
 
-<div class="3u 12u(xsmall)">
+<div class="3u 12u(xsmall) col-3 col-12-small">
 	<label for="password">{{ 'entity.user.password'|trans }}</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
     <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
 </div>
 
-<div class="3u 12u(xsmall)"></div>
-<div class="9u$ 12u$(xsmall)">
+<div class="3u 12u(xsmall) col-3 col-12-small"></div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
     <label for="remember_me">{{ 'message.remember_me'|trans }}</label>
 	<div>
-	    <input type="submit" id="_submit" name="_submit" class="special" value="{{ 'form.button.login'|trans }}" />
+	    <input type="submit" id="_submit" name="_submit" class="special primary" value="{{ 'form.button.login'|trans }}" />
 	</div>
 </div>
 

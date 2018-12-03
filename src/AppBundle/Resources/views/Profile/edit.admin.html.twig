@@ -8,7 +8,7 @@
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit row uniform', 'novalidate': 'novalidate' } }) }}
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.username'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.email'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -25,7 +25,7 @@
 	{{ form_errors(form.email) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.fname'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -33,7 +33,7 @@
 	{{ form_errors(form.fname) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.lname'|trans() }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -42,7 +42,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.zip'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -50,7 +50,7 @@
 	{{ form_errors(form.zip) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.address'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -58,7 +58,7 @@
 	{{ form_errors(form.address) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.tel'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -68,7 +68,7 @@
 
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.password'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -77,7 +77,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.password_confirm'|trans }}*</label>
 </div>
 <div class="9u$ 12u$(xsmall)">
@@ -86,7 +86,7 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)"></div>
+<div class="3u 12u$(xsmall) col-3 col-12-small"></div>
 <div class="9u$ 12u$(xsmall)">
 	<input type="submit" value="{{ 'form.button.edit'|trans }}" class="special">
 </div>

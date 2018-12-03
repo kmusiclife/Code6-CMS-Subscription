@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 // Entities
 use AppBundle\Entity\Setting;
+use AppBundle\Entity\User;
 use CmsBundle\Entity\Image;
 use CmsBundle\Entity\Article;
 
@@ -51,17 +52,23 @@ class AppHelper
 		$this->router = $router;
 		
 		$this->settings_cache = array();
-		$this->user = $this->tokenStorage->getToken()->getUser();
+		if(is_object($this->tokenStorage->getToken()))
+			$this->user = $this->tokenStorage->getToken()->getUser();
+		else $this->user = new User();
+
 	}
 	public function theme_name()
 	{
-		$user = $this->tokenStorage->getToken()->getUser();
-		if(is_object($user)){
-			if($user->getTheme()) return $user->getTheme();
+		if($this->user == 'anon.'){
+			$theme_name = null;
+		} else {
+			$theme_name = $this->user->getTheme() ? $this->user->getTheme() : null;
 		}
+		if($theme_name) return $theme_name;
 		
 		$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
 		if($theme_name) return $theme_name;
+		
 		return $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', "default");
 	}
 	public function curlRequest($url, $params=array()){

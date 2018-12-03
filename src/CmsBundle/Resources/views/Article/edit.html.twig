@@ -4,28 +4,28 @@
 {% block title %}{{ 'article.title.edit'|trans() }}{% endblock %}
 
 {% block body %}
-{{ form_start(edit_form, {'attr':{'class':'row uniform'}}) }}
+{{ form_start(edit_form, {'attr':{'class':'row uniform gtr-uniform'}}) }}
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.title'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.title, {'attr': { 'placeholder':'例) example' }}) }}
 	{{ form_errors(edit_form.title) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.slug'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_errors(edit_form.slug) }}
 	{{ form_widget(edit_form.slug) }}
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.seo.image'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.seo.image) }}
 	{{ form_errors(edit_form.seo.image) }}
 	{% if article.seo.image.src is defined %}
@@ -38,10 +38,10 @@
 </div>
 
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.body'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.body, {'attr': { 'placeholder':'例) ', 'style':'height: 300px;'}}) }}
 	{{ form_errors(edit_form.body) }}
 </div>
@@ -50,10 +50,10 @@
 
 
 {% for image in edit_form.images %}
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.images'|trans() }}</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(image) }}
 	{{ form_errors(image) }}
 	{% if image.vars.value.src is not null %}
@@ -64,15 +64,15 @@
 </div>
 {% endfor %}
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.published_at'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(edit_form.publishedat, {'attr': { 'class' : 'js-datepicker-datetime', 'placeholder':'例) 2018' }}) }}
 </div>
 
 
-<div class="12u$ 12u$(xsmall)">
+<div class="12u$ 12u$(xsmall) col-12 col-12-small">
 	<div class="box">
 		<div>
 		<h3>{{ 'seo.title.form_title'|trans }}</h3>
@@ -96,26 +96,26 @@
 	</div>
 </div>
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.is_published'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 {{ form_widget(edit_form.is_published) }}
 <label for="cmsbundle_article_is_published">{{ 'article.message.is_published'|trans() }}</label>
 </div>
 
 {% if getSetting('parameter_members_mode') == true %}
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.article.is_member'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 {{ form_widget(edit_form.is_member) }}
 <label for="cmsbundle_article_is_member">{{ 'article.message.is_member'|trans() }}</label>
 </div>
 {% endif %}
 
 <div class="12u$ 12u$(xsmall)">
-	<input type="submit" class="special fit" value="{{ 'article.button.edit'|trans }}" id="submit-button" />
+	<input type="submit" class="special fit primary" value="{{ 'article.button.edit'|trans }}" id="submit-button" />
 </div>
 
 
@@ -124,18 +124,18 @@
 
 <hr />
 
-{{ form_start(delete_form, {'attr':{'class':'row uniform'}}) }}
+{{ form_start(delete_form, {'attr':{'class':'row uniform gtr-uniform'}}) }}
 
-<div class="3u 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small">
 	<label>{{ 'entity.user.current_password'|trans() }}*</label>
 </div>
-<div class="9u$ 12u$(xsmall)">
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(delete_form.password.current_password) }}
 	{{ form_errors(delete_form.password.current_password) }}
 </div>
 
-<div class="3u 12u$(xsmall)"></div>
-<div class="9u$ 12u$(xsmall)">
+<div class="3u 12u$(xsmall) col-3 col-12-small"></div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	<input type="submit" class="" value="{{ 'article.button.delete'|trans }}" id="delete-button" />
 </div>
 {{ form_end(delete_form) }}

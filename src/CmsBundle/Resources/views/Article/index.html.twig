@@ -3,41 +3,33 @@
 
 {% block title %}{{ 'article.title.index'|trans() }}{% endblock title %}
 {% block body %}
-<div>
-<a href="{{ path('article_new') }}" class="button special small fit"><i class="fas fa-plus"></i> {{ 'article.title.new'|trans() }}</a>
+<div class="row uniform gtr-uniform">
+	<div class="12u 12u(xxsmall)$ col-12 col-12-xxsmall">
+		<a href="{{ path('article_new') }}" class="button special primary small fit"><i class="fas fa-plus"></i> {{ 'article.title.new'|trans() }}</a>
+	</div>
 </div>
-<div class="table-wrapper">
-<table class="table">
-    <thead>
-	    <tr>
-	        <th>{{ 'entity.article.eyecatch'|trans() }}</th>
-	        <th>{{ 'entity.article.title'|trans() }}</th>
-	    </tr>
-	</thead>
-    <tbobdy>
+
 {% for article in articles %}
-    <tr>
-        <td width="35%">
-        	{% if article.seo.image is defined %}
-	        	{% if article.seo.image is not null %}
-		        	<div class="image fit">
-			        	<img src="{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}" alt=""/>
-		        	</div>
-				{% endif %}
-			{% endif %}
-        </td>
-        <td>
-			<div style="padding: 10px 0;">{{ article.title|trans() }}</div>
-	        <div>
-	        <a href="{{ path('article_show', {'slug': article.slug}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
-	        	<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
+<div class="row uniform gtr-uniform">
+	<div class="3u 12u(xxsmall) col-3 col-12-xxsmall">
+		{% if article.seo.image is not null %}
+			<div class="image fit">
+				<img src="{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}" alt=""/>
 			</div>
-        </td>
-    </tr>
-{% endfor %}
-    </tbobdy>
-</table>
+		{% endif %}
+	</div>
+	<div class="9u 12u$(xxsmall) col-9 col-12-xxsmall">
+		<p>{{ article_date(article, 'Y年m月d日') }}<br />
+		<strong>{{ article.title|trans() }}</strong></p>
+		<div>
+		<a href="{{ path('article_show', {'slug': article.slug}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
+			<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
+		</div>
+	</div>
 </div>
+{% endfor %}
+
+<hr />
 
 {% include admin_template_path('pager.html.twig') %}
 
