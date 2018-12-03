@@ -6,23 +6,23 @@
 
 {% block title %}サイト管理{% endblock title %}
 {% block body %}
-<div class="row uniform">
-    <div class="4u 12u(small)">
+<div class="row uniform gtr-uniform">
+    <div class="4u 12u(small) col-4 col-12-small">
     	<a class="button special fit" href="{{ path('article_new') }}"><i class="fas fa-plus"></i> {{ 'article.title.new'|trans }}</a>
     </div>
-    <div class="4u 12u(small)">
+    <div class="4u 12u(small) col-4 col-12-small">
     	<a class="button special fit" href="{{ path('article_index') }}"><i class="fas fa-list-ul"></i> {{ 'article.title.index'|trans }}</a>
     </div>
-    <div class="4u 12u$(small)">
+    <div class="4u 12u$(small) col-4 col-12-small">
     	<a class="button special fit" href="{{ path('admin_contact_index') }}"><i class="far fa-envelope"></i> {{ 'contact.title.index'|trans }}</a>
     </div>
     {% if getSetting('parameter_members_mode') == 'true' %}
-    <div class="12u 12u$(small)">
+    <div class="12u 12u$(small) col-12 col-12-small">
     	<a class="button special fit" href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans }}</a>
     </div>
     {% endif %}
 
-    <div class="12u 12u$(small)">
+    <div class="12u 12u$(small) col-12 col-12-small">
     	<div class="box">
     		<h4>画像アップロードの方法</h4>
     		<p>画像のアップロードはサイト上でより美しく表示するためにアップロードに条件を設けています。アップロードができない場合は下記のルールを確認してください。</p>
