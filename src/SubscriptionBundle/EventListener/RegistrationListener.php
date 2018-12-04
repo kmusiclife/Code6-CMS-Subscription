@@ -73,10 +73,6 @@ class RegistrationListener implements EventSubscriberInterface
 	}
 	public function onRegistrationInitialize(GetResponseUserEvent $event)
 	{
-		if( !$this->serviceContainer->get('subscription.stripe_helper')->setApiKey() )
-		{
-			return $event->setResponse( new RedirectResponse( $this->router->generate('stripe_config') ) );
-		}
 	}
 	public function onRegistrationSuccess(FormEvent $event)
 	{

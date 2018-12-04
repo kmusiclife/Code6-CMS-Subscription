@@ -1,0 +1,21 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block banner %}
+{% endblock %}
+
+{% block title %}Stripe情報リセット{% endblock title %}
+{% block body %}
+
+<div class="row uniform">
+
+	<div class="12u 12u$ col-12 col-12-small">
+        <p>Stripeの情報をリセットします。再度接続しない限りStripeの接続は行われることはなく、Stripeとの連携ができなくなり収益の受け取り、会員登録ができなくなります。</p>
+	</div>
+	<div class="12u 12u$ col-12 col-12-small">
+		<a href="{{ path('super_stripe_reset_execute') }}" class="button special fit">リセットする</a>
+	</div>
+
+</div>
+
+{% endblock body %}

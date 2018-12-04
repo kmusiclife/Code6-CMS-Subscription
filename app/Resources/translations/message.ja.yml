@@ -26,6 +26,7 @@ super:
         demo: "デモモード設定・変更"
         admin: "管理者モード"
         members: "メンバーモード"
+        stripe_reset: "STRIPEリセット"
         
 setting:
     title:

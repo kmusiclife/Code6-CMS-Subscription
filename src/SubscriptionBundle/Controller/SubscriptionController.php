@@ -118,5 +118,27 @@ class SubscriptionController extends Controller
         return $this->render('SubscriptionBundle:Subscription:card.completed.html.twig', array(
         ));
     }
+    /**
+     * @Route("/super/stripe/reset/execute", name="super_stripe_reset_execute")
+     * @Method("GET")
+     */
+    public function stripeResetExecuteAction()
+    {
+        $this->get('app.app_helper')->setSetting('stripe_livemode', null);
+        $this->get('app.app_helper')->setSetting('stripe_public_token', null);
+        $this->get('app.app_helper')->setSetting('stripe_secret_token', null);
+        $this->get('app.app_helper')->setSetting('stripe_access_token', null);
 
+        return $this->redirectToRoute('super_index');
+
+    }
+    /**
+     * @Route("/super/stripe/reset", name="super_stripe_reset")
+     * @Method("GET")
+     */
+    public function stripeResetAction()
+    {
+        return $this->render('SubscriptionBundle:Super:stripe.reset.html.twig', array(
+        ));
+    }
 }
