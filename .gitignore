@@ -5,6 +5,7 @@
 /.gitignore
 /.web-server-pid
 /web/themes/*
+/web/.htaccess
 !/web/themes/default
 /web/config.rb
 /web/assets
