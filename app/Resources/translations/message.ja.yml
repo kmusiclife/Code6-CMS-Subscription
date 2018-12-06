@@ -27,7 +27,6 @@ super:
         admin: "管理者モード"
         members: "メンバーモード"
         stripe_reset: "STRIPE初期化"
-        ssl: "強制SSLリダイレクト"
         
 setting:
     title:
