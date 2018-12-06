@@ -14,7 +14,7 @@
 <head>
 <title>{% block title %}Code6 CMS Subscription{% endblock %}</title>
 {% block stylesheets %}{% endblock stylesheets %}
-{% include 'themes/default/header.html.twig' %}
+{% include template_seo() %}
 {% block pre_javascript %}{% endblock pre_javascript %}
 </head>
 <body>
@@ -42,7 +42,7 @@
 	{{ block('fos_user_content') }}
 {% endif %}
 
-{% include "themes/default/footer.html.twig" %}
+{% include "default/footer.html.twig" %}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <!--[if lte IE 8]><script src="{{ asset('admin/js/ie/respond.min.js') }}"></script><![endif]-->

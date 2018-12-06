@@ -26,7 +26,8 @@ super:
         demo: "デモモード設定・変更"
         admin: "管理者モード"
         members: "メンバーモード"
-        stripe_reset: "STRIPEリセット"
+        stripe_reset: "STRIPE初期化"
+        ssl: "強制SSLリダイレクト"
         
 setting:
     title:

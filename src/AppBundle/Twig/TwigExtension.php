@@ -19,7 +19,9 @@ class TwigExtension extends AbstractExtension
     protected $router;
 	protected $tokenStorage;
 	
-    protected $pager;
+	protected $pager;
+	protected $theme_name;
+	protected $admin_theme_name;
 
     public function __construct(
     	ContainerInterface $serviceContainer, 
@@ -35,6 +37,28 @@ class TwigExtension extends AbstractExtension
 		$this->router = $router;
 		$this->tokenStorage = $tokenStorage;
 		
+		$theme_name = $this->get_theme_name();
+
+		if( !$theme_name ){
+			$this->theme_name = $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
+		}
+		$theme_dir = $this->get_theme_dir();
+		if(!file_exists($theme_dir) ){
+			$theme_name = $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
+		}
+
+		$admin_theme_name = $this->get_admin_theme_name();
+
+		if( !$admin_theme_name ){
+			$admin_theme_name = $this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', 'default');
+		}
+		$admin_theme_dir = $this->get_admin_theme_dir();
+		if( !file_exists($admin_theme_dir) ){
+			$admin_theme_name = $this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', 'default');
+		}
+
+		$this->theme_name = $theme_name;
+
     }
     public function getFilters()
     {
@@ -73,12 +97,13 @@ class TwigExtension extends AbstractExtension
 			
 			new \Twig_SimpleFunction('get_admin_template_directory_uri', array($this, 'get_admin_template_directory_uri')),
 	        new \Twig_SimpleFunction('get_admin_template_url', array($this, 'get_admin_template_directory_uri')),
+			new \Twig_SimpleFunction('admin_template_path', array($this, 'admin_template_path')),
+			new \Twig_SimpleFunction('admin_template_layout', array($this, 'admin_template_layout')),
 
 			new \Twig_SimpleFunction('template_exists', array($this, 'template_exists')),
 			new \Twig_SimpleFunction('template_path', array($this, 'template_path')),
-			new \Twig_SimpleFunction('admin_template_path', array($this, 'admin_template_path')),
 			new \Twig_SimpleFunction('template_layout', array($this, 'template_layout')),
-			new \Twig_SimpleFunction('admin_template_layout', array($this, 'admin_template_layout')),
+			new \Twig_SimpleFunction('template_seo', array($this, 'template_seo')),
 
 			new \Twig_SimpleFunction('get_header', array($this, 'get_header')),
 	        new \Twig_SimpleFunction('get_footer', array($this, 'get_footer')),
@@ -102,12 +127,123 @@ class TwigExtension extends AbstractExtension
 	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
 	    );
 	}
+	public function get_pager()
+	{
+		$user = $this->tokenStorage->getToken()->getUser();
+		$template_file = $this->get_template_file("_cms/pager.html.twig");
+	    return $template_file;
+	}
+	public function get_pager_vars(){
+		return $this->pager;
+	}
+	public function get_part($extname=''){
+	    return $this->get_template('part', $extname);
+	}
+	public function get_footer($extname=''){
+	    return $this->get_template('footer', $extname);
+	}
+	public function get_header($extname=''){
+	    return $this->get_template('header', $extname);
+	}
+	public function this_permalink($app, $absolutely=false)
+	{
+		if($absolutely) return $app->getRequest()->getUri();
+		return $app->getRequest()->getRequestUri();
+	}
+	public function is_home($app)
+	{
+		return $app->getRequest()->getRequestUri() == '/' ? true : false;
+	}
+	public function is_article($app)
+	{
+		return preg_match('/\/article$|^\/article\/(.*)$/', $app->getRequest()->getRequestUri());
+	}
+	public function getSetting($slug)
+	{
+		return $this->serviceContainer->get('app.app_helper')->getSetting($slug);
+	}
+	public function getParameter($name)
+	{
+		return $this->serviceContainer->get('app.app_helper')->getParameter($name);
+	}
+	/* Normal Template */
+	private function get_template($filename, $extname='')
+	{
+		$_filename = $filename.($extname ? '-'.$extname : '').'.html.twig';
+		$template_file = $this->get_template_file($_filename);
+
+	    return $template_file;
+	}
+	public function template_exists($filename)
+	{
+		$theme_dir = $this->get_theme_dir();
+		$template_file = $this->get_template_file($filename);
+	    return file_exists($template_file);
+	}
+	public function get_template_directory_uri()
+	{
+		$theme_name = $this->get_theme_name();
+		if( $theme_name ){
+			return $this->absolute_url( 'themes/'.$theme_name );
+		}
+		return $this->absolute_url( 'themes/default' );
+	}
 	public function template_layout()
 	{
-		$template_file = $this->template_path("layout.html.twig");
+		$template_file = $this->get_template_file("layout.html.twig");
 		if(null == $template_file) return $this->template_path("layout.html.twig", "default");
 
 		return $template_file;
+	}
+	public function get_theme_name()
+	{
+		if($this->theme_name) return $this->theme_name;
+
+		if( is_object($this->tokenStorage->getToken()) ){
+			
+			$user = $this->tokenStorage->getToken()->getUser();
+			if( $user != 'anon.' ){
+				if($user->getTheme()) return $user->getTheme();
+			}
+		} 
+		return $this->serviceContainer->get('app.app_helper')->getSetting('parameter_theme_name');
+		
+	}
+	public function get_theme_dir($theme_name=null)
+	{
+		if(!$theme_name){
+			$theme_name = $this->get_theme_name();
+		}
+		if(null == $theme_name or $theme_name == 'default'){
+			$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/default';
+		} else {
+			$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/'.$theme_name;
+		}
+		return $theme_dir;
+	}
+	public function get_template_file($filename)
+	{
+		$template_file = $this->get_theme_dir().'/'.$filename;
+		if( file_exists($template_file) ) return $template_file;
+		
+		return $this->get_theme_dir('default').'/'.$filename;
+	}
+	public function template_path($filename)
+	{	
+		return $this->get_template_file($filename);
+	}
+	public function template_seo()
+	{
+		return $this->get_template_file('seo.html.twig');
+	}
+	/* Admin Tempalte */
+	public function get_admin_template_directory_uri()
+	{
+		$admin_theme_name = $this->get_admin_theme_name();
+		if( $admin_theme_name ){
+			return $this->absolute_url( 'admin/'.$admin_theme_name );
+		}
+		return $this->absolute_url( 'admin/default' );
 	}
 	public function admin_template_layout()
 	{
@@ -115,52 +251,36 @@ class TwigExtension extends AbstractExtension
 		if(null == $template_file) return $this->admin_template_path("layout.html.twig", "default");
 		return $template_file;
 	}
-	public function template_path($filename, $theme_name=null)
-	{	
-		$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/';
-		if(null == $theme_name) $theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
-		$template_dir = $theme_dir.$theme_name;
-		$template_file = $template_dir.'/'.$filename;
-
-		if( file_exists($template_file) ) return $template_file;
-		return $theme_dir.'default'.'/'.$filename;
-	}
-	public function admin_template_path($filename, $theme_name=null)
+	public function get_admin_theme_name()
 	{
-		$admin_theme_dir = $this->serviceContainer->getParameter('project_dir').'/src/AppBundle/Resources/views/Template/';
-
-		if(null == $theme_name){
-			$theme_name = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name');
-		}
-		if(null == $theme_name){
-			$theme_name = $this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', 'default');
-		}
-		$template_dir = $admin_theme_dir.$theme_name;
-		$template_file = $template_dir.'/'.$filename;
-		
-		if(null == file_exists($template_dir)){
-			$theme_name = $this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', 'default');
-			$template_file = $admin_theme_dir.$theme_name.'/'.$filename;
-		}
-
-		if( file_exists($template_file) ) return $template_file;
-		return false;
+		return $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name');
 	}
+	public function get_admin_theme_dir($admin_theme_name=null)
+	{
+		if(!$admin_theme_name){
+			$admin_theme_name = $this->get_admin_theme_name();
+		}
+		return $this->serviceContainer->getParameter('project_dir').'/src/AppBundle/Resources/views/Template/'.$admin_theme_name;
+	}
+	public function get_admin_template_file($filename)
+	{
+		$admin_template_file = $this->get_admin_theme_dir().'/'.$filename;
+		if( file_exists($admin_template_file) ) return $admin_template_file;
 
+		return $this->get_admin_theme_dir('default').'/'.$filename;
+	}
+	public function admin_template_path($filename, $admin_theme_name=null)
+	{
+		return $this->get_admin_template_file($filename);
+	}
+	/* Article */
 	public function get_article_embed()
 	{
-		$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/';
-		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
-		
-	    if( $this->template_exists('_cms/article.index.embed.html.twig') ){
-		    $template_file = $theme_dir.$theme_name.'/_cms/article.index.embed.html.twig';
-	    } else {
-			$template_file = $theme_dir.'default/_cms/article.index.embed.html.twig';
-	    }
-	    return $template_file;
+		return $this->get_template_file('_cms/article.index.embed.html.twig');
 	}
 	public function article_body($article, $params=array())
 	{
+		
 		$image_format = isset($params['image_format']) ? $params['image_format'] : 'image_normal';
 		$image_class = isset($params['image_class']) ? $params['image_class'] : 'code6-image';
 		$image_style = isset($params['image_style']) ? $params['image_style'] : '';
@@ -169,9 +289,9 @@ class TwigExtension extends AbstractExtension
 		$inc = 1;
 
 		if( $this->template_exists('_cms/article.image.embed.html.twig') ){
-			$template = $this->serviceContainer->get('twig')->load($this->template_path('_cms/article.image.embed.html.twig'));
+			$template = $this->serviceContainer->get('twig')->load($this->get_template_file('_cms/article.image.embed.html.twig'));
 		} else {
-			$template = $this->serviceContainer->get('twig')->load($this->template_path('_cms/article.image.embed.html.twig', "default"));
+			$template = $this->serviceContainer->get('twig')->load($this->get_template_file('_cms/article.image.embed.html.twig', "default"));
 		}
 		
 		foreach($article->getImages() as $image)
@@ -232,97 +352,6 @@ class TwigExtension extends AbstractExtension
 		$this->pager = $pager;
 		
 		return $articles;
-	}
-	public function get_pager()
-	{
-		$user = $this->tokenStorage->getToken()->getUser();
-		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
-		$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/';
-
-		if( $this->template_exists('_cms/pager.html.twig') ){
-		    $template_file = $theme_dir.$theme_name.'/_cms/pager.html.twig';
-	    } else {
-			$template_file = $theme_dir.'default/_cms/pager.html.twig';
-	    }
-	    return $template_file;
-	}
-	public function get_pager_vars()
-	{
-		return $this->pager;
-	}
-	public function get_part($extname='')
-	{
-	    return $this->get_template('part', $extname);
-	}
-	public function get_footer($extname='')
-	{
-	    return $this->get_template('footer', $extname);
-	}
-	public function get_header($extname='')
-	{
-	    return $this->get_template('header', $extname);
-	}
-	private function get_template($filename, $extname='')
-	{
-		$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/';
-		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
-		$template_file = $theme_dir.$theme_name.'/'.$filename.($extname ? '-'.$extname : '').'.html.twig';
-	    
-	    return $template_file;
-	}
-	public function template_exists($filename)
-	{
-		$theme_dir = $this->serviceContainer->getParameter('project_dir').'/app/Resources/views/themes/';
-		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
-		$template_file = $theme_dir.$theme_name.'/'.$filename;
-
-	    $exists = file_exists($template_file);
-	    if(false == $exists){
-		    if(false == file_exists($theme_dir.$theme_name)){
-				$this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', 'default');
-				$this->serviceContainer->get('app.app_helper')->updateSettingCache('parameter_theme_name', 'default');
-			    return $this->template_exists($filename);
-		    }
-	    }
-	    return file_exists($template_file);
-	}
-	public function get_admin_template_directory_uri()
-	{
-		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name') ){
-			$uri = 'admin/'.$this->serviceContainer->get('app.app_helper')->getSetting('parameter_admin_theme_name');
-			return $this->absolute_url($uri);
-		}
-		return '/';
-	}
-	public function get_template_directory_uri()
-	{
-		$theme_name = $this->serviceContainer->get('app.app_helper')->theme_name();
-		if( $theme_name ){
-			$uri = 'themes/'.$theme_name;
-			return $this->absolute_url($uri);
-		}
-		return '/';
-	}
-	public function this_permalink($app, $absolutely=false)
-	{
-		if($absolutely) return $app->getRequest()->getUri();
-		return $app->getRequest()->getRequestUri();
-	}
-	public function is_home($app)
-	{
-		return $app->getRequest()->getRequestUri() == '/' ? true : false;
-	}
-	public function is_article($app)
-	{
-		return preg_match('/\/article$|^\/article\/(.*)$/', $app->getRequest()->getRequestUri());
-	}
-	public function getSetting($slug)
-	{
-		return $this->serviceContainer->get('app.app_helper')->getSetting($slug);
-	}
-	public function getParameter($name)
-	{
-		return $this->serviceContainer->get('app.app_helper')->getParameter($name);
 	}
 
 }

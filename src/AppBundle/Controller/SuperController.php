@@ -73,6 +73,7 @@ class SuperController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $setting = $em->getRepository('AppBundle:Setting')->findOneBySlug('parameter_demo_mode');
+        if(!$setting) $setting = new Setting();
         $form = $this->createForm('AppBundle\Form\Type\SettingFormType', $setting);
 
         $form->add('value', ChoiceType::class, array(
@@ -103,6 +104,7 @@ class SuperController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $setting = $em->getRepository('AppBundle:Setting')->findOneBySlug('parameter_members_mode');
+        if(!$setting) $setting = new Setting();
         $form = $this->createForm('AppBundle\Form\Type\SettingFormType', $setting);
 
         $form->add('value', ChoiceType::class, array(
