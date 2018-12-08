@@ -7,24 +7,12 @@
 {% block title %}マスター管理{% endblock title %}
 {% block body %}
 
+{% set on_button = '<button class="button small primary special">ON</button>' %}
+{% set off_button = '<button class="button small">OFF</button>' %}
+
 <div class="row uniform">
-    <div class="4u 12u(small)">
+    <div class="12u 12u(small)">
     	<a class="button fit" href="{{ path('admin_index') }}"><i class="fas fa-arrow-left"></i> {{ 'super.title.admin'|trans }}</a>
-    </div>
-    <div class="4u 12u(small)">
-    	<a class="button fit" href="{{ path('super_theme') }}">{{ 'super.title.theme'|trans }}</a>
-    </div>
-    <div class="4u 12u(small)">
-    	<a class="button fit" href="{{ path('super_demo') }}">{{ 'super.title.demo'|trans }}</a>
-    </div>
-    <div class="4u 12u(small)">
-    	<a class="button fit" href="{{ path('super_invitation') }}">{{ 'super.title.invitation'|trans }}</a>
-    </div>
-    <div class="4u 12u(small)">
-    	<a class="button fit" href="{{ path('super_members') }}">{{ 'super.title.members'|trans }}</a>
-    </div>
-    <div class="4u 12u(small)">
-    	<a class="button fit" href="{{ path('super_stripe_reset') }}">{{ 'super.title.stripe_reset'|trans }}</a>
     </div>
 
     <div class="12u 12u$(small)">
@@ -34,20 +22,35 @@
     		<table class="table">
     			<tr>
     				<td width="35%">現在のテーマ</td>
-    				<td>{{ getSetting('parameter_theme_name') }}</td>
+    				<td>
+						<a href="{{ path('super_theme') }}">{{ getSetting('parameter_theme_name')|default('未設定') }}</a>
+					</td>
     			</tr>
     			<tr>
-    				<td>デモモードかどうか</td>
-    				<td>{{ getSetting('parameter_demo_mode') }}</td>
+    				<td>ストライプ初期化</td>
+    				<td>
+						<a href="{{ path('super_stripe_reset') }}">{{ 'super.title.stripe_reset'|trans }}</a>
+					</td>
     			</tr>
     			<tr>
-    				<td>会員登録サイトかどうか</td>
-    				<td>{{ getSetting('parameter_members_mode') }}</td>
+    				<td>デモサイト ON/OFF</td>
+    				<td>
+						<a href="{{ path('super_demo') }}">{{ getSetting('parameter_demo_mode') == 'true' ? on_button|raw : off_button|raw }}</a>
+					</td>
     			</tr>
     			<tr>
-    				<td>招待制かどうか</td>
-    				<td>{{ getSetting('parameter_invitation_mode') }}</td>
+    				<td>会員登録 ON/OFF</td>
+    				<td>
+						<a href="{{ path('super_members') }}">{{ getSetting('parameter_members_mode') == 'true' ? on_button|raw : off_button|raw }}</a>
+					</td>
     			</tr>
+    			<tr>
+    				<td>招待制 ON/OFF</td>
+    				<td>
+						<a href="{{ path('super_invitation') }}">{{ getSetting('parameter_invitation_mode') == 'true' ? on_button|raw : off_button|raw }}</a>
+					</td>
+    			</tr>
+
     		</table>
     	</div>
     </div>
