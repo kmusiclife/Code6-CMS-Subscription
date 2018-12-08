@@ -87,6 +87,16 @@ class RegistrationListener implements EventSubscriberInterface
 
 			if( $this->serviceContainer->get('session')->get('invitation_passed') ) return;
 
+			$request = $event->getRequest();
+			$code = $request->request->get('code');
+			$recaptcha = $request->request->get('_recaptcha');
+
+			if(!$code and !$recaptcha) {
+				return $event->setResponse(
+					new RedirectResponse( $this->router->generate('invitation_index_public'))
+				);				
+			}
+
 			if( false == $this->serviceContainer->get('app.app_helper')->recaptchaCheck() ){
 				$this->serviceContainer->get('session')->getFlashBag()->add('error', 'タイムアウトまたはスパム防止のためもう一度操作を行ってください');
 				return $event->setResponse(
@@ -94,9 +104,6 @@ class RegistrationListener implements EventSubscriberInterface
 				);
 			}
 
-			$request = $event->getRequest();
-			$code = $request->request->get('code');
-			
 			if(null == $code) {
 				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードが入力されていません');
 				return $event->setResponse(
