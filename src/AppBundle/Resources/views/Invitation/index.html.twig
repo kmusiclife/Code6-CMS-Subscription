@@ -1,0 +1,41 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block title %}{{ 'invitation.title.index'|trans() }}{% endblock title %}
+{% block body %}
+<div class="row uniform gtr-uniform">
+	<div class="12u 12u(xxsmall)$ col-12 col-12-xxsmall">
+		<a href="{{ path('invitation_new') }}" class="button special primary small fit"><i class="fas fa-plus"></i> {{ 'invitation.title.new'|trans() }}</a>
+	</div>
+</div>
+
+<div class="row uniform gtr-uniform">
+<table class="alt">
+    {% for invitation in invitations %}
+        <tr>
+            <td width="30%">
+                <img src="{{ path('invitation_qrcode', {'id':invitation.id}) }}" style="width: 100%;" />
+            </td>
+            <td>
+                <h4>招待名：{{ invitation.name }}</h4>
+                <p>説明文：{{ invitation.description }}</p>
+                <p>
+                    招待用URL：<input type="text" value="{{ absolute_url( path('invitation_index_public_code', {'code': invitation.code}) ) }}" readonly="readonly"><br />
+                    招待用ID：<input type="text" value="{{ invitation.code }}" readonly="readonly">
+                </p>
+                <p>
+                     {{ invitation.countcurrent }} / {{ invitation.countlimit }} 招待しました（{{ invitation.countlimit }}人まで招待が可能です）
+                </p>
+                <p>
+                    <a class="button primary special small fit" href="{{ path('invitation_edit', { 'id': invitation.id }) }}">編集</a>
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% include admin_template_path('pager.html.twig') %}
+
+</div>
+
+{% endblock %}

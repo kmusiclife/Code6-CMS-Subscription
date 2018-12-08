@@ -1,0 +1,65 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block title %}{{ 'invitation.title.index'|trans() }}{% endblock %}
+{% block body %}
+{{ form_start(edit_form, {'attr':{'class':'row uniform gtr-uniform'}}) }}
+    <div class="3u 12u(small) col-3 col-12-small">
+        {{ 'entity.invitation.name'|trans() }}
+    </div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        {{ form_widget(edit_form.name) }}
+        {{ form_errors(edit_form.name) }}
+    </div>
+
+    <div class="3u 12u(small) col-3 col-12-small">
+        {{ 'entity.invitation.description'|trans() }}
+    </div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        {{ form_widget(edit_form.description, {'attr':{'style':'height: 300px;'}}) }}
+        {{ form_errors(edit_form.description) }}
+    </div>
+
+    <div class="3u 12u(small) col-3 col-12-small">
+        {{ 'entity.invitation.countlimit'|trans() }}
+    </div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        <div class="select-wrapper">
+            {{ form_widget(edit_form.countlimit) }}
+            {{ form_errors(edit_form.countlimit) }}
+        </div>
+    </div>
+
+
+    <div class="3u 12u(small) col-3 col-12-small"></div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        <input type="submit" class="special primary" value="招待コードを編集する" />
+    </div>
+
+{{ form_end(edit_form) }}
+
+{% if is_delete %}
+<hr />
+{{ form_start(delete_form, {'attr':{'class':'row uniform gtr-uniform'}}) }}
+    <div class="3u 12u$(xsmall) col-3 col-12-small">
+        <label>{{ 'entity.user.current_password'|trans() }}*</label>
+    </div>
+    <div class="9u$ 12u$(xsmall) col-9 col-12-small">
+        {{ form_widget(delete_form.password.current_password) }}
+        {{ form_errors(delete_form.password.current_password) }}
+    </div>
+    <div class="3u 12u(small) col-3 col-12-small"></div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        <input type="submit" class="" value="招待コードを削除する" />
+    </div>
+{{ form_end(delete_form) }}
+{% else %}
+    <div class="row uniform gtr-uniform">
+        <div class="3u 12u(small) col-3 col-12-small"></div>
+        <div class="9u 12u$(small) col-9 col-12-small">
+            この招待状を利用した方が {{ invitation_count }} 名存在するためにこの招待状は削除はできません。
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
