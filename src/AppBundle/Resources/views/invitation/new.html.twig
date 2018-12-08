@@ -1,0 +1,39 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block title %}{{ 'invitation.title.new'|trans() }}{% endblock %}
+{% block body %}
+{{ form_start(form, {'attr':{'class':'row uniform gtr-uniform'}}) }}
+    <div class="3u 12u(small) col-3 col-12-small">
+        {{ 'entity.invitation.name'|trans() }}
+    </div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        {{ form_widget(form.name, {'attr':{'placeholder':'例) ビジネス仲間の皆様へ'}} ) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div class="3u 12u(small) col-3 col-12-small">
+        {{ 'entity.invitation.description'|trans() }}
+    </div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        {{ form_widget(form.description, {'attr':{'style':'height: 300px;', 'placeholder':'例) いつも大変お世話になっております。本サービスをご利用していただきたいと思いご招待いたします。'}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="3u 12u(small) col-3 col-12-small">
+        {{ 'entity.invitation.countlimit'|trans() }}
+    </div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        <div class="select-wrapper">
+            {{ form_widget(form.countlimit) }}
+            {{ form_errors(form.countlimit) }}
+        </div>
+    </div>
+
+    <div class="3u 12u(small) col-3 col-12-small"></div>
+    <div class="9u 12u$(small) col-9 col-12-small">
+        <input type="submit" class="special primary" value="{{ 'invitation.title.new'|trans() }}" />
+    </div>
+
+{{ form_end(form) }}
+{% endblock %}

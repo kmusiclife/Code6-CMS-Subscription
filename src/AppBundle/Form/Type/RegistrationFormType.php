@@ -19,22 +19,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class RegistrationFormType extends AbstractType
 {
 
     protected $userManager;
     protected $serviceContainer;
-    protected $entityManager;
+	protected $entityManager;
+	protected $requestStack;
 
     public function __construct(
     	ContainerInterface $serviceContainer, 
     	UserManagerInterface $userManager, 
-    	EntityManagerInterface $entityManager
+		EntityManagerInterface $entityManager,
+		RequestStack $requestStack
     ){
         $this->serviceContainer = $serviceContainer;
         $this->userManager = $userManager;
-        $this->entityManager = $entityManager;
+		$this->entityManager = $entityManager;
+		$this->requestStack = $requestStack;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -66,7 +70,13 @@ class RegistrationFormType extends AbstractType
 	    $builder->add('tel', TelType::class);
 	    $builder->add('facebook_url', HiddenType::class);
 	    $builder->add('stripe_plan_id', ChoiceType::class, $plan_id_choices);
-	    $builder->add('stripe_token_id', HiddenType::class, ['error_bubbling' => false]);
+		$builder->add('stripe_token_id', HiddenType::class, ['error_bubbling' => false]);
+		
+		/*
+		$request = $this->requestStack->getCurrentRequest();
+		$code = $request->request->get('code');
+		$invitation = $this->entityManager->getRepository('AppBundle:Invitation')->findOneBy(array('code' => $code));
+		*/
 
     }
     public function getName()

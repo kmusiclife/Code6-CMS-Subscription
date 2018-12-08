@@ -27,6 +27,7 @@
         "components/jquery": "^3.3",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "endroid/qr-code": "^3.5",
         "enyo/dropzone": "^5.5",
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",

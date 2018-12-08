@@ -15,7 +15,7 @@ services:
     
     app.app_helper:
         class: AppBundle\Helper\AppHelper
-        arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router"]
+        arguments: ["@service_container", "@security.token_storage", "@fos_user.user_manager", "@doctrine.orm.entity_manager", "@router", "@request_stack"]
         public: true
 
     app.init_helper:

@@ -26,7 +26,7 @@ class UserController extends Controller
         $pager = $this->get('app.app_pager');
         $pager->setInc(10);
         $pager->setPath('user_index'); 
-        $users = $pager->getUsers();
+        $users = $pager->getUsers('id', 'DESC');
 
         return $this->render('@AppBundle/Resources/views/User/index.html.twig', array(
 	        'pager' => $pager,

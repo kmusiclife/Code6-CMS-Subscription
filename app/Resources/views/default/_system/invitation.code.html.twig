@@ -1,0 +1,36 @@
+{% trans_default_domain 'message' %}
+{% extends template_layout() %}
+
+{% block title %}入会へのご招待{% endblock %}
+
+{% block body %}
+<form action="{{ path("fos_user_registration_register") }}" method="post" class="row uniform gtr-uniform">
+<input type="hidden" name="code" value="{{ invitation.code }}">
+
+<div class="col-12 col-12-small" align="center">
+    <header class="major special">
+        <h3>{{ invitation.name }}</h3>
+        <p>{{ invitation.description }}</p>
+        <p>
+            <input type="submit" id="_submit" name="_submit" class="special primary" value="会員登録へ進む" />
+        </p>
+    </header>
+</div>
+
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ getParameter('recaptcha_site_key') }}"></script>
+<script>
+grecaptcha.ready(function() {
+  grecaptcha.execute('{{ getParameter('recaptcha_site_key') }}', {action: 'homepage'}).then(function(token) {
+	    recaptcha = document.getElementById('recaptcha');
+	    recaptcha.value = token;
+  });
+});
+</script>
+<input type="hidden" id="recaptcha" name="_recaptcha" value="" />
+
+
+</form>
+
+{% endblock %}
+

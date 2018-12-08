@@ -128,11 +128,17 @@ class User extends BaseUser
     public function getTheme(){
         return $this->theme;
     }
-    
+
     /* Google Recaptcha */
     private $recaptcha;
     public function getRecaptcha(){ return $this->recaptcha; }
     public function setRecaptcha($recaptcha){ $this->recaptcha = $recaptcha; }
+
+    /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Invitation")
+    */
+    protected $invitation;
+
 
 
 
@@ -326,5 +332,29 @@ class User extends BaseUser
     public function getStripeSubscriptionId()
     {
         return $this->stripe_subscription_id;
+    }
+
+    /**
+     * Set invitation.
+     *
+     * @param \AppBundle\Entity\Invitation|null $invitation
+     *
+     * @return User
+     */
+    public function setInvitation(\AppBundle\Entity\Invitation $invitation = null)
+    {
+        $this->invitation = $invitation;
+
+        return $this;
+    }
+
+    /**
+     * Get invitation.
+     *
+     * @return \AppBundle\Entity\Invitation|null
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
     }
 }

@@ -52,6 +52,7 @@ class RequestListener
             $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', "default");
             $this->serviceContainer->get('app.app_helper')->setSetting('parameter_members_mode', "false");
             $this->serviceContainer->get('app.app_helper')->setSetting('parameter_image_count', 4);
+            $this->serviceContainer->get('app.app_helper')->setSetting('parameter_invitation_mode', "false");
             $this->serviceContainer->get('app.app_helper')->setSetting('parameters', "true");
         }
         if( !$this->serviceContainer->get('app.init_helper')->checkUsers() ){
