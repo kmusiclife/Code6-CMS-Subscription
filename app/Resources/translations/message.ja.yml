@@ -20,6 +20,17 @@ entity:
         slug_config: "初期設定ID"
         value_config: "初期設定内容"
 
+    invitation:
+        name: "招待の名前"
+        description: "招待の説明"
+        countlimit: "招待の上限"
+
+invitation:
+    title:
+        index: "招待一覧"
+        new: "招待を新規作成する"
+        edit: "招待を編集する"
+
 super:
     title:
         theme: "テーマ設定・変更"
@@ -27,6 +38,7 @@ super:
         admin: "管理者モード"
         members: "メンバーモード"
         stripe_reset: "STRIPE初期化"
+        invitation: "招待機能設定・変更"
         
 setting:
     title:

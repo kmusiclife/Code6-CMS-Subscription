@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use FOS\UserBundle\Model\UserManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 // Entities
 use AppBundle\Entity\Setting;
@@ -22,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 use Symfony\Component\Finder\Finder;
 
 class AppHelper 
@@ -42,7 +42,8 @@ class AppHelper
 		TokenStorageInterface $tokenStorage,
 		UserManagerInterface $userManager, 
 		EntityManagerInterface $entityManager, 
-		UrlGeneratorInterface $router
+		UrlGeneratorInterface $router,
+		RequestStack $requestStack
 	){
 		
 		$this->serviceContainer = $serviceContainer;
@@ -50,6 +51,7 @@ class AppHelper
 		$this->userManager = $userManager;
 		$this->entityManager = $entityManager;
 		$this->router = $router;
+		$this->requestStack = $requestStack;
 		
 		$this->settings_cache = array();
 		if(is_object($this->tokenStorage->getToken()))
@@ -194,4 +196,22 @@ class AppHelper
 
 		return $theme_names;
 	}
+	public function recaptchaCheck()
+	{
+		$request = $this->requestStack->getCurrentRequest();
+		$_recaptcha = $request->request->get('_recaptcha');
+		
+		$recaptcha_json = $this->curlRequest(
+        	'https://www.google.com/recaptcha/api/siteverify',
+        	array(
+	        	'response' => $_recaptcha,
+				'secret' => $this->serviceContainer->getParameter('recaptcha_secret_key')
+			)
+		);
+        $recaptcha = json_decode($recaptcha_json);
+		if($recaptcha->success) return true;
+
+		return false;
+	}
+
 }

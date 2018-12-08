@@ -39,19 +39,16 @@ class ExceptionListener
         if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
-
-	        if($exception->getStatusCode() == 404){
-		        $filename = '404.html.twig';
-	        }
-	        else{
-		        $filename = 'exception.html.twig';
-	        }
-
         } else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            $filename = 'exception.html.twig';
         }
         
+        if($exception->getStatusCode() == 404){
+	        $filename = '404.html.twig';
+        }
+        else{
+	        $filename = 'exception.html.twig';
+        }
         $template = $this->templating->render('@AppBundle/Resources/views/Common/'.$filename, array(
 	        'exception' => $exception,
 	        'message' => $message

@@ -64,6 +64,37 @@ class SuperController extends Controller
         ));
 
     }
+   /**
+     * @Route("/invitation", name="super_invitation")
+     * @Method("GET,POST")
+     */
+    public function invitationAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $setting = $em->getRepository('AppBundle:Setting')->findOneBySlug('parameter_invitation_mode');
+        if(!$setting) $setting = new Setting();
+        $form = $this->createForm('AppBundle\Form\Type\SettingFormType', $setting);
+
+        $form->add('value', ChoiceType::class, array(
+            'choices'  => array('招待制モード' => 'true', '通常モード' => 'false'),
+        ));
+        $form->add('slug', HiddenType::class, array('data' => 'parameter_invitation_mode'));
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($setting);
+            $em->flush();
+            return $this->redirectToRoute('super_index');
+        }
+        
+        return $this->render('@AppBundle/Resources/views/Super/invitation.html.twig', array(
+            'form' => $form->createView(),
+	        'body' => ''
+        ));
+
+    }
     /**
      * @Route("/demo", name="super_demo")
      * @Method("GET,POST")

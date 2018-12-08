@@ -1,0 +1,39 @@
+{% trans_default_domain 'message' %}
+{% extends template_layout() %}
+
+{% block title %}招待コード入力{% endblock %}
+
+{% block body %}
+<form action="{{ path("fos_user_registration_register") }}" method="post" class="row uniform gtr-uniform">
+
+<div class="col-3 col-12-small">
+    <label>招待コード入力</label>
+</div>
+<div class="col-9 col-12-small">
+    <p>ご利用ありがとうございます。本サービスは招待状がないとサービスに参加することができません。招待コードをお持ちの方は下記に入力してください。</p>
+    <input type="text" name="code" value="">
+</div>
+
+
+<div class="col-3 col-12-small"></div>
+<div class="col-9 col-12-small">
+    <input type="submit" id="_submit" name="_submit" class="special primary" value="招待コードを送信" />
+</div>
+
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ getParameter('recaptcha_site_key') }}"></script>
+<script>
+grecaptcha.ready(function() {
+  grecaptcha.execute('{{ getParameter('recaptcha_site_key') }}', {action: 'homepage'}).then(function(token) {
+	    recaptcha = document.getElementById('recaptcha');
+	    recaptcha.value = token;
+  });
+});
+</script>
+<input type="hidden" id="recaptcha" name="_recaptcha" value="" />
+
+
+</form>
+
+{% endblock %}
+

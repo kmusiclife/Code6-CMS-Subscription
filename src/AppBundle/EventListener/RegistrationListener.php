@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 // Injection Classes
 use FOS\UserBundle\Util\TokenGeneratorInterface;
@@ -49,11 +50,12 @@ class RegistrationListener implements EventSubscriberInterface
 		$this->tokenGenerator = $tokenGenerator;
 		$this->serviceContainer = $serviceContainer;
 		$this->userManager = $userManager;
-		$this->EntityManager = $entityManager;
+		$this->entityManager = $entityManager;
 		$this->router = $router;
 		
 		$this->form = null;
 		$this->user = null;
+
 	}
 
 	public static function getSubscribedEvents()
@@ -73,33 +75,78 @@ class RegistrationListener implements EventSubscriberInterface
 	}
 	public function onRegistrationInitialize(GetResponseUserEvent $event)
 	{
-		//$user = $event->getUser();
-		//$request = $event->getRequest();
-		
+		// $user = $event->getUser();
+
 		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_members_mode') == "false" ){
 			return $event->setResponse(
 				new RedirectResponse( $this->router->generate('site_index'))
 			);
 		}
+
+		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" ){
+
+			if( $this->serviceContainer->get('session')->get('invitation_passed') ) return;
+
+			if( false == $this->serviceContainer->get('app.app_helper')->recaptchaCheck() ){
+				$this->serviceContainer->get('session')->getFlashBag()->add('error', 'タイムアウトまたはスパム防止のためもう一度操作を行ってください');
+				return $event->setResponse(
+					new RedirectResponse( $this->router->generate('invitation_index_public'))
+				);
+			}
+
+			$request = $event->getRequest();
+			$code = $request->request->get('code');
+			
+			if(null == $code) {
+				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードが入力されていません');
+				return $event->setResponse(
+					new RedirectResponse( $this->router->generate('invitation_index_public'))
+				);
+			}
+
+			$invitation = $this->entityManager->getRepository('AppBundle:Invitation')->findOneBy(array('code' => $code));
+			if(null == $invitation){
+				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードが正しくありません正しい招待コードを入力してください');
+				return $event->setResponse(
+					new RedirectResponse( $this->router->generate('invitation_index_public'))
+				);
+			}
+
+			if($invitation->getCountCurrent() >= $invitation->getCountLimit())
+			{
+				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードの上限を超えましたこの招待コードは使えません');
+				return $event->setResponse(
+					new RedirectResponse( $this->router->generate('invitation_index_public'))
+				);
+			}
+
+			$this->serviceContainer->get('session')->set('invitation_passed', $invitation->getCode());
+
+		}
+
 	}
 	public function onRegistrationSuccess(FormEvent $event)
 	{
-		//$user = $event->getUser();
-		//$request = $event->getRequest();
+		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" ){
+			$user = $event->getForm()->getData();
+			$code = $this->serviceContainer->get('session')->get('invitation_passed');
+			
+			$invitation = $this->entityManager->getRepository('AppBundle:Invitation')->findOneBy(array('code' => $code));
+			$user->setInvitation($invitation);
+			$this->entityManager->persist($user);
+			
+			$invitation->setCountCurrent( $invitation->getCountCurrent() + 1 );
+			$this->entityManager->persist($invitation);
+
+			$this->entityManager->flush();
+		}
+
 	}
 	public function onRegistrationComplete(FilterUserResponseEvent $event)
 	{
-		/*
-		$user = $event->getUser();
-        $this->serviceContainer->get('app.app_helper')->sendEmailBySetting(
-        	$user->getEmail(), 
-        	'register_email_subject', 
-        	'register_email', 
-        	true,
-        	array('user' => $user),
-        	array()
-        );
-        */
+		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" ){
+			$this->serviceContainer->get('session')->set('invitation_passed', null);
+		}
 	}
 	public function onKernelException(GetResponseForExceptionEvent $event)
 	{

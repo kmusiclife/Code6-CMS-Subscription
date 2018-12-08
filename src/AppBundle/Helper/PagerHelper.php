@@ -85,15 +85,18 @@ class PagerHelper
 		return $articles;
 		
 	}
-	public function getUsers()
+	public function getUsers($order_id=null, $order_sort='DESC')
 	{
 		$qb = $this->entityManager->createQueryBuilder();
 		$qb
 			->select('e')
 			->from('AppBundle:User', 'e')
 			->setFirstResult( $this->offset )
-            ->setMaxResults( $this->inc )
+			->setMaxResults( $this->inc )
 		;
+		if($order_id){
+			$qb->orderBy("e.".$order_id,  $order_sort);
+		}	
 		if( $this->serviceContainer->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') ){
 		} else {
 			$qb

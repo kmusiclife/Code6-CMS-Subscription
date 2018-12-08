@@ -17,9 +17,14 @@
     	<a class="button special fit" href="{{ path('admin_contact_index') }}"><i class="far fa-envelope"></i> {{ 'contact.title.index'|trans }}</a>
     </div>
     {% if getSetting('parameter_members_mode') == 'true' %}
-    <div class="12u 12u$(small) col-12 col-12-small">
-    	<a class="button special fit" href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans }}</a>
-    </div>
+		{% if getSetting('parameter_invitation_mode') == 'true' %}
+			<div class="4u 12u$(small) col-4 col-12-small">
+				<a class="button special fit" href="{{ path('invitation_index') }}"><i class="fas fa-gift"></i> {{ 'invitation.title.index'|trans }}</a>
+			</div>
+		{% endif %}
+		<div class="4u 12u$(small) col-4 col-12-small">
+			<a class="button special fit" href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans }}</a>
+		</div>
     {% endif %}
 
     <div class="12u 12u$(small) col-12 col-12-small">
