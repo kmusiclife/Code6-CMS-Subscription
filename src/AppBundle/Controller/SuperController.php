@@ -77,7 +77,7 @@ class SuperController extends Controller
         $form = $this->createForm('AppBundle\Form\Type\SettingFormType', $setting);
 
         $form->add('value', ChoiceType::class, array(
-            'choices'  => array('招待制モード' => 'true', '通常モード' => 'false'),
+            'choices'  => array('ON' => 'true', 'OFF' => 'false'),
         ));
         $form->add('slug', HiddenType::class, array('data' => 'parameter_invitation_mode'));
 
@@ -108,7 +108,7 @@ class SuperController extends Controller
         $form = $this->createForm('AppBundle\Form\Type\SettingFormType', $setting);
 
         $form->add('value', ChoiceType::class, array(
-            'choices'  => array('デモモード' => 'true', '公開モード' => 'false'),
+            'choices'  => array('ON' => 'true', 'OFF' => 'false'),
         ));
         $form->add('slug', HiddenType::class, array('data' => 'parameter_demo_mode'));
 
@@ -139,7 +139,7 @@ class SuperController extends Controller
         $form = $this->createForm('AppBundle\Form\Type\SettingFormType', $setting);
 
         $form->add('value', ChoiceType::class, array(
-            'choices'  => array('会員登録サイト' => 'true', '通常サイト' => 'false'),
+            'choices'  => array('ON' => 'true', 'OFF' => 'false'),
         ));
         $form->add('slug', HiddenType::class, array('data' => 'parameter_members_mode'));
 
