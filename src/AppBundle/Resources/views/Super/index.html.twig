@@ -11,8 +11,23 @@
 {% set off_button = '<button class="button small">OFF</button>' %}
 
 <div class="row uniform">
-    <div class="12u 12u(small)">
+    <div class="4u 12u(small)">
     	<a class="button fit" href="{{ path('admin_index') }}"><i class="fas fa-arrow-left"></i> {{ 'super.title.admin'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button fit" href="{{ path('super_theme') }}">{{ 'super.title.theme'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button fit" href="{{ path('super_demo') }}">{{ 'super.title.demo'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button fit" href="{{ path('super_invitation') }}">{{ 'super.title.invitation'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button fit" href="{{ path('super_members') }}">{{ 'super.title.members'|trans }}</a>
+    </div>
+    <div class="4u 12u(small)">
+    	<a class="button fit" href="{{ path('super_stripe_reset') }}">{{ 'super.title.stripe_reset'|trans }}</a>
     </div>
 
     <div class="12u 12u$(small)">
@@ -50,7 +65,9 @@
 						<a href="{{ path('super_invitation') }}">{{ getSetting('parameter_invitation_mode') == 'true' ? on_button|raw : off_button|raw }}</a>
 					</td>
     			</tr>
-
+    				<td>招待制かどうか</td>
+    				<td>{{ getSetting('parameter_invitation_mode') }}</td>
+    			</tr>
     		</table>
     	</div>
     </div>
