@@ -32,7 +32,7 @@ class InvitationController extends Controller
             //if( $this->get('session')->get('invitation_passed') ){
             //    return $this->redirectToRoute('fos_user_registration_register');
             //}
-            return $this->render('AppBundle:Invitation:invitation.html.twig', array(
+            return $this->render('@AppBundle/Resources/views/Invitation/invitation.html.twig', array(
             ));
 
         } else {
