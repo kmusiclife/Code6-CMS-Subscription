@@ -58,7 +58,8 @@ class PagerHelper
 		$qb
 			->select('e')
 			->from('CmsBundle:Article', 'e')
-            ->where('e.publishedAt <= :now')
+			->where('e.publishedAt <= :now')
+			->andWhere('e.is_published = 1')
             ->setParameter('now', $now)
             ->add('orderBy', 'e.id DESC')
             ->setFirstResult( $this->offset )

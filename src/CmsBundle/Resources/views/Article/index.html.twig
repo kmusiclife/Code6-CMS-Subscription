@@ -9,25 +9,43 @@
 	</div>
 </div>
 
-{% for article in articles %}
-<div class="row uniform gtr-uniform">
-	<div class="3u 12u(xxsmall) col-3 col-12-xxsmall">
-		{% if article.seo.image is not null %}
-			<div class="image fit">
-				<img src="{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}" alt=""/>
+{% if is_articles() %}
+	{% for article in articles %}
+	<div class="row uniform gtr-uniform">
+		<div class="3u 12u(xxsmall) col-3 col-12-xxsmall">
+			{% if article.seo.image is not null %}
+				<div class="image fit">
+					<img src="{{ article.seo.image.src|upload_uri|imagine_filter('image_normal') }}" alt=""/>
+				</div>
+			{% endif %}
+		</div>
+		<div class="9u 12u$(xxsmall) col-9 col-12-xxsmall">
+			<p>
+				{{ 'entity.article.published_at'|trans() }} {{ article_date(article, 'Y年m月d日') }}<br />
+				<strong>{{ article.title|trans() }}</strong>
+				<table class="table">
+					<tr>
+						<td width="50%">{{ 'entity.article.is_published'|trans() }}</td>
+						<td>{{ article.ispublished ? '公開' : '非公開' }}</td>
+					</tr>
+					{% if getSetting('parameter_members_mode') == 'true' %}
+					<tr>
+						<td>{{ 'entity.article.is_member'|trans() }}</td>
+						<td>{{ article.ismember ? '会員のみ' : '一般公開' }}</td>
+					</tr>
+					{% endif %}
+				</table>
+			</p>
+			<div>
+			<a href="{{ path('article_show', {'slug': article.slug}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
+				<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
 			</div>
-		{% endif %}
-	</div>
-	<div class="9u 12u$(xxsmall) col-9 col-12-xxsmall">
-		<p>{{ article_date(article, 'Y年m月d日') }}<br />
-		<strong>{{ article.title|trans() }}</strong></p>
-		<div>
-		<a href="{{ path('article_show', {'slug': article.slug}) }}" class="button small" target="_blank">{{ 'article.button.show'|trans() }}</a>
-			<a href="{{ path('article_edit', {'id': article.id}) }}" class="button small special">{{ 'article.button.edit'|trans() }}</a>
 		</div>
 	</div>
-</div>
-{% endfor %}
+	{% endfor %}
+
+{% else %}
+{% endif %}
 
 <hr />
 

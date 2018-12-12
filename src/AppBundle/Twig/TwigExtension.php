@@ -20,6 +20,7 @@ class TwigExtension extends AbstractExtension
 	protected $tokenStorage;
 	
 	protected $pager;
+	protected $articles;
 	protected $theme_name;
 	protected $admin_theme_name;
 
@@ -115,7 +116,8 @@ class TwigExtension extends AbstractExtension
 			
 	        new \Twig_SimpleFunction('have_new_articles', array($this, 'have_new_articles')),
 			new \Twig_SimpleFunction('get_articles', array($this, 'get_articles')),
-	        new \Twig_SimpleFunction('get_article_embed', array($this, 'get_article_embed')),
+			new \Twig_SimpleFunction('is_articles', array($this, 'is_articles')),
+			new \Twig_SimpleFunction('get_article_embed', array($this, 'get_article_embed')),
 	        new \Twig_SimpleFunction('article_index_permalink', array($this, 'article_index_permalink')),
 
 			new \Twig_SimpleFunction('article_date', array($this, 'article_date')),
@@ -343,15 +345,20 @@ class TwigExtension extends AbstractExtension
 		}
 		return false;
 	}
+	public function is_articles($limit=5)
+	{
+		$this->articles = $this->get_articles($limit);
+		return count($this->articles);
+	}
 	public function get_articles($limit=5)
 	{
-        $pager = $this->serviceContainer->get('app.app_pager');
+		if( $this->articles ) return $this->articles;
+		$pager = $this->serviceContainer->get('app.app_pager');
         $pager->setInc($limit);
         $pager->setPath('article_index_public'); 
-		$articles = $pager->getArticles();
+		$this->articles = $pager->getArticles();
 		$this->pager = $pager;
-		
-		return $articles;
+		return $this->articles;
 	}
 
 }

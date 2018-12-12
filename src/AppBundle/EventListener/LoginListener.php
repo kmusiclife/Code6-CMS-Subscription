@@ -40,6 +40,10 @@ class LoginListener {
 				'secret' => $this->serviceContainer->getParameter('recaptcha_secret_key')
 			)
 		);
+		if(null == $recaptcha_json)
+		{
+			throw new BadCredentialsException('Error');
+		}
         $recaptcha = json_decode($recaptcha_json);
         
         if(!$recaptcha->success)

@@ -50,15 +50,17 @@
 	{{ form_widget(form.publishedat, {'attr': { 'class' : 'js-datepicker-datetime', 'placeholder':'例) 2018' }}) }}
 </div>
 
-
+{% set image_id = 1 %}
 {% for image in form.images %}
 <div class="3u 12u$(xsmall) col-3 col-12-small">
-	<label>{{ 'entity.article.images'|trans() }}</label>
+	<label>{{ 'entity.article.images'|trans() }}{{ image_id }}</label>
 </div>
 <div class="9u$ 12u$(xsmall) col-9 col-12-small">
 	{{ form_widget(image) }}
 	{{ form_errors(image) }}
+	<p><small>記事の中では [image{{ image_id }}] と記入してください。</small></p>
 </div>
+{% set image_id = image_id + 1 %}
 {% endfor %}
 
 
