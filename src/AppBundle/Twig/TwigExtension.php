@@ -124,6 +124,7 @@ class TwigExtension extends AbstractExtension
 			new \Twig_SimpleFunction('article_permalink', array($this, 'article_permalink')),
 	        new \Twig_SimpleFunction('article_image', array($this, 'article_image')),
 			new \Twig_SimpleFunction('article_body', array($this, 'article_body')),
+			new \Twig_SimpleFunction('article_description', array($this, 'article_description')),
 
 	        new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
 	        new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
@@ -279,6 +280,10 @@ class TwigExtension extends AbstractExtension
 	public function get_article_embed()
 	{
 		return $this->get_template_file('_cms/article.index.embed.html.twig');
+	}
+	public function article_description($article, $max_length=150, $marker='...')
+	{
+		return mb_strimwidth( strip_tags($article->getBody()), 0, $max_length, $marker );
 	}
 	public function article_body($article, $params=array())
 	{
