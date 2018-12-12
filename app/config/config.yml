@@ -21,7 +21,7 @@ fos_user:
             template: "@AppBundle/Resources/views/Registration/email.txt.twig"
             
         form:
-            type: AppBundle\Form\Type\RegistrationFormType
+            type:  '%registration_form_type%'
 
     resetting:
         email:
@@ -29,7 +29,7 @@ fos_user:
             
     profile:
         form:
-            type: AppBundle\Form\Type\ProfileFormType
+            type:  '%profile_form_type%'
             
 parameters:
     locale: ja

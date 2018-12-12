@@ -44,9 +44,10 @@ class Invitation
      * @ORM\Column(name="enabled", type="boolean", nullable=true)
      */
     protected $enabled = true;
-
- 
-
+    /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+    */
+    protected $createdUser;
  
 
     /**
@@ -202,4 +203,29 @@ class Invitation
     {
         return $this->enabled;
     }
+
+    /**
+     * Set createdUser.
+     *
+     * @param \AppBundle\Entity\User|null $createdUser
+     *
+     * @return Article
+     */
+    public function setCreatedUser(\AppBundle\Entity\User $createdUser = null)
+    {
+        $this->createdUser = $createdUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createdUser.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getCreatedUser()
+    {
+        return $this->createdUser;
+    }
+    
 }

@@ -1,3 +1,10 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+{% set home_url = path('super_index') %}
+{% elseif is_granted('ROLE_ADMIN') %}
+{% set home_url = path('admin_index') %}
+{% else %}
+{% set home_url = path('site_index') %}
+{% endif %}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="shortcut icon" type="image/x-icon" href="{{ get_admin_template_directory_uri() }}/favicon.ico" />
@@ -9,21 +16,12 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="{{ get_admin_template_directory_uri() }}/css/ie8.css" /><![endif]-->
 </head>
 <body>
-
 <header id="header">
 	<h1>
-		<a 
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-			href="{{ path('super_index') }}"
-		{% elseif is_granted('ROLE_ADMIN') %}
-			href="{{ path('admin_index') }}"
-		{% else %}
-			href="{{ path('site_index') }}"
-		{% endif %}
-		>Code6 CMS <span>Subscription</span></a>
+		<a href="{{ home_url }}">Code6 CMS</a>
 	</h1>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	    <a href="{{ path('fos_user_profile_show') }}">
+	    <a href="{{ home_url }}">
 	        {{ app.user.username }}
 	    </a>
 	{% else %}
@@ -42,16 +40,18 @@
 		{% endif %}
 	</ul>
 	<ul class="links">
-		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-			{% if is_granted('ROLE_ADMIN') %}
-				<li><a href="{{ path('image_index') }}"><i class="fas fa-images"></i> {{ 'image.title.index'|trans({}, 'message') }}</a></li>
-				{% if getSetting('parameter_members_mode') == true %}
-					<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans({}, 'message') }}</a></li>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans({}, 'message') }}</a></li>
+			<li><a href="{{ path('invitation_index') }}"><i class="fas fa-gift"></i> {{ 'invitation.title.index'|trans({}, 'message') }}</a></li>
+		{% elseif is_granted('ROLE_ADMIN') %}
+			{% if getSetting('parameter_members_mode') == 'true' %}
+				<li><a href="{{ path('user_index') }}"><i class="fas fa-users"></i> {{ 'user.title.index'|trans({}, 'message') }}</a></li>
+				{% if getSetting('parameter_invitation_mode') == 'true' %}
+					<li><a href="{{ path('invitation_index') }}"><i class="fas fa-gift"></i> {{ 'invitation.title.index'|trans({}, 'message') }}</a></li>
 				{% endif %}
-			{% else %}
-				<li><a href="{{ path('fos_user_profile_show') }}">プロフィール</a></li>
 			{% endif %}
-		{% endif %}
+		{% else %}				
+		{% endif %}	
 	</ul>
 	<ul class="actions vertical">
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -60,7 +60,7 @@
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 			<li><a href="{{ path('fos_user_security_logout') }}" class="button fit">Log Out</a></li>
 		{% else %}
-			<li><a href="{{ path('fos_user_security_login') }}" class="button special fit">Log In</a></li>
+			<li><a href="{{ path('fos_user_security_login') }}" class="button special primary fit">Log In</a></li>
 		{% endif %}
 		
 	</ul>

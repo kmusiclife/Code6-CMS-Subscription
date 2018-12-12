@@ -1,0 +1,36 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block title %}{{ 'user.title.index'|trans }}{% endblock %}
+{% block body %}
+<div>
+<a href="{{ path('user_new') }}" class="button special small fit"><i class="fas fa-plus"></i> {{ 'user.title.new'|trans() }}</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{ 'entity.user.username'|trans() }}</th>
+            <th>{{ 'entity.user.email'|trans() }}</th>
+            <th>Stripe</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.username }} ({{ user.fname }} {{ user.lname }})</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.stripesubscriptionid ? '<i class="far fa-credit-card"></i>' : '-' }}</td>
+            <td>
+                <a href="{{ path('user_edit', { 'id': user.id }) }}" class="button small special">{{ 'user.button.edit'|trans() }}</a>
+                <a href="{{ path('user_show', { 'id': user.id }) }}" class="button small">{{ 'user.button.show'|trans() }}</a>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% include admin_template_path('pager.html.twig') %}
+
+{% endblock %}

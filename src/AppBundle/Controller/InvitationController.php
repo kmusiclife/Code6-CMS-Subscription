@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Invitation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 use Endroid\QrCode\QrCode;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,21 +25,45 @@ class InvitationController extends Controller
      * @Route("/invitation", name="invitation_index_public")
      * @Method("GET")
      */
-    public function invitationAction()
+    public function invitationAction(Request $request)
     {
 
-        if( $this->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" ){
-            
-            //if( $this->get('session')->get('invitation_passed') ){
-            //    return $this->redirectToRoute('fos_user_registration_register');
-            //}
-            return $this->render('@AppBundle/Resources/views/Invitation/invitation.html.twig', array(
-            ));
-
-        } else {
+        $em = $this->getDoctrine()->getManager();
+        
+        if( false == $this->get('app.app_helper')->getSetting('parameter_invitation_mode') ){
+            $this->get('session')->set('invitation_passed', false);
             return $this->redirectToRoute('fos_user_registration_register');
         }
+        $code = $request->request->get('code');
+        
+        if($code){
+
+            if( true == $this->get('session')->get('invitation_passed') ) {
+                return $this->redirectToRoute('fos_user_registration_register');
+            }    
+            if( false == $this->get('app.app_helper')->recaptchaCheck() ){
+                $this->get('session')->getFlashBag()->add('error', 'スパム対策によるブロック、またはタイムアウトのため再度入力してください');
+                return $this->redirectToRoute('invitation_index_public');
+            }
+            $invitation = $em->getRepository('AppBundle:Invitation')->findOneBy(array('code' => $code));
+            if( null == $invitation ){
+                $this->get('session')->getFlashBag()->add('error', '招待コードが正しくありません正しい招待コードを入力してください');
+                return $this->redirectToRoute('invitation_index_public');
+            }
+            if($invitation->getCountCurrent() < $invitation->getCountLimit())
+            {
+                $this->get('session')->set('invitation_passed', $invitation->getCode());
+                return $this->redirectToRoute('fos_user_registration_register');
+            } else {
+                $this->get('session')->getFlashBag()->add('error', '招待コードの上限を超えましたこの招待コードは使えません');
+                return $this->redirectToRoute('invitation_index_public');
+            }
+
+        } else {
+            return $this->render('@AppBundle/Resources/views/Invitation/invitation.html.twig', array());
+        }
     }
+    
     /**
      * @Route("/invitation/code/{code}", name="invitation_index_public_code")
      * @Method("GET")
@@ -49,6 +74,11 @@ class InvitationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $code = $request->get('code');
         $invitation = $em->getRepository('AppBundle:Invitation')->findOneBy(array('code' => $code));
+        
+        if(null == $invitation){
+            $this->get('session')->set('invitation_passed', null);
+            return new RedirectResponse( $this->generateUrl('invitation_index_public') );
+        }
 
         if( $this->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" ){
             
@@ -56,11 +86,9 @@ class InvitationController extends Controller
 			{
 				$this->get('session')->getFlashBag()->add('error', '招待コードの上限を超えました。この招待コードは使えません。');
 				return new RedirectResponse( $this->generateUrl('invitation_index_public') );
+            } else {
+                $this->get('session')->set('invitation_passed', $invitation->getCode());
             }
-            
-            //if( $this->get('session')->get('invitation_passed') ){
-            //    return $this->redirectToRoute('fos_user_registration_register');
-            //}
             return $this->render('@AppBundle/Resources/views/Invitation/invitation.code.html.twig', array(
                 'invitation' => $invitation
             ));
@@ -115,6 +143,7 @@ class InvitationController extends Controller
         $form = $this->createForm('AppBundle\Form\Type\InvitationType', $invitation);
         $invitation->setCode( sha1(random_int(PHP_INT_MIN, PHP_INT_MAX)).uniqid() );
         $invitation->setEnabled(true);
+        $invitation->setCreatedUser($this->getUser());
 
         $form->handleRequest($request);
 
@@ -140,13 +169,15 @@ class InvitationController extends Controller
     public function editAction(Request $request, Invitation $invitation)
     {
         $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        if(!$invitation->getCreatedUser()){
+            $invitation->setCreatedUser($this->getUser());
+        }
         $deleteForm = $this->createDeleteForm($invitation);
         $editForm = $this->createForm('AppBundle\Form\Type\InvitationType', $invitation);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             $this->get('session')->getFlashBag()->add('notice', '招待を編集しました');
             return $this->redirectToRoute('invitation_index');
         }

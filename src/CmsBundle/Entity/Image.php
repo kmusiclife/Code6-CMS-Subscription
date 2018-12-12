@@ -53,7 +53,7 @@ class Image
 	 *    minWidth = 1000,
 	 *    maxWidth = 4100,
 	 *    minWidthMessage = "1000px以上の画像をアップロードしてください",
-	 *    maxWidthMessage = "2000px以上の画像はアップロードできません",
+	 *    maxWidthMessage = "4100px以上の画像はアップロードできません",
 	 *    minRatio = 1.1,
 	 *    maxRatio = 1.8,
 	 *    minRatioMessage = "横写真のみアップロードが可能です",

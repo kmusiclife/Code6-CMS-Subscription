@@ -1,0 +1,57 @@
+{% trans_default_domain 'message' %}
+{% extends admin_template_layout() %}
+
+{% block title %}{{ 'profile.title.edit'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit row uniform gtr-uniform', 'novalidate': 'novalidate' } }) }}
+
+
+<div class="3u 12u$(xsmall) col-3 col-12-small">
+	<label>{{ 'entity.user.username'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
+	{{ form_widget(form.username, {'attr': { 'placeholder':'例) example' }}) }}
+	{{ form_errors(form.username) }}
+</div>
+
+
+<div class="3u 12u$(xsmall) col-3 col-12-small">
+	<label>{{ 'entity.user.email'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
+	{{ form_widget(form.email, {'attr': { 'placeholder':'例) info@example.com' }}) }}
+	{{ form_errors(form.email) }}
+</div>
+
+
+
+<div class="3u 12u$(xsmall) col-3 col-12-small">
+	<label>{{ 'entity.user.password'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
+	{{ form_widget(form.plainPassword.first, {'attr': { 'placeholder':'' }}) }}
+	{{ form_errors(form.plainPassword.first) }}
+</div>
+
+
+<div class="3u 12u$(xsmall) col-3 col-12-small">
+	<label>{{ 'entity.user.password_confirm'|trans }}*</label>
+</div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
+	{{ form_widget(form.plainPassword.second, {'attr': { 'placeholder':'' }}) }}
+	{{ form_errors(form.plainPassword.second) }}
+</div>
+
+
+<div class="3u 12u$(xsmall) col-3 col-12-small"></div>
+<div class="9u$ 12u$(xsmall) col-9 col-12-small">
+	<input type="submit" value="{{ 'form.button.edit'|trans }}" class="special">
+</div>
+
+
+{{ form_end(form) }}
+
+{% endblock fos_user_content %}
+

@@ -47,7 +47,7 @@ class RequestListener
             !$this->serviceContainer->get('app.app_helper')->getSetting('parameters') or 
             $this->serviceContainer->get('app.app_helper')->getSetting('parameters') == "false"
         ){
-            $this->serviceContainer->get('app.app_helper')->setSetting('parameter_demo_mode', "false");
+            $this->serviceContainer->get('app.app_helper')->setSetting('parameter_demo_mode', "true");
             $this->serviceContainer->get('app.app_helper')->setSetting('parameter_admin_theme_name', "default");
             $this->serviceContainer->get('app.app_helper')->setSetting('parameter_theme_name', "default");
             $this->serviceContainer->get('app.app_helper')->setSetting('parameter_members_mode', "false");
@@ -61,7 +61,7 @@ class RequestListener
         }
 
         if(null == $this->serviceContainer->get('app.app_helper')->getSetting('parameter_demo_mode')){
-            $this->serviceContainer->get('app.app_helper')->setSetting('parameter_demo_mode', "false");
+            $this->serviceContainer->get('app.app_helper')->setSetting('parameter_demo_mode', "true");
         }
         $is_demo_mode = $this->serviceContainer->get('app.app_helper')->getSetting('parameter_demo_mode') == "true" ? true : false;
 

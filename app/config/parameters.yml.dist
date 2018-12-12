@@ -4,25 +4,21 @@ parameters:
     database_name: Code6-CMS-Subscription
     database_user: root
     database_password: ~
-
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: ~
     mailer_password: ~
-
     secret: ThisTokenIsNotSoSecretChangeIt
-
     mailer_address: info@example.com
     mailer_name: 'Code6 CMS Subscription'
-    
-    project_dir: '%kernel.project_dir%'
-    upload_path: '%kernel.project_dir%/web/uploads'
-    upload_uri: /uploads
-
     recaptcha_site_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
     recaptcha_secret_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
     stripe_connect_client_id: ca_xxxxxxxxxxxxxxxxxxxxxxxxxxx
     stripe_secret_token: sk_xxxxxxxxxxxxxxxxxxxxxxxxxxx
     facebook_app_id: null
     stripe_application_fee: 10
+    project_dir: '%kernel.project_dir%'
+    upload_path: '%kernel.project_dir%/web/uploads'
+    upload_uri: /uploads
+    registration_form_type: AppBundle\Form\Type\RegistrationFormType
+    profile_form_type: AppBundle\Form\Type\ProfileFormType

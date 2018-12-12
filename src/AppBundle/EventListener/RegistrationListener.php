@@ -82,53 +82,13 @@ class RegistrationListener implements EventSubscriberInterface
 				new RedirectResponse( $this->router->generate('site_index'))
 			);
 		}
-
-		if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" ){
-
-			if( $this->serviceContainer->get('session')->get('invitation_passed') ) return;
-
-			$request = $event->getRequest();
-			$code = $request->request->get('code');
-			$recaptcha = $request->request->get('_recaptcha');
-
-			if(!$code and !$recaptcha) {
-				return $event->setResponse(
-					new RedirectResponse( $this->router->generate('invitation_index_public'))
-				);				
-			}
-
-			if( false == $this->serviceContainer->get('app.app_helper')->recaptchaCheck() ){
-				$this->serviceContainer->get('session')->getFlashBag()->add('error', 'タイムアウトまたはスパム防止のためもう一度操作を行ってください');
-				return $event->setResponse(
-					new RedirectResponse( $this->router->generate('invitation_index_public'))
-				);
-			}
-
-			if(null == $code) {
-				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードが入力されていません');
-				return $event->setResponse(
-					new RedirectResponse( $this->router->generate('invitation_index_public'))
-				);
-			}
-
-			$invitation = $this->entityManager->getRepository('AppBundle:Invitation')->findOneBy(array('code' => $code));
-			if(null == $invitation){
-				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードが正しくありません正しい招待コードを入力してください');
-				return $event->setResponse(
-					new RedirectResponse( $this->router->generate('invitation_index_public'))
-				);
-			}
-
-			if($invitation->getCountCurrent() >= $invitation->getCountLimit())
-			{
-				$this->serviceContainer->get('session')->getFlashBag()->add('error', '招待コードの上限を超えましたこの招待コードは使えません');
-				return $event->setResponse(
-					new RedirectResponse( $this->router->generate('invitation_index_public'))
-				);
-			}
-
-			$this->serviceContainer->get('session')->set('invitation_passed', $invitation->getCode());
-
+		if( 
+			$this->serviceContainer->get('app.app_helper')->getSetting('parameter_invitation_mode') == "true" and 
+			false == $this->serviceContainer->get('session')->get('invitation_passed') 
+		){
+			return $event->setResponse(
+				new RedirectResponse( $this->router->generate('invitation_index_public'))
+			);
 		}
 
 	}
