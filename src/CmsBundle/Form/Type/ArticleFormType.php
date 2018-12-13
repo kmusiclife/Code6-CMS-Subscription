@@ -42,7 +42,7 @@ class ArticleFormType extends AbstractType
 			'required' => false,
         ));
         
-        if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_members_mode') ){
+        if( $this->serviceContainer->get('app.app_helper')->getSetting('parameter_members_mode') == "true" ){
 	        $builder->add('is_member', CheckboxType::class, array(
 				'required' => false,
 	        ));

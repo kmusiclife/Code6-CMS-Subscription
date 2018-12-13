@@ -53,10 +53,16 @@ class AppHelper
 		$this->router = $router;
 		$this->requestStack = $requestStack;
 		
-		$this->settings_cache = array();
 		if(is_object($this->tokenStorage->getToken()))
 			$this->user = $this->tokenStorage->getToken()->getUser();
 		else $this->user = new User();
+
+		$this->settings_cache = array();
+		$settings = $this->entityManager->getRepository('AppBundle:Setting')->findAll();
+		foreach($settings as $setting)
+		{
+			$this->settings_cache[$setting->getSlug()] = $setting->getValue();
+		}
 
 	}
 	public function theme_name()

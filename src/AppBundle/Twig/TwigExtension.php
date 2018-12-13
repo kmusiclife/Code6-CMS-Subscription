@@ -34,7 +34,7 @@ class TwigExtension extends AbstractExtension
     {
         $this->serviceContainer = $serviceContainer;
         $this->requestStack = $requestStack;
-        $this->EntityManager = $entityManager;
+        $this->entityManager = $entityManager;
 		$this->router = $router;
 		$this->tokenStorage = $tokenStorage;
 		
@@ -342,7 +342,7 @@ class TwigExtension extends AbstractExtension
 	}
 	public function have_new_articles($date_diff=90)
 	{
-		$article = $this->EntityManager->getRepository('CmsBundle:Article')->findOneBy(array(), array('createdAt' => 'DESC'));
+		$article = $this->entityManager->getRepository('CmsBundle:Article')->findOneBy(array(), array('createdAt' => 'DESC'));
 		if($article){
 			$current_date = new \DateTime("now");
 			$interval = $current_date->diff( $article->getPublishedAt() );

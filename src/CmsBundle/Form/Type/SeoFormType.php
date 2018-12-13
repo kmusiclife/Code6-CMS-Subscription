@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,7 +14,7 @@ class SeoFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description', null, array('required' => false));
+        $builder->add('description', TextAreaType::class, array('required' => true));
         $builder->add('keywords', TextType::class, array('required' => false));
         $builder->add('image', ImageSimpleFormType::class, array());
     }
